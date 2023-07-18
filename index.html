@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="js/addform.js">
+  </script>
+  <script src="js/calculate.js"></script>
+  <title>FGO Damage Roadmap</title>
+</head>
+<body>
+  <header>
+    <a href="." id="title">FGO Damage Roadmap</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <form id="fgocalc-form">
+        <div class="input-field">
+          <form action="">
+            <div class="turn-wrapper">
+              <h3>基本情報</h3>
+              <div class="servant-info">
+                <input type="text" class="servant-name" name="servant-name" size="10" placeholder="サーヴァント名">
+                <select name="servant-class">
+                  <option value="saber">剣</option>
+                  <option value="archer">弓</option>
+                  <option value="lancer">槍</option>
+                  <option value="rider">騎</option>
+                  <option value="caster">術</option>
+                  <option value="assassin">殺</option>
+                  <option value="berserker">狂</option>
+                  <option value="ruler">裁</option>
+                  <option value="avenger">讐</option>
+                  <option value="alterego">分</option>
+                  <option value="mooncancer">月</option>
+                  <option value="pretender">詐</option>
+                  <option value="foreigner">降</option>
+                  <option value="shielder">盾</option>
+                  <option value="beast">獣</option>
+                </select>
+                <select name="servant-attr">
+                  <option value="sky">天</option>
+                  <option value="earth">地</option>
+                  <option value="human">人</option>
+                  <option value="star">星</option>
+                  <option value="beast">獣</option>
+                </select>
+                <br>
+                <label>ATK:<input type="number" class="numberfield" name="servant-atk" min="0" max="30000"><br></label>
+                <lebel>礼装ATK:<input type="number" class="numberfield" name="craft-essence-atk" min="0" max="3000"></lebel>
+                <br>
+                <label>宝具色:<select name="np-color">
+                    <option value="b">B</option>
+                    <option value="a">A</option>
+                    <option value="q">Q</option>
+                </select></label><br>
+                <label>宝具倍率:<input type="number" class="numberfield" name="np-mag" min="0" max="5000">%</label>
+                <br>
+                <label>足跡 B:<input type="number" class="numberfield" name="b-footprint" min="0" max="500"></label>
+                <label>A:<input type="number" class="numberfield" name="a-footprint" min="0" max="500"></label>
+                <label>Q:<input type="number" class="numberfield" name="q-footprint" min="0" max="500"></label>
+                <br>
+                <!-- <label>N/A:<input type="number" class="numberfield" name="np-rate" min="0" max="10" step="0.01">%</label><br>
+                <label>星発生率:<input type="number" class="numberfield" name="star-rate" min="0" max="20" step="0.1">%</label>
+                <br> -->
+                <!-- <label>hit数 宝具:<input type="number" class="hitcount numberfield" name="n-hit-count" min="1" max="20"></label>
+                <label>B:<input type="number" class="hitcount numberfield" name="b-hit-count" min="1" max="20"></label>
+                <label>A:<input type="number" class="hitcount numberfield" name="a-hit-count" min="1" max="20"></label>
+                <label>Q:<input type="number" class="hitcount numberfield" name="q-hit-count" min="1" max="20"></label>
+                <label>EX:<input type="number" class="hitcount numberfield" name="ex-hit-count" min="1" max="20"></label>
+                </label> -->
+                <br>
+              </div>
+            </div>
+
+            <div class="turn-wrapper">
+              <h3>パッシブ/開始時効果</h3>
+              <div id="passive-skill">
+                  <input type="button" value="追加" onclick="addForm(this,0)">
+              </div>
+            </div>
+
+            <div id="turns">
+            </div>
+
+            <div class="button-wrapper">
+              <input type="button" value="ターンを追加" onclick="addTurn()">
+              <input class="turn-delete-button" type="button" value="ターンを削除" onclick="deleteTurn()">
+              <input type="button" value="計算" onclick="calculate()">
+            </div>
+          </form>
+        </div>
+      </form>
+
+      <div class="resultform">
+        <table class="result" id="result-form">
+          <div class="midashi">
+            <tr>
+              <th class="table1">ターン</th>
+              <th>1st</th>
+              <th>2nd</th>
+              <th>3rd</th>
+              <th>EX</th>
+              <th>total</th>
+              <th class="goal-damage">目標ダメ</th>
+              <th>撃破率</th>
+            </tr>
+          <div>
+            <tr class="r1">
+              <td class="turn-result-name" rowspan="4">1T</td>
+              <td><output type="text" name="result"></output></td>
+              <td><output type="text" name="result"></output></td>
+              <td><output type="text" name="result"></output></td>
+              <td><output type="number" class="numberfield">-</output></td>
+              <td><output type="number" class="numberfield">-</output></td>
+              <td class="goal-damage"><output type="number" class="numberfield">-</output></td>
+              <td><output type="number" class="numberfield">-</output></td>
+            </tr>
+            <tr class="r2">
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td class="goal-damage" rowspan="3"><output type="number" class="numberfield" name="result"></output></td>
+              <td rowspan="3"><output type="number" class="numberfield" name="result"></output>%</td>
+            </tr>
+            <tr class="r3">
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+            </tr>
+            <tr class="r4">
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+              <td><output type="number" class="numberfield" name="result"></output></td>
+            </tr>
+          </div>
+        </table>
+      </div>
+    </div>
+
+    <template id='buff-form-template'>
+      <div class="buff-form">
+        <input type="text" class="skill-name" size="8" placeholder="スキル/バフ名">
+        <select class="skill-type">
+          <option value="atk_buff">攻撃バフ</option>
+          <option value="b_buff">Bバフ</option>
+          <option value="a_buff">Aバフ</option>
+          <option value="a_power_buff">Aバフ(スコア)</option>
+          <option value="q_buff">Qバフ</option>
+          <option value="q_power_buff">Qバフ(スコア)</option>
+          <option value="ex_buff">EXバフ</option>
+          <option value="np_buff">宝具バフ</option>
+          <option value="cr_buff">クリバフ</option>
+          <option value="b_cr_buff">Bクリバフ</option>
+          <option value="a_cr_buff">Aクリバフ</option>
+          <option value="q_cr_buff">Qクリバフ</option>
+          <option value="sp_buff">特攻バフ</option>
+          <!-- <option value="npget_buff">NP獲得バフ</option> -->
+          <!-- <option value="starget_buff">星発生バフ</option> -->
+          <!-- <option value="npget">NP獲得</option> -->
+          <!-- <option value="npget_per_turn">毎TNP獲得</option> -->
+          <!-- <option value="starget">星獲得</option> -->
+          <!-- <option value="starget_per_turn">毎T星獲得</option> -->
+          <option value="sp_np">特攻宝具</option>
+          <option value="sp_def">特殊耐性</option>
+          <option value="damage_plus">ダメージ＋</option>
+        </select>
+        <input type="number" class="numberfield ammount" min="-10000" max="10000" placeholder="効果量">
+        <select class="turn">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="0">-</option>
+        </select>T
+        <select class="time">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="0" selected>-</option>
+        </select>回
+        <input type="button" value="削除" onclick="deleteForm(this)">
+      </div>
+    </template>
+
+    <template id="turn-template">
+      <div id="turn0" class="turn-wrapper">
+        <h3>0T目</h3>
+        <div class="enemy-info">
+          <label>クラス相性
+            <select id="turn0-class">
+              <option value="0.5">0.5</option>
+              <option value="1.0">1.0</option>
+              <option value="1.2">1.2</option>
+              <option value="1.5">1.5</option>
+              <option value="2.0" selected>2.0</option>
+            </select>
+          </label>
+          <label>属性相性
+            <select id="turn0-attr">
+              <option value="0.9">0.9</option>
+              <option value="1.0" selected>1.0</option>
+              <option value="1.1">1.1</option>
+            </select>
+          </label>
+          <input type="number" id="turn0-enemy-hp" min="0" max="100000000" placeholder="目標ダメージ">
+        </div>
+        <div class="turn-skill" id="turn0-skill">
+          <input type="button" value="追加">
+        </div>
+        <div class="card-select-wrapper">
+          <div class="card-select" id="turn0-card1">
+            <div class="card-select-field">
+              <label>カード1
+              <select id="turn0-card1-color" class="card-color-select">
+                <option value="n" selected>N</option>
+                <option value="b">B</option>
+                <option value="a">A</option>
+                <option value="q">Q</option>
+              </select>
+              <select id="turn0-card1-cri">
+                <option value="2">有</option>
+                <option value="1">無</option>
+                <option value="0">0</option>
+                <option value="-1">他</option>
+              </select>
+              </label>
+            </div>
+            <div class="card-skill" id="turn0-card1-skill">
+              <input type="button" value="追加">
+            </div>
+          </div>
+
+          <div class="card-select" id="turn0-card2">
+            <label>カード2
+            <select id="turn0-card2-color" class="card-color-select">
+              <option value="n">N</option>
+              <option value="b" selected>B</option>
+              <option value="a">A</option>
+              <option value="q">Q</option>
+            </select>
+            <select id="turn0-card2-cri">
+              <option value="2">有</option>
+              <option value="1">無</option>
+              <option value="0">0</option>
+              <option value="-1">他</option>
+            </select></label>
+            <div id="turn0-card2-skill">
+              <input type="button" value="追加">
+            </div>
+          </div>
+
+          <div class="card-select" id="turn0-card3">
+            <label>カード3
+            <select id="turn0-card3-color" class="card-color-select">
+              <option value="n">N</option>
+              <option value="b" selected>B</option>
+              <option value="a">A</option>
+              <option value="q">Q</option>
+            </select>
+            <select id="turn0-card3-cri">
+              <option value="2">有</option>
+              <option value="1">無</option>
+              <option value="0">0</option>
+              <option value="-1">他</option>
+            </select></label>
+            <div id="turn0-card3-skill">
+              <input type="button" value="追加">
+            </div>
+          </div>
+
+          <div class="card-select" id="turn0-card4">
+            <label>カード4
+            <select id="turn0-card4-color" class="card-color-select">
+              <option value="ex">EX</option>
+              <option value="-1">-</option>
+            </select>
+            <select id="turn0-card4-cri">
+              <option value="1">有</option>
+              <option value="0">0</option>
+            </select></label>
+            <div id="turn0-card4-skill">
+              <input type="button" value="追加">
+            </div>
+          </div>
+        </div>
+        <!-- <label>メモ
+        <textarea name="turn1-note" class="note"></textarea>
+        </label> -->
+      </div>
+    </template>
+
+  </main>
+
+  <footer>
+    <a href="https://twitter.com/yukimisnowy" target="_blank" rel="noopener noreferrer" class="footer-item">管理者Twitter</a>
+  </footer>
+</body>
+</html>
