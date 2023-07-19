@@ -31,6 +31,7 @@ function addTurn() {
   }
   const parent = document.getElementById("turns");
   parent.appendChild(newturn);
+  colorChangeCheck();
 }
 
 function deleteTurn() {
@@ -56,5 +57,33 @@ function sortForm(p) {
   let bfr = f.previousElementSibling;
   if (bfr.className=="buff-form") {
   f.parentElement.insertBefore(f, bfr);
+  }
+}
+
+//カード色に応じて入力フォームの色を変更
+function changeColor(p) {
+  let cardcolor = p.value;
+  const cfield = p.parentElement.parentElement
+  if (document.getElementById("colorcheck").children[0].checked) {
+    if (cardcolor=="n") {
+      cardcolor = document.getElementById("np-color").value;    
+    }
+    if (cardcolor=="b") {
+      cfield.style.backgroundColor = "tomato";
+    } else if (cardcolor=="a") {
+      cfield.style.backgroundColor = "cornflowerblue";
+    } else if (cardcolor=="q") {
+      cfield.style.backgroundColor = "lightgreen";
+    }
+  } else {
+    cfield.style.backgroundColor = "white";
+  }
+}
+
+//宝具色とチェックボックス変更時に色変更を実行
+function colorChangeCheck() {
+  let p = document.getElementsByClassName("card-color-select");
+  for (let i = 0; i < p.length; i++) {
+    changeColor(p[i]);
   }
 }

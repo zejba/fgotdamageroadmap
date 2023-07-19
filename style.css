@@ -1,8 +1,7 @@
 .buff-form {
   display:flex;
-  gap: 0px 2px;
+  gap: 0px 1px;
   margin: 2px 0px;
-  max-width: 300px;
 };
 
 .container {
@@ -12,13 +11,18 @@
 h3 {
   line-height: 1px;
 }
+
+select {
+  color: black;
+}
+
 .turn-wrapper {
   display: flex;
   flex-flow: column;
   border: solid 2px;
   border-radius: 6px;
   padding: 10px;
-  max-width: 441px;
+  max-width: 450px;
   margin: 6px;
   gap: 5px 2px;
 }
@@ -52,6 +56,7 @@ h3 {
   border: solid 1px;
   border-radius: 6px;
   padding: 8px;
+  background-color: white;
 }
 
 .enemy-info {
@@ -61,12 +66,16 @@ h3 {
   padding: 6px
 }
 
-.turn-delete-button {
-  margin-left: auto;
+.button-wrapper {
+  display: flex;
+  gap: 0 6px;
+  padding: 8px 14px;
+  max-width: 450px;
 }
 
-.button-wrapper {
-  padding: 8px 14px;
+#colorcheck {
+  font-size: 12px;
+  margin-left: auto;
 }
 
 th,td {
@@ -91,6 +100,10 @@ th {
 
 td {
   height: 25px;
+}
+
+.cardname {
+  background-color: white;
 }
 
 /* ヘッダー */

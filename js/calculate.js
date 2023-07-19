@@ -213,12 +213,38 @@ function calculate() {
 
   //出力
 
+  //リザルトフォームを生成
   addResultForm(turns);
   let op = document.getElementsByName("result");
-  for (let m=0; m < 20*turns; m++) {
-    op[m].textContent = totalResult[m].toLocaleString();
-  }
 
+  //ターン数ループ
+  for (let i=0; i<turns; i++) {
+    //カード色部分
+    for (let j=0; j < 3; j++) {
+      let k = i*20 + j; 
+      op[k].textContent = totalResult[k].toLocaleString();
+      if (document.getElementById("colorcheck").children[0].checked) {
+        let cardcolor = totalResult[k];
+        if (totalResult[k]=="N") {
+          cardcolor = npColor.toUpperCase();  
+        }
+        if (cardcolor=="B") {
+          op[k].parentElement.style.backgroundColor = "tomato";
+        } else if (cardcolor=="A") {
+          op[k].parentElement.style.backgroundColor = "cornflowerblue";
+        } else if (cardcolor=="Q") {
+          op[k].parentElement.style.backgroundColor = "lightgreen";
+        }
+      } else {
+        op[k].parentElement.style.backgroundColor = "white";
+      }
+    }
+    //数値部分
+    for (let j=3; j < 20; j++) {
+      let k = i*20 + j; 
+      op[k].textContent = totalResult[k].toLocaleString();
+    }
+  }
 }
 
 

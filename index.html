@@ -51,7 +51,7 @@
                 <label>ATK:<input type="number" class="numberfield" name="servant-atk" min="0" max="30000"><br></label>
                 <lebel>礼装ATK:<input type="number" class="numberfield" name="craft-essence-atk" min="0" max="3000"></lebel>
                 <br>
-                <label>宝具色:<select name="np-color">
+                <label>宝具色:<select id="np-color" name="np-color" onchange="colorChangeCheck()">
                     <option value="b">B</option>
                     <option value="a">A</option>
                     <option value="q">Q</option>
@@ -89,6 +89,7 @@
               <input type="button" value="ターン追加" onclick="addTurn()">
               <input class="turn-delete-button" type="button" value="ターン削除" onclick="deleteTurn()">
               <input type="button" value="計算" onclick="calculate()">
+              <label id="colorcheck">カード選択に色をつける<input type="checkbox" onchange="colorChangeCheck()"></label>
             </div>
           </form>
         </div>
@@ -110,9 +111,9 @@
           <div>
             <tr class="r1">
               <td class="turn-result-name" rowspan="4">1T</td>
-              <td><output type="text" name="result"></output></td>
-              <td><output type="text" name="result"></output></td>
-              <td><output type="text" name="result"></output></td>
+              <td class="cardname"><output type="text" name="result"></output></td>
+              <td class="cardname"><output type="text" name="result"></output></td>
+              <td class="cardname"><output type="text" name="result"></output></td>
               <td><output type="number" class="numberfield">-</output></td>
               <td><output type="number" class="numberfield">-</output></td>
               <td class="goal-damage"><output type="number" class="numberfield">-</output></td>
@@ -202,7 +203,7 @@
           <option value="0" selected>-</option>
         </select>回
         <input type="button" value="✖" onclick="deleteForm(this)">
-        <input type="button" value="↑" onclick="sortForm(this)">
+        <input type="button" value="▲" onclick="sortForm(this)">
       </div>
     </template>
 
@@ -233,22 +234,20 @@
         </div>
         <div class="card-select-wrapper">
           <div class="card-select" id="turn0-card1">
-            <div class="card-select-field">
-              <label>カード1
-              <select id="turn0-card1-color" class="card-color-select">
-                <option value="n" selected>N</option>
-                <option value="b">B</option>
-                <option value="a">A</option>
-                <option value="q">Q</option>
-              </select>
-              <select id="turn0-card1-cri">
-                <option value="2">クリティカル有</option>
-                <option value="1">クリティカル無</option>
-                <option value="0">ダメージ0</option>
-                <option value="-1">他(サポ宝具等)</option>
-              </select>
-              </label>
-            </div>
+            <label>カード1
+            <select id="turn0-card1-color" class="card-color-select" onchange="changeColor(this)">
+              <option value="n" selected>N</option>
+              <option value="b">B</option>
+              <option value="a">A</option>
+              <option value="q">Q</option>
+            </select>
+            <select id="turn0-card1-cri">
+              <option value="2">クリティカル有</option>
+              <option value="1">クリティカル無</option>
+              <option value="0">ダメージ0</option>
+              <option value="-1">他(サポ宝具等)</option>
+            </select>
+            </label>
             <div class="card-skill" id="turn0-card1-skill">
               <input type="button" value="追加">
             </div>
@@ -256,7 +255,7 @@
 
           <div class="card-select" id="turn0-card2">
             <label>カード2
-            <select id="turn0-card2-color" class="card-color-select">
+            <select id="turn0-card2-color" class="card-color-select" onchange="changeColor(this)">
               <option value="n">N</option>
               <option value="b" selected>B</option>
               <option value="a">A</option>
@@ -275,7 +274,7 @@
 
           <div class="card-select" id="turn0-card3">
             <label>カード3
-            <select id="turn0-card3-color" class="card-color-select">
+            <select id="turn0-card3-color" class="card-color-select" onchange="changeColor(this)">
               <option value="n">N</option>
               <option value="b" selected>B</option>
               <option value="a">A</option>
