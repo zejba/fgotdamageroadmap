@@ -145,7 +145,7 @@ function calculate() {
         let atkbuff = buffTotalling("atk_buff") / 100;
         let cardbuff = (buffTotalling(cardColor + "_buff") + buffTotalling(cardColor + "_power_buff")) / 100;
         let spbuff = buffTotalling("sp_buff") / 100;
-        let spdef = Math.max(buffTotalling("sp_def") / 100, 1);
+        let spdef = Math.min(buffTotalling("sp_def") / 100, 1);
         let nporcrbuff = 0;
         let card;
         //宝具orクリバフとカード補正
