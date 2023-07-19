@@ -40,3 +40,21 @@ function deleteTurn() {
     document.getElementById("turn"+n).remove();
   }
 }
+
+// 宝具関連のバフが選択された場合自動的に量とターンの初期値を調整
+function inputChange(p) {
+  if (p.value=="sp_np") {
+    p.parentElement.getElementsByClassName("ammount")[0].value = "100";
+    p.parentElement.getElementsByClassName("turn")[0].options[10].selected = true;
+  } else if (p.value=="np_mag_up") {
+    p.parentElement.getElementsByClassName("turn")[0].options[10].selected = true;
+  }
+}
+
+function sortForm(p) {
+  let f = p.parentElement;
+  let bfr = f.previousElementSibling;
+  if (bfr.className=="buff-form") {
+  f.parentElement.insertBefore(f, bfr);
+  }
+}

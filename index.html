@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <script src="js/addform.js?date=202307192230">
+  <script src="js/addform.js?date=202307200100">
   </script>
-  <script src="js/calculate.js?date=202307192230"></script>
+  <script src="js/calculate.js?date=202307200100"></script>
   <title>FGO Damage Roadmap</title>
 </head>
 <body>
@@ -86,8 +86,8 @@
             </div>
 
             <div class="button-wrapper">
-              <input type="button" value="ターンを追加" onclick="addTurn()">
-              <input class="turn-delete-button" type="button" value="ターンを削除" onclick="deleteTurn()">
+              <input type="button" value="ターン追加" onclick="addTurn()">
+              <input class="turn-delete-button" type="button" value="ターン削除" onclick="deleteTurn()">
               <input type="button" value="計算" onclick="calculate()">
             </div>
           </form>
@@ -149,7 +149,7 @@
     <template id='buff-form-template'>
       <div class="buff-form">
         <input type="text" class="skill-name" size="8" placeholder="スキル/バフ名">
-        <select class="skill-type">
+        <select class="skill-type" onchange="inputChange(this)">
           <option value="atk_buff">攻撃バフ</option>
           <option value="b_buff">Bバフ</option>
           <option value="a_buff">Aバフ</option>
@@ -201,7 +201,8 @@
           <option value="10">10</option>
           <option value="0" selected>-</option>
         </select>回
-        <input type="button" value="削除" onclick="deleteForm(this)">
+        <input type="button" value="✖" onclick="deleteForm(this)">
+        <input type="button" value="↑" onclick="sortForm(this)">
       </div>
     </template>
 
@@ -228,7 +229,7 @@
           <input type="number" id="turn0-enemy-hp" min="0" max="100000000" placeholder="目標ダメージ">
         </div>
         <div class="turn-skill" id="turn0-skill">
-          <input type="button" value="追加">
+          <input type="button" value="スキル追加">
         </div>
         <div class="card-select-wrapper">
           <div class="card-select" id="turn0-card1">
@@ -241,10 +242,10 @@
                 <option value="q">Q</option>
               </select>
               <select id="turn0-card1-cri">
-                <option value="2">有</option>
-                <option value="1">無</option>
-                <option value="0">0</option>
-                <option value="-1">他</option>
+                <option value="2">クリティカル有</option>
+                <option value="1">クリティカル無</option>
+                <option value="0">ダメージ0</option>
+                <option value="-1">他(サポ宝具等)</option>
               </select>
               </label>
             </div>
@@ -262,10 +263,10 @@
               <option value="q">Q</option>
             </select>
             <select id="turn0-card2-cri">
-              <option value="2">有</option>
-              <option value="1">無</option>
-              <option value="0">0</option>
-              <option value="-1">他</option>
+              <option value="2">クリティカル有</option>
+              <option value="1">クリティカル無</option>
+              <option value="0">ダメージ0</option>
+              <option value="-1">他(サポ宝具等)</option>
             </select></label>
             <div id="turn0-card2-skill">
               <input type="button" value="追加">
@@ -281,10 +282,10 @@
               <option value="q">Q</option>
             </select>
             <select id="turn0-card3-cri">
-              <option value="2">有</option>
-              <option value="1">無</option>
-              <option value="0">0</option>
-              <option value="-1">他</option>
+              <option value="2">クリティカル有</option>
+              <option value="1">クリティカル無</option>
+              <option value="0">ダメージ0</option>
+              <option value="-1">他(サポ宝具等)</option>
             </select></label>
             <div id="turn0-card3-skill">
               <input type="button" value="追加">
@@ -299,7 +300,7 @@
             </select>
             <select id="turn0-card4-cri">
               <option value="1">有</option>
-              <option value="0">0</option>
+              <option value="0">ダメージ0</option>
             </select></label>
             <div id="turn0-card4-skill">
               <input type="button" value="追加">
