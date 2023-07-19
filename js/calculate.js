@@ -38,6 +38,7 @@ function calculate() {
   buffs["sp_np"] = [[0,Infinity,Infinity]];
   buffs["sp_def"] = [[0,Infinity,Infinity]];
   buffs["damage_plus"] = [[0,Infinity,Infinity]];
+  buffs["np_mag_up"] = [[0, Infinity, Infinity]];
 
   readBuff("passive-skill");
 
@@ -121,7 +122,7 @@ function calculate() {
         if (cardColor == "n") {
           actType = "np";
           //宝具倍率
-          mag = npMag/100 ;
+          mag = (npMag + buffTotalling("np_mag_up"))/100;
           //特攻宝具処理
           let spnp = buffTotalling("sp_np");
           if (spnp != 0) {
@@ -142,20 +143,20 @@ function calculate() {
             mag = 3.5;
           }
         }
-        let atkbuff = buffTotalling("atk_buff") / 100;
-        let cardbuff = (buffTotalling(cardColor + "_buff") + buffTotalling(cardColor + "_power_buff")) / 100;
-        let spbuff = buffTotalling("sp_buff") / 100;
+        let atkbuff = Math.max(buffTotalling("atk_buff") / 100, -1);
+        let cardbuff = Math.max((buffTotalling(cardColor + "_buff") + buffTotalling(cardColor + "_power_buff")) / 100, -1);
+        let spbuff = Math.max(buffTotalling("sp_buff") / 100, -1);
         let spdef = Math.min(buffTotalling("sp_def") / 100, 1);
         let nporcrbuff = 0;
         let card;
         //宝具orクリバフとカード補正
         if (actType == "np") {
-          nporcrbuff = buffTotalling("np_buff") / 100;
+          nporcrbuff = Math.max(buffTotalling("np_buff") / 100, -1);
           card = cardCorres[j-1] * (cardbuff+1);
         } else {
           card = cardCorres[j-1] * (1 + (j-1) * 0.2) * (cardbuff+1) + firstBonus;
           if (actType == "cr") {
-            nporcrbuff = (buffTotalling("cr_buff") + buffTotalling(cardColor + "_cr_buff")) / 100;
+            nporcrbuff = Math.max((buffTotalling("cr_buff") + buffTotalling(cardColor + "_cr_buff")) / 100, -1);
           }
         }
         if (cr == 0) {
