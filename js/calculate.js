@@ -78,7 +78,7 @@ function calculate() {
     if (cardCorres[0] == 1.5 || (cardCorres[0] != cardCorres[1] && cardCorres[1] != cardCorres[2] && cardCorres[0] != cardCorres[2])) {
       firstBonus = 0.5;
     }
-    if (cardCorres.slice(0,2).every(element => element == 1.5)) {
+    if (cardCorres.slice(0,3).every(element => element == 1.5)) {
       busterChainBonus = 1;
     }
 
@@ -145,7 +145,7 @@ function calculate() {
         let atkbuff = buffTotalling("atk_buff") / 100;
         let cardbuff = (buffTotalling(cardColor + "_buff") + buffTotalling(cardColor + "_power_buff")) / 100;
         let spbuff = buffTotalling("sp_buff") / 100;
-        let spdef = buffTotalling("sp_def") / 100;
+        let spdef = Math.max(buffTotalling("sp_def") / 100, 1);
         let nporcrbuff = 0;
         let card;
         //宝具orクリバフとカード補正
