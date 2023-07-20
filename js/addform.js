@@ -47,8 +47,10 @@ function inputChange(p) {
   if (p.value=="sp_np") {
     p.parentElement.getElementsByClassName("amount")[0].value = "100";
     p.parentElement.getElementsByClassName("turn")[0].options[10].selected = true;
+    p.parentElement.getElementsByClassName("time")[0].options[0].selected = true;
   } else if (p.value=="np_mag_up") {
     p.parentElement.getElementsByClassName("turn")[0].options[10].selected = true;
+    p.parentElement.getElementsByClassName("time")[0].options[0].selected = true;
   }
 }
 
