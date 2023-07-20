@@ -12,7 +12,7 @@ function deleteForm(p) {
 function addTurn() {
   const template = document.getElementById("turn-template");
   const newturn = template.content.cloneNode(true);
-  const n = document.getElementsByClassName("turn-wrapper").length - 1;
+  const n = document.getElementsByClassName("turn-form").length + 1;
   newturn.querySelector("h3").textContent = n+"T目";
   newturn.getElementById("turn0").id = "turn"+n;
   newturn.getElementById("turn0-class").id = "turn"+n+"-class";
@@ -45,7 +45,7 @@ function deleteTurn() {
 // 宝具関連のバフが選択された場合自動的に量とターンの初期値を調整
 function inputChange(p) {
   if (p.value=="sp_np") {
-    p.parentElement.getElementsByClassName("ammount")[0].value = "100";
+    p.parentElement.getElementsByClassName("amount")[0].value = "100";
     p.parentElement.getElementsByClassName("turn")[0].options[10].selected = true;
   } else if (p.value=="np_mag_up") {
     p.parentElement.getElementsByClassName("turn")[0].options[10].selected = true;
@@ -85,5 +85,16 @@ function colorChangeCheck() {
   let p = document.getElementsByClassName("card-color-select");
   for (let i = 0; i < p.length; i++) {
     changeColor(p[i]);
+  }
+}
+
+function resetForm() {
+  let tf = document.getElementsByClassName("turn-form");
+  for (let i = tf.length-1; i >= 0; i--) {
+    tf[i].remove();
+  }
+  let bf = document.getElementsByClassName("buff-form");
+  for (let i = bf.length-1; i >= 0; i--) {
+    bf[i].remove();
   }
 }

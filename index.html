@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <script src="js/addform.js?date=202307200300">
-  </script>
+  <script src="js/addform.js?date=202307200300"></script>
   <script src="js/calculate.js?date=202307200300"></script>
+  <script src="js/savedata.js"></script>
   <title>FGO Damage Roadmap</title>
 </head>
 <body>
@@ -22,8 +22,8 @@
             <div class="turn-wrapper">
               <h3>基本情報</h3>
               <div class="servant-info">
-                <input type="text" class="servant-name" name="servant-name" size="10" placeholder="サーヴァント名">
-                <select name="servant-class">
+                <input type="text" class="servant-name" id="servant-name" size="10" placeholder="サーヴァント名">
+                <select id="servant-class">
                   <option value="saber">剣</option>
                   <option value="archer">弓</option>
                   <option value="lancer">槍</option>
@@ -40,7 +40,7 @@
                   <option value="shielder">盾</option>
                   <option value="beast">獣</option>
                 </select>
-                <select name="servant-attr">
+                <select id="servant-attr">
                   <option value="sky">天</option>
                   <option value="earth">地</option>
                   <option value="human">人</option>
@@ -48,19 +48,19 @@
                   <option value="beast">獣</option>
                 </select>
                 <br>
-                <label>ATK:<input type="number" class="numberfield" name="servant-atk" min="0" max="30000"><br></label>
-                <lebel>礼装ATK:<input type="number" class="numberfield" name="craft-essence-atk" min="0" max="3000"></lebel>
+                <label>ATK:<input type="number" class="numberfield" id="servant-atk" min="0" max="30000"><br></label>
+                <lebel>礼装ATK:<input type="number" class="numberfield" id="craft-essence-atk" min="0" max="3000"></lebel>
                 <br>
-                <label>宝具色:<select id="np-color" name="np-color" onchange="colorChangeCheck()">
+                <label>宝具色:<select id="np-color" id="np-color" onchange="colorChangeCheck()">
                     <option value="b">B</option>
                     <option value="a">A</option>
                     <option value="q">Q</option>
                 </select></label><br>
-                <label>宝具倍率:<input type="number" class="numberfield" name="np-mag" min="0" max="5000">%</label>
+                <label>宝具倍率:<input type="number" class="numberfield" id="np-mag" min="0" max="5000">%</label>
                 <br>
-                <label>足跡 B:<input type="number" class="numberfield" name="b-footprint" min="0" max="500"></label>
-                <label>A:<input type="number" class="numberfield" name="a-footprint" min="0" max="500"></label>
-                <label>Q:<input type="number" class="numberfield" name="q-footprint" min="0" max="500"></label>
+                <label>足跡 B:<input type="number" class="numberfield" id="b-footprint" min="0" max="500"></label>
+                <label>A:<input type="number" class="numberfield" id="a-footprint" min="0" max="500"></label>
+                <label>Q:<input type="number" class="numberfield" id="q-footprint" min="0" max="500"></label>
                 <br>
                 <!-- <label>N/A:<input type="number" class="numberfield" name="np-rate" min="0" max="10" step="0.01">%</label><br>
                 <label>星発生率:<input type="number" class="numberfield" name="star-rate" min="0" max="20" step="0.1">%</label>
@@ -145,6 +145,11 @@
           </div>
         </table>
       </div>
+      <div class="button-wrapper">
+        <input type="button" value="エクスポート" onclick="exportData()">
+        <input id="upload-file" type="file" accept=".csv">
+        <input type="button" value="適用" onclick="inportData()">
+    </div>
     </div>
 
     <template id='buff-form-template'>
@@ -175,7 +180,7 @@
           <option value="sp_def">特殊耐性</option>
           <option value="damage_plus">ダメージ＋</option>
         </select>
-        <input type="number" class="numberfield ammount" min="-10000" max="10000" placeholder="効果量">
+        <input type="number" class="numberfield amount" min="-10000" max="10000" placeholder="効果量">
         <select class="turn">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -208,7 +213,7 @@
     </template>
 
     <template id="turn-template">
-      <div id="turn0" class="turn-wrapper">
+      <div id="turn0" class="turn-wrapper turn-form">
         <h3>0T目</h3>
         <div class="enemy-info">
           <label>クラス相性

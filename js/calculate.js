@@ -1,17 +1,17 @@
 function calculate() {
   // 固定値を取得
-  const servantClass = document.getElementsByName('servant-class').item(0).value;
-  const servantAttr = document.getElementsByName('servant-attr').item(0).value;
-  const servantAtk = Number(document.getElementsByName('servant-atk').item(0).value);
-  const craftEssenceAtk = Number(document.getElementsByName('craft-essence-atk').item(0).value);
+  const servantClass = document.getElementById('servant-class').value;
+  const servantAttr = document.getElementById('servant-attr').value;
+  const servantAtk = Number(document.getElementById('servant-atk').value);
+  const craftEssenceAtk = Number(document.getElementById('craft-essence-atk').value);
   const atk = servantAtk + craftEssenceAtk;
-  const npColor = document.getElementsByName('np-color').item(0).value;
-  const npMag = Number(document.getElementsByName('np-mag').item(0).value);
-  const bFootprint =  Number(document.getElementsByName('b-footprint').item(0).value);
-  const aFootprint =  Number(document.getElementsByName('a-footprint').item(0).value);
-  const qFootprint =  Number(document.getElementsByName('q-footprint').item(0).value);
+  const npColor = document.getElementById('np-color').value;
+  const npMag = Number(document.getElementById('np-mag').value);
+  const bFootprint =  Number(document.getElementById('b-footprint').value);
+  const aFootprint =  Number(document.getElementById('a-footprint').value);
+  const qFootprint =  Number(document.getElementById('q-footprint').value);
   const classCorr = classCheck(servantClass);
-  const turns = document.getElementsByClassName("turn-wrapper").length - 2;
+  const turns = document.getElementsByClassName("turn-form").length;
   let totalResult = [];
   buffs = {};
   // バフ量、ターン、回数
@@ -269,29 +269,30 @@ function classCheck(svclass) {
   }
 }
 
+//バフ読み込み
 function readBuff(element) {
   const ele = document.getElementById(element);
   let buffForms = [];
-  if (ele.length != 0) {
+  if (buffForms.length != 0) {
     buffForms = ele.getElementsByClassName("buff-form");
   }
   for (let i = 0; i < buffForms.length; i++) {
     const skillType = buffForms[i].getElementsByClassName('skill-type')[0].value;
-    const ammount =  Number(buffForms[i].getElementsByClassName('ammount')[0].value);
+    const amount =  Number(buffForms[i].getElementsByClassName('amount')[0].value);
     const turn = Number(buffForms[i].getElementsByClassName('turn')[0].value);
     const time = Number(buffForms[i].getElementsByClassName('time')[0].value);
-    if (ammount != 0) {
+    if (amount != 0) {
       if (["npget", "starget"].includes(skillType)) {
       } else {
         // 永続スキル
         if (turn==0 && time==0) {
-          buffs[skillType][0][0] += ammount;
+          buffs[skillType][0][0] += amount;
         // ターン制スキル
         } else if (time==0) {
-          buffs[skillType].push([ammount, turn, Infinity]);
+          buffs[skillType].push([amount, turn, Infinity]);
         // 回数制スキル
         } else {
-          buffs[skillType].push([ammount, turn, time]);
+          buffs[skillType].push([amount, turn, time]);
         }
       }
     }
@@ -299,6 +300,7 @@ function readBuff(element) {
 
 }
 
+//バフ処理
 function buffTotalling(buffName) {
   let buff = 0;
   for (let i=0; i < buffs[buffName].length; i++) {
