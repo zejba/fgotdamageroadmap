@@ -10,9 +10,19 @@ function calculate() {
   const bFootprint =  Number(document.getElementById('b-footprint').value);
   const aFootprint =  Number(document.getElementById('a-footprint').value);
   const qFootprint =  Number(document.getElementById('q-footprint').value);
+  const npbool = document.getElementById("np-calc-check").checked;
+  const npRate = Number(document.getElementById('np-rate').value);
+  const starRate = Number(document.getElementById('star-rate').value) / 100;
+  const nHit = Number(document.getElementById('n-hit-count').value);
+  const bHit = Number(document.getElementById('b-hit-count').value);
+  const aHit = Number(document.getElementById('a-hit-count').value);
+  const qHit = Number(document.getElementById('q-hit-count').value);
+  const exHit = Number(document.getElementById('ex-hit-count').value);
   const classCorr = classCheck(servantClass);
   const turns = document.getElementsByClassName("turn-form").length;
   let totalResult = [];
+  let npResult = [];
+  let starResult = [];
   buffs = {};
   // バフ量、ターン、回数
   // 各バフの最初の要素は永続バフ
@@ -52,6 +62,8 @@ function calculate() {
     let vsclass = Number(document.getElementById("turn"+i+"-class").value);
     let vsattr = Number(document.getElementById("turn"+i+"-attr").value);
     let enemyHp = Number(document.getElementById("turn"+i+"-enemy-hp").value);
+    let dtdr = Number(document.getElementById("turn"+i+"-dtdr").value) / 100;
+    let dsr = Number(document.getElementById("turn"+i+"-dsr").value) / 100;
 
     // スキルのバフを計算
     readBuff("turn"+i+"-skill");
@@ -62,7 +74,9 @@ function calculate() {
     cardColors.push(document.getElementById("turn"+i+"-card2-color").value);
     cardColors.push(document.getElementById("turn"+i+"-card3-color").value);
     cardColors.push("ex");
-    let firstBonus = 0;
+    let bFirstBonus = 0;
+    let aFirstBonus = 0;
+    let qFirstBonus = 0;
     let busterChainBonus = 0;
 
     //カード補正に変換
@@ -81,9 +95,18 @@ function calculate() {
       }
     });
 
-    //1stBボーナス
-    if (cardCorres[0] == 1.5 || (cardCorres[0] != cardCorres[1] && cardCorres[1] != cardCorres[2] && cardCorres[0] != cardCorres[2])) {
-      firstBonus = 0.5;
+    //1stボーナス
+    if (cardCorres[0] == 1.5) {
+      bFirstBonus = 0.5;
+    } else if (cardCorres[0] == 1.0){
+      aFirstBonus = 1;
+    } else if (cardCorres[0] == 0.8) {
+      qFirstBonus = 0.2;
+    }
+    if (cardCorres[0] != cardCorres[1] && cardCorres[1] != cardCorres[2] && cardCorres[0] != cardCorres[2]) {
+      bFirstBonus = 0.5;
+      aFirstBonus = 1;
+      qFirstBonus = 0.2;
     }
     //Bチェインボーナス
     if (cardCorres.slice(0,3).every(element => element == 1.5)) {
@@ -93,17 +116,24 @@ function calculate() {
     for (let j = 1; j <= 4; j++) {
       // カードのバフを計算
       readBuff("turn"+i+"-card"+j+"-skill");
+      //判定
+      let bl = Number(document.getElementById("turn"+i+"-card"+j+"-bool").value);
+      //オバキル
+      let ovk = Number(document.getElementById("turn"+i+"-card"+j+"-ovk").value);
       // クリティカル判定
-      let cr = Number(document.getElementById("turn"+i+"-card"+j+"-cri").value);
+      let cr = 1;
+      if (j!=4) {
+        cr = Number(document.getElementById("turn"+i+"-card"+j+"-cri").value);
+      }
       // 固定ダメージを0で定義
       let constantDamage = 0;
       // EXカードが選択されていなければバフを消費せず次へ
       if (j == 4 && document.getElementById("turn"+i+"-card4-color").value == -1) {
-        cr = -1;
+        bl = 2;
       }
 
       // 他鯖のカード使用時は回数バフを消費せず次へ
-      if (cr != -1) {
+      if (bl != 2) {
         //固定ダメージ
         constantDamage += buffTotalling("damage_plus");
         //カード色の取得
@@ -111,21 +141,33 @@ function calculate() {
         // デフォルトを通常攻撃にする
         let actType = "normal";
         let mag = 1;
+        let hit;
+        let cardNpCorr = 0;
+        let cardStarCorr = 0;
         // atk計算
         let corrected_atk = atk;
-        //足跡の処理(この段階では宝具はn)
+        //足跡とhitの処理(この段階では宝具はn)
         if (cardColor == "b") {
           corrected_atk += bFootprint;
           constantDamage += (corrected_atk * 0.2 * busterChainBonus);
+          hit = bHit;
+          cardStarCorr = 0.05 + j * 0.05;
         } else if (cardColor == "a") {
           corrected_atk += aFootprint;
+          hit = aHit;
+          cardNpCorr = 1.5 + j * 1.5;
         } else if (cardColor == "q") {
           corrected_atk += qFootprint;
+          hit = qHit
+          cardNpCorr = 0.5 + j * 0.5;
+          cardStarCorr = 0.3 + j * 0.5;
         }
         //クラス補正
         corrected_atk = corrected_atk * classCorr;
         //宝具の場合
         if (cardColor == "n") {
+          cr = 1;
+          hit = nHit
           actType = "np";
           //宝具倍率
           mag = (npMag + buffTotalling("np_mag_up"))/100;
@@ -136,14 +178,26 @@ function calculate() {
           }
           //宝具色
           cardColor = npColor;
+          //NP
+          if (npColor=="b") {
+            cardStarCorr = 0.1;
+          } else if (npColor=="a") {
+            cardNpCorr = 3;
+          } else if (npColor=="q") {
+            cardNpCorr = 1;
+            cardStarCorr = 0.8;
+          }
         //クリティカルの場合
         } else if (cr == 2) {
           actType = "cr";
           mag = 2;
         //EXの場合
         } else if (cardColor == "ex") {
+          hit = exHit
           actType = "ex";
           mag = 2;
+          cardNpCorr = 1;
+          cardStarCorr = 1;
           //同色チェインの場合
           if (cardCorres[0] == cardCorres[1] && cardCorres[1] == cardCorres[2]) {
             mag = 3.5;
@@ -152,17 +206,26 @@ function calculate() {
 
         //各種バフ計算
         let atkbuff = Math.max(buffTotalling("atk_buff") / 100, -1);
-        let cardbuff = Math.max((buffTotalling(cardColor + "_buff") + buffTotalling(cardColor + "_power_buff")) / 100, -1);
+        let npcardbuff = buffTotalling(cardColor + "_buff") / 100;
+        let cardpowerbuff = buffTotalling(cardColor + "_power_buff") / 100;
+        let cardbuff = Math.max((npcardbuff + cardpowerbuff), -1);
+        npcardbuff = Math.max(npcardbuff, -1);
         let spbuff = Math.max(buffTotalling("sp_buff") / 100, -1);
         let spdef = Math.min(buffTotalling("sp_def") / 100, 1);
+        let npgetbuff = Math.max(buffTotalling("npget_buff") / 100, -1);
+        let stargetbuff = Math.max(buffTotalling("starget_buff") / 100, -1);
         let nporcrbuff = 0;
         let cardCorr;
-        let fb = firstBonus;
+        let bfb = bFirstBonus;
+        let afb = aFirstBonus;
+        let qfb = qFirstBonus;
         //宝具orクリバフとカード補正
         if (actType == "np") {
           nporcrbuff = Math.max(buffTotalling("np_buff") / 100, -1);
           cardCorr = cardCorres[j-1];
-          fb = 0;
+          bfb = 0;
+          afb = 0;
+          qfb = 0;
         } else {
           cardCorr = cardCorres[j-1] * (1 + (j-1) * 0.2);
           if (actType == "cr") {
@@ -171,15 +234,21 @@ function calculate() {
         }
 
         //0ダメージ選択時は回数消費
-        if (cr == 0) {
+        if (bl == 1) {
           result.push([0,0]);
+          npResult.push(npGetCalc(npRate, cardNpCorr, npcardbuff, afb, dtdr, npgetbuff, cr, hit, ovk));
+          starResult.push(starGetCalc(starRate, cardStarCorr, npcardbuff, qfb, dsr, stargetbuff, cr, hit, ovk));
         } else {
-          result.push([damageCalc(corrected_atk, mag, cardCorr, cardbuff, fb, vsclass, vsattr, atkbuff, nporcrbuff, spbuff, spdef), constantDamage])
+          result.push([damageCalc(corrected_atk, mag, cardCorr, cardbuff, bfb, vsclass, vsattr, atkbuff, nporcrbuff, spbuff, spdef), constantDamage])
+          npResult.push(npGetCalc(npRate, cardNpCorr, npcardbuff, afb, dtdr, npgetbuff, cr, hit, ovk));
+          starResult.push(starGetCalc(starRate, cardStarCorr, npcardbuff, qfb, dsr, stargetbuff, cr, hit, ovk));
         }
 
         //他選択時は回数消費しない
       } else {
         result.push([0, 0]);
+        npResult.push(0);
+        starResult.push([0,0]);
       }
     }
 
@@ -228,8 +297,10 @@ function calculate() {
   //出力
 
   //リザルトフォームを生成
-  addResultForm(turns);
+  addResultForm(turns, npbool);
   let op = document.getElementsByName("result");
+  let npr = document.getElementsByName("npresult");
+  let starr = document.getElementsByName("starresult");
 
   //ターン数ループ
   for (let i=0; i<turns; i++) {
@@ -258,6 +329,21 @@ function calculate() {
       let k = i*20 + j; 
       op[k].textContent = totalResult[k].toLocaleString();
     }
+    //NP部分
+    if (npbool) {
+      let npsum = 0;
+      let starsum = [0,0];
+      for (let j=0; j<=3; j++) {
+        npr[i*5+j].textContent = npResult[i*4+j];
+        npsum += npResult[i*4+j];
+        starr[i*5+j].textContent = starResult[i*4+j][0] + "(+" + starResult[i*4+j][1] + ")" + Math.floor(starResult[i*4+j][2] * 100) + "～" + Math.floor(starResult[i*4+j][3] * 100) + "%";
+        starsum[0] += starResult[i*4+j][0];
+        starsum[1] += starResult[i*4+j][1];
+      }
+      npr[i*5+4].textContent = npsum;
+      starr[i*5+4].textContent = starsum[0] + "(+" + starsum[1] + ")";
+    }
+
   }
 }
 
@@ -372,31 +458,78 @@ function binarySearch(target, arr) {
 }
 
 //表を増やす
-function addResultForm(i) {
+function addResultForm(i, np) {
   const parent = document.getElementById("result-form");
-  //2T目以降を削除
-  const cnt = document.getElementsByClassName("r1").length;
-  for (let m=1; m < cnt; m++) {
-    document.getElementsByClassName("r1")[1].remove();
-    document.getElementsByClassName("r2")[1].remove();
-    document.getElementsByClassName("r3")[1].remove();
-    document.getElementsByClassName("r4")[1].remove();
+  //初期化
+  let t = document.getElementsByClassName("result-content");
+  for (let k=0; k<t.length;) {
+    t[0].remove();
   }
   //ターンの数ループ
-  for (let j=2; j <=i; j++) {
-    //1行ごとに処理
-    for (let k=1; k<=4; k++) {
-      let template = document.getElementsByClassName("r"+k)[0];
-      let newresult = template.cloneNode(true); 
-      if (k==1) {
-        newresult.children[0].textContent = j+"T";
-      }
+  for (let j=1; j <=i; j++) {
+  //1行ごとに処理
+    let template = document.getElementById("result-template1").content;
+    let newresult = template.cloneNode(true); 
+    newresult.children[0].children[0].textContent = j+"T";
+    parent.appendChild(newresult);
+    if (np) {
+      template = document.getElementById("result-template2").content;
+      newresult = template.cloneNode(true);
       parent.appendChild(newresult);
     }
   }
 }
 
-function npGetCals(ovk) {
+
+//NP計算
+function npGetCalc(npRate, cardNpCorr, cardbuff, fb, dtdr, npgetbuff, cr, hit, ovk) {
+  if (ovk > hit) {
+    ovk = hit;
+  }
   let result;
-  result = npRate * card 
+  result = npRate * ((cardNpCorr * (1+cardbuff)) + fb) * dtdr * (1+npgetbuff) * cr * 100;
+  //hit数をかける前に小数点第3位切り捨て
+  result = Math.floor(result * 1.5) * ovk + Math.floor(result * (hit - ovk));
+  result = result / 100;
+  return result
+}
+
+//スター計算
+function starGetCalc(starRate, cardStarCorr, cardbuff, fb, dsr, stargetbuff, cr, hit, ovk) {
+  if (cr == 2) {
+    cr = 0.2;
+  } else {
+    cr = 0;
+  }
+  if (ovk > hit) {
+    ovk = hit;
+  }
+ let sr;
+ sr = Math.max(starRate + ((cardStarCorr * (1+cardbuff))) + fb + dsr + stargetbuff + cr + 0.3, 0);
+ let result = [0, 0, 0, 0];
+ //発生率格納
+ result[2] = Math.min(Math.max(sr - 0.3, 0), 3);
+ result[3] = Math.min(sr, 3);
+ // if (ovk==0) {
+  //オバキル0なら下限に統一
+  //result[3] = result[2];
+ //} else if (ovk==hit) {
+  //オバキル全部なら上限に統一
+  //result[2] = result[3];
+ //}
+
+ for (let i=1; i <= hit; i++) {
+    if (i==ovk+1) {
+      sr = result[2];
+    }
+    if (sr>=3) {
+      result[0] += 3;
+    } else {
+      result[0] += Math.floor(sr);
+      if (sr % 1 != 0) {
+        result[1] += 1;
+      }
+    }
+  }
+  return result;
 }

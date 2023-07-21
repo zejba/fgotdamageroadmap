@@ -1,7 +1,7 @@
 .buff-form {
   display:flex;
-  gap: 0px 1px;
-  margin: 2px 0px;
+  gap: 2px 1px;
+  margin: 3px 0px;
 };
 
 .container {
@@ -40,6 +40,10 @@ select {
   width: 180px;
 }
 
+.np-and-star-info {
+  display: none;
+}
+
 .hitcount {
   width: 40px;
 }
@@ -76,6 +80,11 @@ select {
 #colorcheck {
   font-size: 12px;
   margin-left: auto;
+}
+
+.notice {
+  margin: 6px;
+  overflow-wrap: normal;
 }
 
 /* 表 */

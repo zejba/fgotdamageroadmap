@@ -15,10 +15,14 @@ function exportData() {
     info.push(Number(document.getElementById('b-footprint').value));
     info.push(Number(document.getElementById('a-footprint').value));
     info.push(Number(document.getElementById('q-footprint').value));
-    //星とNP計算実装のためのマージン
-    for (let i=0; i < 7; i++) {
-      info.push(0);
-    }
+    info.push(Number(document.getElementById('np-rate').value));
+    info.push(Number(document.getElementById('star-rate').value));
+    info.push(Number(document.getElementById('n-hit-count').value));
+    info.push(Number(document.getElementById('b-hit-count').value));
+    info.push(Number(document.getElementById('a-hit-count').value));
+    info.push(Number(document.getElementById('q-hit-count').value));
+    info.push(Number(document.getElementById('ex-hit-count').value));
+
     const turns = document.getElementsByClassName("turn-form").length;
     info.push(turns);
     savedata.push(info);
@@ -31,13 +35,21 @@ function exportData() {
       let t = document.getElementById("turn"+i);
       savedata.push([document.getElementById("turn"+i+"-class").value,
                     document.getElementById("turn"+i+"-attr").value,
-                    Number(document.getElementById("turn"+i+"-enemy-hp").value)]);
+                    Number(document.getElementById("turn"+i+"-enemy-hp").value),
+                    Number(document.getElementById("turn"+i+"-dtdr").value),
+                    Number(document.getElementById("turn"+i+"-dsr").value)]);
       savedata.push(getSkillData("turn"+i+"-skill"));
-      for (let j=1; j<=4; j++) {
+      for (let j=1; j<=3; j++) {
         savedata.push([document.getElementById("turn"+i+"-card"+j+"-color").value,
-                      document.getElementById("turn"+i+"-card"+j+"-cri").value,]);
+                      document.getElementById("turn"+i+"-card"+j+"-bool").value,
+                      document.getElementById("turn"+i+"-card"+j+"-ovk").value,
+                      document.getElementById("turn"+i+"-card"+j+"-cri").value]);
         savedata.push(getSkillData("turn"+i+"-card"+j+"-skill"));
       }
+      savedata.push([document.getElementById("turn"+i+"-card4-color").value,
+                     document.getElementById("turn"+i+"-card4-bool").value,
+                     document.getElementById("turn"+i+"-card4-ovk").value]);
+      savedata.push(getSkillData("turn"+i+"-card4-skill"));
     }
 
     //CSV形式に変換して保存
@@ -121,6 +133,13 @@ function inportData() {
         document.getElementById('b-footprint').value = Number(arr[0][7]);
         document.getElementById('a-footprint').value = Number(arr[0][8]);
         document.getElementById('q-footprint').value = Number(arr[0][9]);
+        document.getElementById('np-rate').value = Number(arr[0][10]);
+        document.getElementById('star-rate').value = Number(arr[0][11]);
+        document.getElementById('n-hit-count').value = Number(arr[0][12]);
+        document.getElementById('b-hit-count').value = Number(arr[0][13]);
+        document.getElementById('a-hit-count').value = Number(arr[0][14]);
+        document.getElementById('q-hit-count').value = Number(arr[0][15]);
+        document.getElementById('ex-hit-count').value = Number(arr[0][16]);
 
         inputSkillData("passive-skill", arr[1]);
 
@@ -129,10 +148,16 @@ function inportData() {
           document.getElementById("turn"+i+"-class").value = arr[10*i-8][0];
           document.getElementById("turn"+i+"-attr").value = arr[10*i-8][1];
           document.getElementById("turn"+i+"-enemy-hp").value = Number(arr[10*i-8][2]);
+          document.getElementById("turn"+i+"-dtdr").value = Number(arr[10*i-8][3]);
+          document.getElementById("turn"+i+"-dsr").value = Number(arr[10*i-8][4]);
           inputSkillData("turn"+i+"-skill", arr[10*i-7]);
           for (let j=1; j<=4; j++) {
             document.getElementById("turn"+i+"-card"+j+"-color").value = arr[10*i+2*j-8][0];
-            document.getElementById("turn"+i+"-card"+j+"-cri").value = Number(arr[10*i+2*j-8][1]);
+            document.getElementById("turn"+i+"-card"+j+"-bool").value = Number(arr[10*i+2*j-8][1]);
+            document.getElementById("turn"+i+"-card"+j+"-ovk").value = Number(arr[10*i+2*j-8][2]);
+            if (j!=4) {
+              document.getElementById("turn"+i+"-card"+j+"-cri").value = Number(arr[10*i+2*j-8][3]);
+            }
             inputSkillData("turn"+i+"-card"+j+"-skill", arr[10*i+2*j-7]);
           }
         }
