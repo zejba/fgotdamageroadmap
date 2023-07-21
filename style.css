@@ -78,6 +78,8 @@ select {
   margin-left: auto;
 }
 
+/* 表 */
+
 th,td {
   border: solid 1px;
   padding: 4px;

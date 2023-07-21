@@ -54,6 +54,7 @@ function inputChange(p) {
   }
 }
 
+//バフ並べ替え
 function sortForm(p) {
   let f = p.parentElement;
   let bfr = f.previousElementSibling;
@@ -90,6 +91,7 @@ function colorChangeCheck() {
   }
 }
 
+//ターンとバフを削除(インポート時に実行)
 function resetForm() {
   let tf = document.getElementsByClassName("turn-form");
   for (let i = tf.length-1; i >= 0; i--) {

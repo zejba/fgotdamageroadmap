@@ -1,5 +1,5 @@
 function calculate() {
-  // 固定値を取得
+  // 基本情報を取得
   const servantClass = document.getElementById('servant-class').value;
   const servantAttr = document.getElementById('servant-attr').value;
   const servantAtk = Number(document.getElementById('servant-atk').value);
@@ -40,8 +40,12 @@ function calculate() {
   buffs["damage_plus"] = [[0,Infinity,Infinity]];
   buffs["np_mag_up"] = [[0, Infinity, Infinity]];
 
+
+  //パッシブスキル取得
   readBuff("passive-skill");
 
+  
+  //ターン数ループ
   for (let i = 1; i <= turns; i++) {
     let result = [];
     //エネミー情報を取得
@@ -61,7 +65,7 @@ function calculate() {
     let firstBonus = 0;
     let busterChainBonus = 0;
 
-    //カード補正を取得
+    //カード補正に変換
     let cardCorres = cardColors.map(function(value) {
       if (value=="n") {
         value = npColor;
@@ -76,9 +80,12 @@ function calculate() {
         return 0.625;
       }
     });
+
+    //1stBボーナス
     if (cardCorres[0] == 1.5 || (cardCorres[0] != cardCorres[1] && cardCorres[1] != cardCorres[2] && cardCorres[0] != cardCorres[2])) {
       firstBonus = 0.5;
     }
+    //Bチェインボーナス
     if (cardCorres.slice(0,3).every(element => element == 1.5)) {
       busterChainBonus = 1;
     }
@@ -90,7 +97,6 @@ function calculate() {
       let cr = Number(document.getElementById("turn"+i+"-card"+j+"-cri").value);
       // 固定ダメージを0で定義
       let constantDamage = 0;
-
       // EXカードが選択されていなければバフを消費せず次へ
       if (j == 4 && document.getElementById("turn"+i+"-card4-color").value == -1) {
         cr = -1;
@@ -143,34 +149,41 @@ function calculate() {
             mag = 3.5;
           }
         }
+
+        //各種バフ計算
         let atkbuff = Math.max(buffTotalling("atk_buff") / 100, -1);
         let cardbuff = Math.max((buffTotalling(cardColor + "_buff") + buffTotalling(cardColor + "_power_buff")) / 100, -1);
         let spbuff = Math.max(buffTotalling("sp_buff") / 100, -1);
         let spdef = Math.min(buffTotalling("sp_def") / 100, 1);
         let nporcrbuff = 0;
-        let card;
+        let cardCorr;
+        let fb = firstBonus;
         //宝具orクリバフとカード補正
         if (actType == "np") {
           nporcrbuff = Math.max(buffTotalling("np_buff") / 100, -1);
-          card = cardCorres[j-1] * (cardbuff+1);
+          cardCorr = cardCorres[j-1];
+          fb = 0;
         } else {
-          card = cardCorres[j-1] * (1 + (j-1) * 0.2) * (cardbuff+1) + firstBonus;
+          cardCorr = cardCorres[j-1] * (1 + (j-1) * 0.2);
           if (actType == "cr") {
             nporcrbuff = Math.max((buffTotalling("cr_buff") + buffTotalling(cardColor + "_cr_buff")) / 100, -1);
           }
         }
+
+        //0ダメージ選択時は回数消費
         if (cr == 0) {
           result.push([0,0]);
         } else {
-          result.push([damageCalc(corrected_atk, mag, card, vsclass, vsattr, atkbuff, nporcrbuff, spbuff, spdef), constantDamage])
+          result.push([damageCalc(corrected_atk, mag, cardCorr, cardbuff, fb, vsclass, vsattr, atkbuff, nporcrbuff, spbuff, spdef), constantDamage])
         }
 
+        //他選択時は回数消費しない
       } else {
         result.push([0, 0]);
       }
     }
 
-    //トータルリザルトを生成
+    //表出力用の配列を生成
     totalResult.push(cardColors[0].toUpperCase());
     totalResult.push(cardColors[1].toUpperCase());
     totalResult.push(cardColors[2].toUpperCase());
@@ -193,6 +206,7 @@ function calculate() {
     }
     totalResult.push(sum);
     sum = 0;
+
     for (let l=0; l < 4; l++) {
       let x = Math.floor(result[l][0]*1.099 + result[l][1]);
       totalResult.push(x);
@@ -249,12 +263,13 @@ function calculate() {
 
 
 // magは宝具なら倍率(特攻込み)、通常攻撃なら1、クリティカルなら2、EXなら2or3.5
-function damageCalc(atk, mag, card, vsclass, vsattr, atkbuff, nporcrbuff, spbuff, spdef) {
+function damageCalc(atk, mag, cardCorr, cardbuff, fb, vsclass, vsattr, atkbuff, nporcrbuff, spbuff, spdef) {
   let result;
-  result = atk * 0.23 * mag * card * vsclass * vsattr * (1+atkbuff) * (1+nporcrbuff+spbuff) * (1-spdef);
+  result = atk * 0.23 * mag * (cardCorr * (1+cardbuff) + fb) * vsclass * vsattr * (1+atkbuff) * (1+nporcrbuff+spbuff) * (1-spdef);
   return result;
 }
 
+//クラス補正
 function classCheck(svclass) {
   if (["berserker", "ruler", "avenger"].includes(svclass)) {
     return 1.1;
@@ -269,11 +284,11 @@ function classCheck(svclass) {
   }
 }
 
-//バフ読み込み
+//バフ取得
 function readBuff(element) {
   const ele = document.getElementById(element);
   let buffForms = [];
-  if (buffForms.length != 0) {
+  if (ele.length != 0) {
     buffForms = ele.getElementsByClassName("buff-form");
   }
   for (let i = 0; i < buffForms.length; i++) {
@@ -335,11 +350,31 @@ function passRate(d1,d2,d3,d4,target) {
   return (Math.floor(cnt / 160000))/100;
 }
 
+//二分探索
+function binarySearch(target, arr) {
+  let left = 0;
+  let right = 39999;
+  if (target <= arr[left]) {
+    return 0;
+  } else if (target > arr[right]) {
+    return 40000;
+  }
+
+  while (right - left > 1) {
+    let mid = Math.floor((left+right) / 2);
+    if (target > arr[mid]) {
+      left = mid;
+    } else {
+      right = mid;
+    }
+  }
+  return left+1;
+}
 
 //表を増やす
 function addResultForm(i) {
   const parent = document.getElementById("result-form");
-  //2行目以降を削除
+  //2T目以降を削除
   const cnt = document.getElementsByClassName("r1").length;
   for (let m=1; m < cnt; m++) {
     document.getElementsByClassName("r1")[1].remove();
@@ -361,23 +396,7 @@ function addResultForm(i) {
   }
 }
 
-//二分探索
-function binarySearch(target, arr) {
-  let left = 0;
-  let right = 39999;
-  if (target <= arr[left]) {
-    return 0;
-  } else if (target > arr[right]) {
-    return 40000;
-  }
-
-  while (right - left > 1) {
-    let mid = Math.floor((left+right) / 2);
-    if (target > arr[mid]) {
-      left = mid;
-    } else {
-      right = mid;
-    }
-  }
-  return left+1;
+function npGetCals(ovk) {
+  let result;
+  result = npRate * card 
 }

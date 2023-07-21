@@ -1,7 +1,9 @@
+//エクスポート
 function exportData() {
   if (window.confirm("CSVファイルを保存しますか?")) {
-  //形式[[基本情報、ターン数],[スキル数、パッシブスキル],[クラス相性,属性相性,HP],[スキル数,スキル*n],[カード,クリ判定],[スキル数,スキル*m,...]]
+  //形式[[基本情報、ターン数],[スキル数、パッシブスキル],[クラス相性,属性相性,HP],[スキル数,スキル*n],[カード,クリ判定],[スキル数,スキル*m],...]
     let savedata = [];
+    //基本情報
     let info = [];
     info.push(document.getElementById('servant-name').value.replace(/,/g,"，"));
     info.push(document.getElementById('servant-class').value);
@@ -13,14 +15,18 @@ function exportData() {
     info.push(Number(document.getElementById('b-footprint').value));
     info.push(Number(document.getElementById('a-footprint').value));
     info.push(Number(document.getElementById('q-footprint').value));
+    //星とNP計算実装のためのマージン
     for (let i=0; i < 7; i++) {
       info.push(0);
     }
     const turns = document.getElementsByClassName("turn-form").length;
     info.push(turns);
     savedata.push(info);
+
+    //パッシブスキル
     savedata.push(getSkillData("passive-skill"));
 
+    //ターンごとに処理
     for (let i=1; i<=turns; i++) {
       let t = document.getElementById("turn"+i);
       savedata.push([document.getElementById("turn"+i+"-class").value,
@@ -33,6 +39,8 @@ function exportData() {
         savedata.push(getSkillData("turn"+i+"-card"+j+"-skill"));
       }
     }
+
+    //CSV形式に変換して保存
     var blob = new Blob([arrToStr(savedata)],{type:"text/csv"});
     var link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
@@ -41,6 +49,7 @@ function exportData() {
   }
 }
 
+//スキルの入力情報を取得
 function getSkillData(p) {
   let skill = document.getElementById(p);
   let buffForms = [];
@@ -57,11 +66,13 @@ function getSkillData(p) {
   return skilldata;
 }
 
+//yyyymmddhhmm
 function getYMD() {
   let date = new Date();
   return date.getFullYear()+("0"+(date.getMonth()+1)).slice(-2)+("0"+date.getDate()).slice(-2)+("0"+date.getHours()).slice(-2)+("0"+date.getMinutes()).slice(-2);
 }
 
+//配列をCSV用の文字列に変換
 function arrToStr(arr) {
   let ans = "";
   arr.forEach((element,index) => {
@@ -78,11 +89,16 @@ function arrToStr(arr) {
   return ans
 }
 
+//インポート
 function inportData() {
+  //アップロード
   const input = document.getElementById("upload-file");
   const file = input.files[0];
+
+  //ファイルの有無と形式を確認
   if (typeof file !== "undefined") {
     if (file.type==="text/csv") {
+      //読み込んで配列に変換
       var reader = new FileReader();
       reader.readAsText(file);
       reader.addEventListener("load", function() {
@@ -93,6 +109,8 @@ function inportData() {
           arr.push(list[i].split(','));
         }
         resetForm();
+
+        //基本情報を反映
         document.getElementById('servant-name').value = arr[0][0];
         document.getElementById('servant-class').value = arr[0][1];
         document.getElementById('servant-attr').value = arr[0][2];
@@ -123,6 +141,8 @@ function inportData() {
   }
 }
 
+
+//受け取った配列(arrc)を元にスキル情報を反映
 function inputSkillData(p, arrc) {
   let f = document.getElementById(p)
   for (let i = 0; i < arrc[0]; i++) {
