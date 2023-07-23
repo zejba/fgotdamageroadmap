@@ -209,11 +209,12 @@ function calculate() {
         let npcardbuff = buffTotalling(cardColor + "_buff") / 100;
         let cardpowerbuff = buffTotalling(cardColor + "_power_buff") / 100;
         let cardbuff = Math.max((npcardbuff + cardpowerbuff), -1);
+        let starcardbuff = npcardbuff;
         npcardbuff = Math.max(npcardbuff, -1);
         let spbuff = Math.max(buffTotalling("sp_buff") / 100, -1);
         let spdef = Math.min(buffTotalling("sp_def") / 100, 1);
         let npgetbuff = Math.max(buffTotalling("npget_buff") / 100, -1);
-        let stargetbuff = Math.max(buffTotalling("starget_buff") / 100, -1);
+        let stargetbuff = buffTotalling("starget_buff") / 100;
         let nporcrbuff = 0;
         let cardCorr;
         let bfb = bFirstBonus;
@@ -237,11 +238,11 @@ function calculate() {
         if (bl == 1) {
           result.push([0,0]);
           npResult.push(npGetCalc(npRate, cardNpCorr, npcardbuff, afb, dtdr, npgetbuff, cr, hit, ovk));
-          starResult.push(starGetCalc(starRate, cardStarCorr, npcardbuff, qfb, dsr, stargetbuff, cr, hit, ovk));
+          starResult.push(starGetCalc(starRate, cardStarCorr, starcardbuff, qfb, dsr, stargetbuff, cr, hit, ovk));
         } else {
           result.push([damageCalc(corrected_atk, mag, cardCorr, cardbuff, bfb, vsclass, vsattr, atkbuff, nporcrbuff, spbuff, spdef), constantDamage])
           npResult.push(npGetCalc(npRate, cardNpCorr, npcardbuff, afb, dtdr, npgetbuff, cr, hit, ovk));
-          starResult.push(starGetCalc(starRate, cardStarCorr, npcardbuff, qfb, dsr, stargetbuff, cr, hit, ovk));
+          starResult.push(starGetCalc(starRate, cardStarCorr, starcardbuff, qfb, dsr, stargetbuff, cr, hit, ovk));
         }
 
         //他選択時は回数消費しない
@@ -336,7 +337,7 @@ function calculate() {
       for (let j=0; j<=3; j++) {
         npr[i*5+j].textContent = npResult[i*4+j] + "%";
         npsum += 100 * npResult[i*4+j];
-        starr[i*5+j].textContent = starResult[i*4+j][0] + "(+" + starResult[i*4+j][1] + ")" + Math.floor(starResult[i*4+j][2] * 100) + "～" + Math.floor(starResult[i*4+j][3] * 100) + "%";
+        starr[i*5+j].textContent = starResult[i*4+j][0] + "(+" + starResult[i*4+j][1] + ")" + Math.floor(starResult[i*4+j][2] * 1000) / 10 + "～" + Math.floor(starResult[i*4+j][3] * 1000) / 10 + "%";
         starsum[0] += starResult[i*4+j][0];
         starsum[1] += starResult[i*4+j][1];
       }

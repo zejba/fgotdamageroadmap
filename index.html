@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css?date=2023072230110">
+  <script src="js/main.js?date=2023072230110"></script>
   <script src="js/addform.js?date=2023072230110"></script>
   <script src="js/calculate.js?date=2023072230110"></script>
   <script src="js/savedata.js?date=2023072230110"></script>
@@ -11,10 +12,18 @@
 </head>
 <body>
   <header>
-    <a href="." id="title">FGO Damage Roadmap</a>
+    <a href="./index.html" id="title">FGO Damage Roadmap</a>
+    <label class="menu-button">≡<input type="checkbox" id="menucheck" onchange="openMenu(this)"></label>
+    <div class="menu">
+      <div id="menu-close-button"><label class="menu-button" for="menucheck">×</label></div>
+      <div class="menu__item"><a href="./index.html">ダメージ計算</a></div>
+      <div class="menu__item"><a href="./rndlist.html">乱数パターン計算</a></div>
+      <div class="menu__item"><a href="https://twitter.com/yukimisnowy" target="_blank" rel="noopener noreferrer">管理者Twitter</a></div>
+    </div>
   </header>
 
   <main>
+    <h2>ダメージ計算</h2>
     <div class="container">
       <form id="fgocalc-form">
         <div class="input-field">

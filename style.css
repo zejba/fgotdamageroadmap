@@ -8,6 +8,10 @@
   width: 100%;
 }
 
+h2 {
+  padding-left: 10px;
+}
+
 h3 {
   line-height: 1px;
 }
@@ -148,6 +152,57 @@ header {
   font-weight:bold
 }
 
+.menu-button {
+  padding-right: 10px;
+  margin-left: auto;
+  color: white;
+  font-size: 36px;
+}
+
+#menucheck {
+  display: none;
+}
+
+.menu{
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 40vw;
+  max-width: 250px;
+  height: 150vh;
+  display: flex;
+  flex-direction: column;
+  align-items: top;
+  justify-content: start;
+  background: darkolivegreen;
+}
+.menu__item{
+  width: 100%;
+  height: auto;
+  padding: .5em 1em;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.menu__item > a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu{
+  transform: translateX(40vw);
+  transition: all .2s linear;
+}
+
+.menu.is-active{
+  transform: translateX(0);
+}
+
+#menu-close-button {
+  margin-left: auto;
+}
+
 footer {
   display: flex;
   height:50px;
@@ -165,6 +220,12 @@ footer {
 
 .footer-item:hover {
   color:black;
+}
+
+/* ランダムチェッカー */
+
+.rndc-numberfield {
+  width: 40px;
 }
 
 @media screen and (max-width:480px) {
