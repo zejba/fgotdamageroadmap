@@ -121,6 +121,7 @@ td {
   background-color: white;
 }
 
+
 /* ヘッダー */
 
 body {
@@ -228,12 +229,16 @@ footer {
   width: 40px;
 }
 
-@media screen and (max-width:480px) {
+@media screen and (max-width:550px) {
 
-	/*　画面サイズが480px以下の場合ここの記述が適用される　*/
+	/*　画面サイズが550px以下の場合ここの記述が適用される　*/
 
   .numberfield {
-    width:50px
+    width:35px
+  }
+
+  .rndc-numberfield {
+    width:25px
   }
 
   .goal-damage {
