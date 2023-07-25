@@ -56,7 +56,7 @@ function addTurn() {
 
 function deleteTurn() {
   let result = window.confirm("ターンを削除しますか？");
-  const n = document.getElementsByClassName("turn-wrapper").length - 2;
+  const n = document.getElementsByClassName("inputfield-wrapper").length - 2;
   if (n>0 && result) {
     document.getElementById("turn"+n).remove();
   }
@@ -78,7 +78,7 @@ function inputChange(p) {
 function sortForm(p) {
   let f = p.parentElement;
   let bfr = f.previousElementSibling;
-  if (bfr.className=="buff-form") {
+  if (bfr.className.split(" ")[0]=="buff-form") {
   f.parentElement.insertBefore(f, bfr);
   }
 }
@@ -86,7 +86,7 @@ function sortForm(p) {
 //カード色に応じて入力フォームの色を変更
 function changeColor(p) {
   let cardcolor = p.value;
-  const cfield = p.parentElement.parentElement
+  const cfield = p.parentElement.parentElement.parentElement
   if (document.getElementById("colorcheck").children[0].checked) {
     if (cardcolor=="n") {
       cardcolor = document.getElementById("np-color").value;    

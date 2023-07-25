@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?date=2023072241400">
-  <script src="js/main.js?date=2023072241400"></script>
-  <script src="js/addform.js?date=2023072241400"></script>
-  <script src="js/calculate.js?date=2023072241400"></script>
-  <script src="js/savedata.js?date=2023072241400"></script>
+  <link rel="stylesheet" href="style.css?date=2023072260530">
+  <script src="js/main.js?date=2023072260530"></script>
+  <script src="js/addform.js?date=2023072260530"></script>
+  <script src="js/calculate.js?date=2023072260530"></script>
+  <script src="js/savedata.js?date=2023072260530"></script>
   <title>FGO Damage Roadmap</title>
 </head>
 <body>
@@ -23,149 +23,190 @@
   </header>
 
   <main>
-    <h2>ダメージ計算</h2>
     <div class="container">
-      <form id="fgocalc-form">
-        <div class="input-field">
-          <form action="">
-            <div class="turn-wrapper">
-              <h3>基本情報</h3>
-              <div class="servant-info">
-                <input type="text" class="servant-name" id="servant-name" size="10" placeholder="サーヴァント名">
-                <select id="servant-class">
-                  <option value="saber">剣</option>
-                  <option value="archer">弓</option>
-                  <option value="lancer">槍</option>
-                  <option value="rider">騎</option>
-                  <option value="caster">術</option>
-                  <option value="assassin">殺</option>
-                  <option value="berserker">狂</option>
-                  <option value="ruler">裁</option>
-                  <option value="avenger">讐</option>
-                  <option value="alterego">分</option>
-                  <option value="mooncancer">月</option>
-                  <option value="pretender">詐</option>
-                  <option value="foreigner">降</option>
-                  <option value="shielder">盾</option>
-                  <option value="beast">獣</option>
-                </select>
-                <select id="servant-attr">
-                  <option value="sky">天</option>
-                  <option value="earth">地</option>
-                  <option value="human">人</option>
-                  <option value="star">星</option>
-                  <option value="beast">獣</option>
-                </select>
-                <br>
-                <label>ATK:<input type="number" class="numberfield" id="servant-atk" min="0" max="30000"><br></label>
-                <lebel>礼装ATK:<input type="number" class="numberfield" id="craft-essence-atk" min="0" max="3000"></lebel>
-                <br>
-                <label>宝具色:<select id="np-color" id="np-color" onchange="colorChangeCheck()">
-                    <option value="b">B</option>
-                    <option value="a">A</option>
-                    <option value="q">Q</option>
-                </select></label><br>
-                <label>宝具倍率:<input type="number" class="numberfield" id="np-mag" min="0" max="5000">%</label>
-                <br>
-                <label>足跡 B:<input type="number" class="numberfield" id="b-footprint" min="0" max="500"></label>
-                <label>A:<input type="number" class="numberfield" id="a-footprint" min="0" max="500"></label>
-                <label>Q:<input type="number" class="numberfield" id="q-footprint" min="0" max="500"></label>
-                <br>
-                <label><input id="np-calc-check" type="checkbox" onchange="npCalcCheck(this)">NP・スター計算</label>
-                <div class="np-and-star-info">
-                  <label>N/A:<input type="number" class="numberfield" id="np-rate" min="0" max="10" step="0.01">%</label><br>
-                  <label>星発生率:<input type="number" class="numberfield" id="star-rate" min="0" max="20" step="0.1">%</label>
-                  <br>
-                  <label>hit数 宝具:<input type="number" class="hitcount numberfield" id="n-hit-count" min="1" max="20"></label>
-                  <label>B:<input type="number" class="hitcount numberfield" id="b-hit-count" min="1" max="20"></label>
-                  <label>A:<input type="number" class="hitcount numberfield" id="a-hit-count" min="1" max="20"></label>
-                  <label>Q:<input type="number" class="hitcount numberfield" id="q-hit-count" min="1" max="20"></label>
-                  <label>EX:<input type="number" class="hitcount numberfield" id="ex-hit-count" min="1" max="20"></label>
-                  </label>
-                </div>
-              </div>
+      <div class="page-title">
+        <h2>ダメージ計算</h2>
+        <label class="open-pop-up" for="pop-up-check">？</label>
+        <input type="checkbox" id="pop-up-check">
+        <div class="overlay">
+          <div class="window">
+            <div class="pop-up-title">
+              <h4>☆使い方</h4>
+              <label class="close-pop-up" for="pop-up-check">✖</label>
             </div>
-
-            <div class="turn-wrapper">
-              <h3>パッシブ/開始時効果</h3>
-              <div id="passive-skill">
-                  <input type="button" value="追加" onclick="addForm(this,0)">
-              </div>
+            <p>想定するクエストの流れに沿って、スキルを使用する地点のフォームにバフを入力してください。ターン・回数を指定することでバフの持続を自動的に管理します。名称入力は任意(メモ用)です。</p>
+            <p>永続バフの場合はターン・回数の項目で"-"を選択してください。特攻宝具や宝具倍率増加の場合は、便宜上"-ターン・1回"を選択してください。</p>
+            <p>デバフはバフに換算して入力してください。システム上で上限並びに一部の下限は設定していませんのでご注意ください。</p>
+            <p>ダメージを0とする場面において、回数バフを消費する場合(計算対象のサーヴァントで他のエネミーを攻撃する等)は"0(回数消費有)"を、消費しない場合(他のサーヴァントのカードや自身のサポート宝具を使用する等)は"0(回数消費無)"を選択してください。</p>
+            <p>以下入力参考例：</p>
+            <div id="sample-images">
+              <img src="images/sample1.png" width="45%">
+              <img src="images/sample2.png" width="45%">
             </div>
-
-            <div id="turns">
-            </div>
-
-            <div class="button-wrapper">
-              <input type="button" value="ターン追加" onclick="addTurn()">
-              <input class="turn-delete-button" type="button" value="ターン削除" onclick="deleteTurn()">
-              <input type="button" value="計算" onclick="calculate()">
-              <label id="colorcheck">カード選択に色をつける<input type="checkbox" onchange="colorChangeCheck()"></label>
-            </div>
-          </form>
+          </div>
         </div>
-      </form>
+      </div>
+      <div class="inputfield-wrapper">
+        <h3>基本情報</h3>
+        <div class="inputfield-item">
+          <input type="text" class="servant-name-field" id="servant-name" size="10" placeholder="サーヴァント名">
+          <select id="servant-class">
+            <option value="saber">剣</option>
+            <option value="archer">弓</option>
+            <option value="lancer">槍</option>
+            <option value="rider">騎</option>
+            <option value="caster">術</option>
+            <option value="assassin">殺</option>
+            <option value="berserker">狂</option>
+            <option value="ruler">裁</option>
+            <option value="avenger">讐</option>
+            <option value="alterego">分</option>
+            <option value="mooncancer">月</option>
+            <option value="pretender">詐</option>
+            <option value="foreigner">降</option>
+            <option value="shielder">盾</option>
+            <option value="beast">獣</option>
+          </select>
+          <select id="servant-attr">
+            <option value="sky">天</option>
+            <option value="earth">地</option>
+            <option value="human">人</option>
+            <option value="star">星</option>
+            <option value="beast">獣</option>
+          </select>
+        </div>
+        <label>ATK:
+          <input type="number" class="numberfield-5digits" id="servant-atk" min="0" max="30000">
+        </label>
+        <lebel>礼装ATK:
+          <input type="number" class="numberfield-5digits" id="craft-essence-atk" min="0" max="3000">
+        </lebel>
+        <label>宝具色:
+          <select id="np-color" id="np-color" onchange="colorChangeCheck()">
+              <option value="b">B</option>
+              <option value="a">A</option>
+              <option value="q">Q</option>
+          </select>
+        </label>
+        <label>宝具倍率:<input type="number" class="numberfield-4digits" id="np-mag" min="0" max="5000">%</label>
+        <div class="inputfield-item">
+          <label>足跡 B:
+            <input type="number" class="numberfield-3digits" id="b-footprint" min="0" max="500">
+          </label>
+          <label>A:
+            <input type="number" class="numberfield-3digits" id="a-footprint" min="0" max="500">
+          </label>
+          <label>Q:
+            <input type="number" class="numberfield-3digits" id="q-footprint" min="0" max="500">
+          </label>
+        </div>
+        <label>
+          <input id="np-calc-check" type="checkbox" onchange="npCalcCheck(this)">NP・スター計算
+        </label>
+        <label class="np-and-star-info">N/A:
+          <input type="number" class="numberfield-3digits" id="np-rate" min="0" max="10" step="0.01">%
+        </label>
+        <label class="np-and-star-info">星発生率:
+          <input type="number" class="numberfield-3digits" id="star-rate" min="0" max="20" step="0.1">%
+        </label>
+        <div class="np-and-star-info inputfield-item">
+          <label>hit数 宝具:
+            <input type="number" class="hitcount numberfield-2digits" id="n-hit-count" min="1" max="20">
+          </label>
+          <label>B:
+            <input type="number" class="hitcount numberfield-2digits" id="b-hit-count" min="1" max="20">
+          </label>
+          <label>A:
+            <input type="number" class="hitcount numberfield-2digits" id="a-hit-count" min="1" max="20">
+          </label>
+          <label>Q:
+            <input type="number" class="hitcount numberfield-2digits" id="q-hit-count" min="1" max="20">
+          </label>
+          <label>EX:
+            <input type="number" class="hitcount numberfield-2digits" id="ex-hit-count" min="1" max="20">
+          </label>
+        </div>
+      </div>
+
+      <div class="inputfield-wrapper">
+        <h3>パッシブ/開始時効果</h3>
+        <div class="inputfield-item" id="passive-skill">
+          <input type="button" class="button" value="追加" onclick="addForm(this,0)">
+        </div>
+      </div>
+
+      <div id="turns">
+      </div>
+
+      <div class="button-wrapper">
+        <input type="button" class="button" value="ターン追加" onclick="addTurn()">
+        <input type="button" class="button" value="ターン削除" onclick="deleteTurn()">
+        <input type="button" class="button" value="計算" onclick="calculate()">
+        <label id="colorcheck">カード選択に色をつける
+          <input type="checkbox" onchange="colorChangeCheck()">
+        </label>
+      </div>
 
       <div class="resultform">
         <table class="result" id="result-form">
-          <div id="midashi">
-            <tr>
-              <th class="table1">ターン</th>
-              <th>1st</th>
-              <th>2nd</th>
-              <th>3rd</th>
-              <th>EX</th>
-              <th>total</th>
-              <th class="goal-damage">目標ダメ</th>
-              <th>撃破率</th>
-            </tr>
-          </div>
+          <tr>
+            <th class="table-number">ターン</th>
+            <th>1st</th>
+            <th>2nd</th>
+            <th>3rd</th>
+            <th>EX</th>
+            <th>total</th>
+            <th class="goal-damage">目標ダメ</th>
+            <th>撃破率</th>
+          </tr>
           <tr class="r1 result-content">
             <td class="turn-result-name" rowspan="4">1T</td>
             <td class="cardname"><output type="text" name="result"></output></td>
             <td class="cardname"><output type="text" name="result"></output></td>
             <td class="cardname"><output type="text" name="result"></output></td>
-            <td><output type="number" class="numberfield">-</output></td>
-            <td><output type="number" class="numberfield">-</output></td>
-            <td class="goal-damage"><output type="number" class="numberfield">-</output></td>
-            <td><output type="number" class="numberfield">-</output></td>
+            <td><output type="number">-</output></td>
+            <td><output type="number">-</output></td>
+            <td class="goal-damage"><output type="number">-</output></td>
+            <td><output type="number">-</output></td>
           </tr>
           <tr class="r2 result-content">
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td class="goal-damage" rowspan="3"><output type="number" class="numberfield" name="result"></output></td>
-            <td rowspan="3"><output type="number" class="numberfield" name="result"></output>%</td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td class="goal-damage" rowspan="3"><output type="number" name="result"></output></td>
+            <td rowspan="3"><output type="number" name="result"></output>%</td>
           </tr>
           <tr class="r3 result-content">
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
           </tr>
           <tr class="r4 result-content">
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
-            <td><output type="number" class="numberfield" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
+            <td><output type="number" name="result"></output></td>
           </tr>
         </table>
       </div>
       
       <div class="button-wrapper">
-        <input type="button" value="エクスポート" onclick="exportData()">
+        <input type="button" class="button" value="エクスポート" onclick="exportData()">
         <input id="upload-file" type="file" accept=".csv">
-        <input type="button" value="適用" onclick="inportData()">
+        <input type="button" class="button" value="適用" onclick="inportData()">
       </div>
+
       <div class="notice">
         <details>
           <summary>
             お知らせ・更新履歴
           </summary>
+            <li>【更新】ヘルプを追加しました。(2023/7/26)</li>
             <li>【重要】NP・スター計算実装の前後でクリティカル判定の保存に齟齬が生じています。お手数おかけしますが修正、再保存をお願いします。(2023/7/22)</li>
             <li>【更新】NP・スター計算機能を追加しました。それに伴い、クリティカルとダメージ0の判定欄を分割しました。(2023/7/22)</li>
             <li>【修正】20日の更新以降バフが反映できず、計算が成り立たない状態になっておりました。大変ご迷惑をおかけしました。(2023/7/21)</li>
@@ -178,7 +219,7 @@
     </div>
 
     <template id='buff-form-template'>
-      <div class="buff-form">
+      <div class="buff-form inputfield-item">
         <input type="text" class="skill-name" size="8" placeholder="スキル/バフ名">
         <select class="skill-type" onchange="inputChange(this)">
           <option value="atk_buff">攻撃バフ</option>
@@ -202,7 +243,7 @@
           <option value="npget_buff">NP獲得バフ</option>
           <option value="starget_buff">星発生バフ</option>
         </select>
-        <input type="number" class="numberfield amount" min="-10000" max="10000" placeholder="効果量">
+        <input type="number" class="numberfield-5digits amount" min="-10000" max="10000" placeholder="効果量">
         <select class="turn">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -229,15 +270,15 @@
           <option value="10">10</option>
           <option value="0" selected>-</option>
         </select>回
-        <input type="button" value="✖" onclick="deleteForm(this)">
-        <input type="button" value="▲" onclick="sortForm(this)">
+        <input type="button" class="button" value="✖" onclick="deleteForm(this)">
+        <input type="button" class="button" value="▲" onclick="sortForm(this)">
       </div>
     </template>
 
     <template id="turn-template">
-      <div id="turn0" class="turn-wrapper turn-form">
+      <div id="turn0" class="inputfield-wrapper turn-form">
         <h3>0T目</h3>
-        <div class="enemy-info">
+        <div class="enemy-info inputfield-item">
           <label>クラス相性:
             <select id="turn0-class">
               <option value="0.5">0.5</option>
@@ -254,108 +295,120 @@
               <option value="1.1">1.1</option>
             </select>
           </label>
-          <input type="number" id="turn0-enemy-hp" min="0" max="100000000" placeholder="目標ダメージ">
+          <input type="number" class="numberfield-9digits" id="turn0-enemy-hp" min="0" max="100000000" placeholder="目標ダメージ">
           <label class="np-and-star-info">DTDR(NP敵補正):
-          <input type="number" class="numberfield np-and-star-info" id="turn0-dtdr" min="0" max="1000" placeholder="DTDR" value="100">%</label>
+            <input type="number" class="numberfield-4digits np-and-star-info" id="turn0-dtdr" min="0" max="1000" placeholder="DTDR" value="100">% 
+          </label>
           <label class="np-and-star-info">DSR(スター敵補正):
-          <input type="number" class="numberfield np-and-star-info" id="turn0-dsr" min="-100" max="100" placeholder="DSR" value="0">%</label>
+            <input type="number" class="numberfield-4digits np-and-star-info" id="turn0-dsr" min="-100" max="100" placeholder="DSR" value="0">%
+          </label>
         </div>
         <div class="turn-skill" id="turn0-skill">
-          <input type="button" value="スキル追加">
+          <input type="button" class="button" value="スキル追加">
         </div>
         <div class="card-select-wrapper">
           <div class="card-select" id="turn0-card1">
             <label>1st
-            <select id="turn0-card1-color" class="card-color-select" onchange="changeColor(this)">
-              <option value="n" selected>N</option>
-              <option value="b">B</option>
-              <option value="a">A</option>
-              <option value="q">Q</option>
-            </select></label>
+              <select id="turn0-card1-color" class="card-color-select" onchange="changeColor(this)">
+                <option value="n" selected>N</option>
+                <option value="b">B</option>
+                <option value="a">A</option>
+                <option value="q">Q</option>
+              </select>
+            </label>
             <label>クリティカル
-            <select id="turn0-card1-cri">
-              <option value="2">有</option>
-              <option value="1">無</option>
-            </select></label>
+              <select id="turn0-card1-cri">
+                <option value="2">有</option>
+                <option value="1">無</option>
+              </select>
+            </label>
             <select id="turn0-card1-bool">
               <option value="0">default</option>
               <option value="1">0(回数消費有)</option>
               <option value="2">0(回数消費無)</option>
             </select>
-            <input type="number" class="numberfield np-and-star-info" id="turn0-card1-ovk" min="0" max="100" placeholder="Overkill">
-            <div class="card-skill" id="turn0-card1-skill">
-              <input type="button" value="追加">
-            </div>
+            <input type="number" class="numberfield-5digits np-and-star-info" id="turn0-card1-ovk" min="0" max="100" placeholder="Overkill">
           </div>
+          <div class="card-skill" id="turn0-card1-skill">
+            <input type="button" class="button" value="追加">
+          </div>
+        </div>
 
+        <div class="card-select-wrapper">
           <div class="card-select" id="turn0-card2">
             <label>2nd
-            <select id="turn0-card2-color" class="card-color-select" onchange="changeColor(this)">
-              <option value="n">N</option>
-              <option value="b" selected>B</option>
-              <option value="a">A</option>
-              <option value="q">Q</option>
-            </select></label>
+              <select id="turn0-card2-color" class="card-color-select" onchange="changeColor(this)">
+                <option value="n">N</option>
+                <option value="b" selected>B</option>
+                <option value="a">A</option>
+                <option value="q">Q</option>
+              </select>
+            </label>
             <label>クリティカル
-            <select id="turn0-card2-cri">
-              <option value="2">有</option>
-              <option value="1">無</option>
-            </select></label>
+              <select id="turn0-card2-cri">
+                <option value="2">有</option>
+                <option value="1">無</option>
+              </select>
+            </label>
             <select id="turn0-card2-bool">
               <option value="0">default</option>
               <option value="1">0(回数消費有)</option>
               <option value="2">0(回数消費無)</option>
             </select>
-            <input type="number" class="numberfield np-and-star-info" id="turn0-card2-ovk" min="0" max="100" placeholder="Overkill">
-            <div id="turn0-card2-skill">
-              <input type="button" value="追加">
-            </div>
+            <input type="number" class="numberfield-5digits np-and-star-info" id="turn0-card2-ovk" min="0" max="100" placeholder="Overkill">
           </div>
+          <div id="turn0-card2-skill">
+            <input type="button" class="button" value="追加">
+          </div>
+        </div>
 
+        <div class="card-select-wrapper">
           <div class="card-select" id="turn0-card3">
             <label>3rd
-            <select id="turn0-card3-color" class="card-color-select" onchange="changeColor(this)">
-              <option value="n">N</option>
-              <option value="b" selected>B</option>
-              <option value="a">A</option>
-              <option value="q">Q</option>
-            </select></label>
+              <select id="turn0-card3-color" class="card-color-select" onchange="changeColor(this)">
+                <option value="n">N</option>
+                <option value="b" selected>B</option>
+                <option value="a">A</option>
+                <option value="q">Q</option>
+              </select>
+            </label>
             <label>クリティカル
-            <select id="turn0-card3-cri">
-              <option value="2">有</option>
-              <option value="1">無</option>
-            </select></label>
+              <select id="turn0-card3-cri">
+                <option value="2">有</option>
+                <option value="1">無</option>
+              </select>
+            </label>
             <select id="turn0-card3-bool">
               <option value="0">default</option>
               <option value="1">0(回数消費有)</option>
               <option value="2">0(回数消費無)</option>
             </select>
-            <input type="number" class="numberfield np-and-star-info" id="turn0-card3-ovk" min="0" max="100" placeholder="Overkill">
-            <div id="turn0-card3-skill">
-              <input type="button" value="追加">
-            </div>
+            <input type="number" class="numberfield-5digits np-and-star-info" id="turn0-card3-ovk" min="0" max="100" placeholder="Overkill">
           </div>
+          <div id="turn0-card3-skill">
+            <input type="button" class="button" value="追加">
+          </div>
+        </div>
 
+        <div class="card-select-wrapper">
           <div class="card-select" id="turn0-card4">
             <label>4th
-            <select id="turn0-card4-color" class="card-color-select">
-              <option value="ex">EX</option>
-              <option value="-1">-</option>
-            </select></label>
+              <select id="turn0-card4-color" class="card-color-select">
+                <option value="ex">EX</option>
+                <option value="-1">-</option>
+              </select>
+            </label>
             <select id="turn0-card4-bool">
               <option value="0">default</option>
               <option value="1">0(回数消費有)</option>
               <option value="2">0(回数消費無)</option>
             </select>
-            <input type="number" class="numberfield np-and-star-info" id="turn0-card4-ovk" min="0" max="100" placeholder="Overkill"></label>
-            <div id="turn0-card4-skill">
-              <input type="button" value="追加">
-            </div>
+            <input type="number" class="numberfield-5digits np-and-star-info" id="turn0-card4-ovk" min="0" max="100" placeholder="Overkill"></label>
+          </div>
+          <div id="turn0-card4-skill">
+            <input type="button" class="button" value="追加">
           </div>
         </div>
-        <!-- <label>メモ
-        <textarea name="turn1-note" class="note"></textarea>
-        </label> -->
       </div>
     </template>
 
@@ -365,56 +418,56 @@
         <td class="cardname"><output type="text" name="result"></output></td>
         <td class="cardname"><output type="text" name="result"></output></td>
         <td class="cardname"><output type="text" name="result"></output></td>
-        <td><output type="number" class="numberfield">-</output></td>
-        <td><output type="number" class="numberfield">-</output></td>
-        <td class="goal-damage"><output type="number" class="numberfield">-</output></td>
-        <td><output type="number" class="numberfield">-</output></td>
+        <td><output type="number">-</output></td>
+        <td><output type="number">-</output></td>
+        <td class="goal-damage"><output type="number">-</output></td>
+        <td><output type="number">-</output></td>
       </tr>
       <tr class="r2 result-content">
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td class="goal-damage" rowspan="3"><output type="number" class="numberfield" name="result"></output></td>
-        <td rowspan="3"><output type="number" class="numberfield" name="result"></output>%</td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td class="goal-damage" rowspan="3"><output type="number" name="result"></output></td>
+        <td rowspan="3"><output type="number" name="result"></output>%</td>
       </tr>
       <tr class="r3 result-content">
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
       </tr>
       <tr class="r4 result-content">
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
-        <td><output type="number" class="numberfield" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
+        <td><output type="number" name="result"></output></td>
       </tr>
     </template>
 
     <template id="result-template2">
       <tr class="r5 result-content">
-        <td><output type="number" class="numberfield">NP</output></td>
-        <td><output type="number" class="numberfield" name="npresult"></output></td>
-        <td><output type="number" class="numberfield" name="npresult"></output></td>
-        <td><output type="number" class="numberfield" name="npresult"></output></td>
-        <td><output type="number" class="numberfield" name="npresult"></output></td>
-        <td><output type="number" class="numberfield" name="npresult"></output></td>
-        <td class="goal-damage"><output type="number" class="numberfield"></output></td>
-        <td><output type="number" class="numberfield"></output></td>
+        <td><output type="number">NP</output></td>
+        <td><output type="number" name="npresult"></output></td>
+        <td><output type="number" name="npresult"></output></td>
+        <td><output type="number" name="npresult"></output></td>
+        <td><output type="number" name="npresult"></output></td>
+        <td><output type="number" name="npresult"></output></td>
+        <td class="goal-damage"><output type="number"></output></td>
+        <td><output type="number"></output></td>
       </tr>
       <tr class="r6 result-content">
-        <td><output type="number" class="numberfield">星</output></td>
-        <td><output type="number" class="numberfield" name="starresult"></output></td>
-        <td><output type="number" class="numberfield" name="starresult"></output></td>
-        <td><output type="number" class="numberfield" name="starresult"></output></td>
-        <td><output type="number" class="numberfield" name="starresult"></output></td>
-        <td><output type="number" class="numberfield" name="starresult"></output></td>
-        <td class="goal-damage"><output type="number" class="numberfield"></output></td>
-        <td><output type="number" class="numberfield"></output></td>
+        <td><output type="number">星</output></td>
+        <td><output type="number" name="starresult"></output></td>
+        <td><output type="number" name="starresult"></output></td>
+        <td><output type="number" name="starresult"></output></td>
+        <td><output type="number" name="starresult"></output></td>
+        <td><output type="number" name="starresult"></output></td>
+        <td class="goal-damage"><output type="number"></output></td>
+        <td><output type="number"></output></td>
       </tr>
     </template>
 
