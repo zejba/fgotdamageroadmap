@@ -160,7 +160,7 @@ function rndCalc() {
     }
   }
   if (document.getElementById("sort-check").checked) {
-    result.sort((a,b) => a[9] - b[9]);
+    result.sort((a,b) => a[13] - b[13]);
   }
   let strchk = false;
   if (document.getElementById("star-check").checked) {

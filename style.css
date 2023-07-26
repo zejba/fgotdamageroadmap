@@ -117,7 +117,6 @@ select {
   margin-top: 25px;
   margin-left: 5px;
   display: inline-block;
-  line-height: 1.2;
   border: solid;
   border-radius: 50%;
   width: 16px;
@@ -125,6 +124,7 @@ select {
   text-align: center;
   cursor: pointer;
   font-weight: bold;
+  font-size: 12px;
 }
 
 #pop-up-check {
