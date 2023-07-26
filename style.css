@@ -177,6 +177,10 @@ select {
   text-align: center;
 }
 
+.note {
+  margin:0 0 0 6px;
+}
+
 
 /* フォームサイズ */
 

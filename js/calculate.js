@@ -337,7 +337,7 @@ function calculate() {
       for (let j=0; j<=3; j++) {
         npr[i*5+j].textContent = npResult[i*4+j] + "%";
         npsum += 100 * npResult[i*4+j];
-        starr[i*5+j].textContent = starResult[i*4+j][0] + "(+" + starResult[i*4+j][1] + ")" + Math.floor(starResult[i*4+j][2] * 1000) / 10 + "～" + Math.floor(starResult[i*4+j][3] * 1000) / 10 + "%";
+        starr[i*5+j].textContent = starResult[i*4+j][0] + "(+" + starResult[i*4+j][1] + ")" + Math.floor(Math.max(starResult[i*4+j][2],0) * 1000) / 10 + "～" + Math.floor(Math.max(starResult[i*4+j][3],0) * 1000) / 10 + "%";
         starsum[0] += starResult[i*4+j][0];
         starsum[1] += starResult[i*4+j][1];
       }
@@ -506,10 +506,10 @@ function starGetCalc(starRate, cardStarCorr, cardbuff, fb, dsr, stargetbuff, cr,
     ovk = hit;
   }
  let sr;
- sr = Math.max(starRate + ((cardStarCorr * (1+cardbuff))) + fb + dsr + stargetbuff + cr + 0.3, 0);
+ sr = starRate + ((cardStarCorr * (1+cardbuff))) + fb + dsr + stargetbuff + cr + 0.3;
  let result = [0, 0, 0, 0];
  //発生率格納
- result[2] = Math.min(Math.max(sr - 0.3, 0), 3);
+ result[2] = Math.min(sr - 0.3, 3);
  result[3] = Math.min(sr, 3);
  // if (ovk==0) {
   //オバキル0なら下限に統一
@@ -523,6 +523,7 @@ function starGetCalc(starRate, cardStarCorr, cardbuff, fb, dsr, stargetbuff, cr,
     if (i==ovk+1) {
       sr = result[2];
     }
+    sr = Math.max(sr, 0)
     if (sr>=3) {
       result[0] += 3;
     } else {

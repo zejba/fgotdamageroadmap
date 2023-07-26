@@ -11,8 +11,20 @@ function addRndResult(x) {
   }
 }
 
+function addRow() {
+  const target = document.getElementById("rndex");
+  const parent = target.parentElement;
+  const element = document.getElementById("rndform-template").content.cloneNode(true);
+  const cnt = document.getElementsByClassName("rndr").length - 3;
+  if (cnt <= 4) {
+    element.children[0].children[0].textContent = ["④","⑤","⑥","⑦","⑧"][cnt];
+    parent.insertBefore(element,target);
+  }
+}
+
 function rndCalc() {
   const ele1 = document.getElementsByName("card-select");
+  const cnt = ele1.length
   const ele2 = document.getElementsByName("sr");
   const ele3 = document.getElementsByName("dsr");
   const ele4 = document.getElementsByName("hit-count");
@@ -22,11 +34,11 @@ function rndCalc() {
   const ele8 = document.getElementsByName("additional-effect");
   const ele9 = document.getElementsByName("damage-judge");
   const ele10 = document.getElementsByName("select-required");
-  const ex = ele1[5].checked;
+  const ex = ele1[cnt-1].checked;
   let info = [];
   let result = [];
-  const numstr = ["①","②","③","④","⑤"];
-  for (let i = 0; i<6; i++) {
+  const numstr = ["①","②","③","④","⑤","⑥","⑦","⑧"];
+  for (let i = 0; i<cnt; i++) {
     let x=1;
     let y=false;
     if (ele7[i].checked) {
@@ -47,12 +59,12 @@ function rndCalc() {
                y]);
   }
   
-  for (let i=0; i<5; i++) {
-    for (let j=0; j<5; j++) {
+  for (let i=0; i<cnt-1; i++) {
+    for (let j=0; j<cnt-1; j++) {
       if (i===j) {
         continue;
       }
-      for (let k=0; k<5; k++) {
+      for (let k=0; k<cnt-1; k++) {
         if (i===k || j===k) {
           continue;
         }
@@ -63,7 +75,7 @@ function rndCalc() {
           fb = 0.2;
         }
 
-        odr = [i,j,k,5];
+        odr = [i,j,k,cnt-1];
         sum = 0;
 
         for (let l=0; l<4; l++) {
@@ -104,7 +116,7 @@ function rndCalc() {
             stp = 0;
           }
           let strnd = 3;
-          if (stp == 0 || dg == 0) {
+          if (stp <= 0 || dg == 0) {
             strnd = 0;
           } else if (stp <= 1) {
             strnd = 1;
@@ -132,8 +144,9 @@ function rndCalc() {
             stp = 0;
             rndcount = 0;
           }
-          r.push(Math.floor(stp*1000) / 10);
+          r.push(Math.trunc(stp*1000) / 10);
           r.push(rndcount);
+          r.push(strnd);
           sum += rndcount;
         }
         r.push(sum);
@@ -149,18 +162,32 @@ function rndCalc() {
   if (document.getElementById("sort-check").checked) {
     result.sort((a,b) => a[9] - b[9]);
   }
+  let strchk = false;
+  if (document.getElementById("star-check").checked) {
+    strchk = true;
+  }
   addRndResult(result.length)
   let target = document.getElementsByName("rndcresult");
   for (let i=0; i<result.length; i++) {
+    let res1 = result[i][2];
+    let res2 = result[i][5];
+    let res3 = result[i][8];
+    let res4 = result[i][11];
+    if (strchk) {
+      res1 += "(" + result[i][3] + ")";
+      res2 += "(" + result[i][6] + ")";
+      res3 += "(" + result[i][9] + ")";
+      res4 += "(" + result[i][12] + ")";
+    }
     target[i*10].textContent = result[i][0];
-    target[i*10+1].textContent = result[i][2];
-    target[i*10+2].textContent = result[i][4];
-    target[i*10+3].textContent = result[i][6];
-    target[i*10+4].textContent = result[i][8];
+    target[i*10+1].textContent = res1;
+    target[i*10+2].textContent = res2;
+    target[i*10+3].textContent = res3;
+    target[i*10+4].textContent = res4;
     target[i*10+5].textContent = result[i][1] +"%";
-    target[i*10+6].textContent = result[i][3] +"%";
-    target[i*10+7].textContent = result[i][5] +"%";
-    target[i*10+8].textContent = result[i][7] +"%";
-    target[i*10+9].textContent = result[i][9];
+    target[i*10+6].textContent = result[i][4] +"%";
+    target[i*10+7].textContent = result[i][7] +"%";
+    target[i*10+8].textContent = result[i][10] +"%";
+    target[i*10+9].textContent = result[i][13];
   }  
 }
