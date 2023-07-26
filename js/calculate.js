@@ -506,11 +506,11 @@ function starGetCalc(starRate, cardStarCorr, cardbuff, fb, dsr, stargetbuff, cr,
     ovk = hit;
   }
  let sr;
- sr = starRate + ((cardStarCorr * (1+cardbuff))) + fb + dsr + stargetbuff + cr + 0.3;
+ sr = starRate + ((cardStarCorr * (1+cardbuff))) + fb + dsr + stargetbuff + cr;
  let result = [0, 0, 0, 0];
  //発生率格納
- result[2] = Math.min(sr - 0.3, 3);
- result[3] = Math.min(sr, 3);
+ result[2] = Math.min(sr, 3);
+ result[3] = Math.min(sr+0.3, 3);
  // if (ovk==0) {
   //オバキル0なら下限に統一
   //result[3] = result[2];
@@ -519,6 +519,7 @@ function starGetCalc(starRate, cardStarCorr, cardbuff, fb, dsr, stargetbuff, cr,
   //result[2] = result[3];
  //}
 
+ sr = result[3];
  for (let i=1; i <= hit; i++) {
     if (i==ovk+1) {
       sr = result[2];

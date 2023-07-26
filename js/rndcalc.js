@@ -154,7 +154,7 @@ function rndCalc() {
       }
     }
   }
-  for (let i=0; i<5; i++) {
+  for (let i=0; i<cnt-1; i++) {
     if (info[i][9]) {
     result = result.filter(elem => elem[0].indexOf(numstr[i]) != -1);
     }
