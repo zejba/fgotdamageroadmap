@@ -335,8 +335,8 @@ function calculate() {
       let npsum = 0;
       let starsum = [0,0];
       for (let j=0; j<=3; j++) {
-        npr[i*5+j].textContent = npResult[i*4+j] + "%";
-        npsum += 100 * npResult[i*4+j];
+        npr[i*5+j].textContent = npResult[i*4+j] / 100 + "%";
+        npsum += npResult[i*4+j];
         starr[i*5+j].textContent = starResult[i*4+j][0] + "(+" + starResult[i*4+j][1] + ")" + Math.floor(Math.max(starResult[i*4+j][2],0) * 1000) / 10 + "～" + Math.floor(Math.max(starResult[i*4+j][3],0) * 1000) / 10 + "%";
         starsum[0] += starResult[i*4+j][0];
         starsum[1] += starResult[i*4+j][1];
@@ -490,9 +490,9 @@ function npGetCalc(npRate, cardNpCorr, cardbuff, fb, dtdr, npgetbuff, cr, hit, o
   let result;
   result = npRate * ((cardNpCorr * (1+cardbuff)) + fb) * dtdr * (1+npgetbuff) * cr * 100;
   //hit数をかける前に小数点第3位切り捨て
-  result = Math.floor(result * 1.5) * ovk + Math.floor(result) * (hit - ovk);
-  result = result / 100;
-  return result
+  result = Math.floor(result);
+  result = Math.floor(result * 1.5) * ovk + result * (hit - ovk);
+  return result;
 }
 
 //スター計算
