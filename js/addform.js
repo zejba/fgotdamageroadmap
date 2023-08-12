@@ -135,3 +135,20 @@ function npCalcCheck(p) {
     }
   }
 }
+
+function addScoreForm(p) {
+  scoreType = ["b_power_buff","b_cr_buff","a_power_buff","a_cr_buff","q_power_buff","q_cr_buff","ex_buff","cr_buff","np_buff"];
+  scoreAmount = [20,20,20,40,20,60,50,10,10];
+  for (let i = 0; i < 9; i++) {
+    addForm(p);
+  }
+  let buffForms = p.parentElement.getElementsByClassName("buff-form");
+  let x = buffForms.length - 9;
+  for (let i = 0; i < 9; i++) {
+    buffForms[x+i].getElementsByClassName('skill-name')[0].value = "スコア";
+    buffForms[x+i].getElementsByClassName('skill-type')[0].value = scoreType[i];
+    buffForms[x+i].getElementsByClassName('amount')[0].value = scoreAmount[i];
+    buffForms[x+i].getElementsByClassName('turn')[0].value = 0;
+    buffForms[x+i].getElementsByClassName('time')[0].value = 0;
+  }
+}
