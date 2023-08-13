@@ -246,7 +246,7 @@ function calculate() {
           result.push([damageCalc(corrected_atk, mag, cardCorr, cardbuff, bfb, vsclass, vsattr, atkbuff, nporcrbuff, spbuff, spdef), constantDamage])
           npResult.push(npGetCalc(npRate, cardNpCorr, npcardbuff, afb, dtdr, npgetbuff, cr, hit, ovk));
           starResult.push(starGetCalc(starRate, cardStarCorr, starcardbuff, qfb, dsr, stargetbuff, cr, hit, ovk));
-          buffCount.push([atkbuff,cardbuff,nporcrbuff,spbuff]);
+          buffCount.push([Math.round(10000 * atkbuff) / 100, Math.round(10000 * cardbuff) / 100, Math.round(10000 * nporcrbuff) / 100, Math.round(10000 * spbuff) / 100,]);
         }
 
         //他選択時は回数消費しない
@@ -355,7 +355,7 @@ function calculate() {
     //バフ情報
     for (let j=0; j<4; j++) {
       let new_element = document.createElement("li");
-      new_element.textContent = (i + 1) + "T-" + (j + 1) + " 攻撃バフ:" + buffCount[4*i+j][0] * 100 + "% 色バフ:" + buffCount[4*i+j][1] * 100 + "% 宝具/クリバフ:" + buffCount[4*i+j][2] * 100 + "% 特攻バフ:" + buffCount[4*i+j][3] * 100 + "%";
+      new_element.textContent = (i + 1) + "T-" + (j + 1) + " 攻撃バフ:" + buffCount[4*i+j][0] + "% 色バフ:" + buffCount[4*i+j][1] + "% 宝具/クリバフ:" + buffCount[4*i+j][2] + "% 特攻バフ:" + buffCount[4*i+j][3] + "%";
       bufff.appendChild(new_element);
     }
   }
