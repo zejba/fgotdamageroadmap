@@ -1,3 +1,4 @@
+let buffs = {};
 function calculate() {
   // 基本情報を取得
   const servantClass = document.getElementById('servant-class').value;
@@ -23,6 +24,7 @@ function calculate() {
   let totalResult = [];
   let npResult = [];
   let starResult = [];
+  let buffCount = [];
   buffs = {};
   // バフ量、ターン、回数
   // 各バフの最初の要素は永続バフ
@@ -239,10 +241,12 @@ function calculate() {
           result.push([0,0]);
           npResult.push(npGetCalc(npRate, cardNpCorr, npcardbuff, afb, dtdr, npgetbuff, cr, hit, ovk));
           starResult.push(starGetCalc(starRate, cardStarCorr, starcardbuff, qfb, dsr, stargetbuff, cr, hit, ovk));
+          buffCount.push([0,0,0,0]);
         } else {
           result.push([damageCalc(corrected_atk, mag, cardCorr, cardbuff, bfb, vsclass, vsattr, atkbuff, nporcrbuff, spbuff, spdef), constantDamage])
           npResult.push(npGetCalc(npRate, cardNpCorr, npcardbuff, afb, dtdr, npgetbuff, cr, hit, ovk));
           starResult.push(starGetCalc(starRate, cardStarCorr, starcardbuff, qfb, dsr, stargetbuff, cr, hit, ovk));
+          buffCount.push([atkbuff,cardbuff,nporcrbuff,spbuff]);
         }
 
         //他選択時は回数消費しない
@@ -250,6 +254,7 @@ function calculate() {
         result.push([0, 0]);
         npResult.push(0);
         starResult.push([0,0]);
+        buffCount.push([0,0,0,0]);
       }
     }
 
@@ -303,6 +308,8 @@ function calculate() {
   let npr = document.getElementsByName("npresult");
   let starr = document.getElementsByName("starresult");
 
+  let bufff = document.getElementById("hidden-result");
+  bufff.innerHTML = "";
   //ターン数ループ
   for (let i=0; i<turns; i++) {
     //カード色部分
@@ -345,6 +352,12 @@ function calculate() {
       starr[i*5+4].textContent = starsum[0] + "(+" + starsum[1] + ")";
     }
 
+    //バフ情報
+    for (let j=0; j<4; j++) {
+      let new_element = document.createElement("li");
+      new_element.textContent = (i + 1) + "T-" + (j + 1) + " 攻撃バフ:" + buffCount[4*i+j][0] * 100 + "% 色バフ:" + buffCount[4*i+j][1] * 100 + "% 宝具/クリバフ:" + buffCount[4*i+j][2] * 100 + "% 特攻バフ:" + buffCount[4*i+j][3] * 100 + "%";
+      bufff.appendChild(new_element);
+    }
   }
 }
 
