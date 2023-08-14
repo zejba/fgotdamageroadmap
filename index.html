@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?date=202308131615">
-  <script src="js/main.js?date=202308131615"></script>
-  <script src="js/addform.js?date=202308131615"></script>
-  <script src="js/calculate.js?date=202308131615"></script>
-  <script src="js/savedata.js?date=202308131615"></script>
+  <link rel="stylesheet" href="style.css?date=202308150130">
+  <script src="js/main.js?date=202308150130"></script>
+  <script src="js/addform.js?date=202308150130"></script>
+  <script src="js/calculate.js?date=202308150130"></script>
+  <script src="js/savedata.js?date=202308150130"></script>
   <title>FGO Damage Roadmap</title>
 </head>
-<body>
+<body onload="generateServantList();">
   <header>
     <a href="./index.html" id="title">FGO Damage Roadmap</a>
     <label class="menu-button">≡<input type="checkbox" id="menucheck" onchange="openMenu(this)"></label>
@@ -49,7 +49,13 @@
       <div class="inputfield-wrapper">
         <h3>基本情報</h3>
         <div class="inputfield-item">
-          <input type="text" class="servant-name-field" id="servant-name" size="10" placeholder="サーヴァント名">
+          <select id="servant-list">
+            <option hidden>サーヴァント選択</option>
+          </select>
+          <input type="button" class="button" value="反映" onclick="reflectsvData()">
+        </div>
+        <div class="inputfield-item">
+          <input type="text" class="servant-name-field" id="servant-name" size="10" placeholder="保存用タイトル">
           <select id="servant-class">
             <option value="saber">剣</option>
             <option value="archer">弓</option>
@@ -217,6 +223,7 @@
             お知らせ・更新履歴
           </summary>
           <ul>
+            <li>【更新】サーヴァントデータを実装しました。(β版)(2023/8/15)</li>
             <li>【更新】カード毎のバフ情報を確認できる機能を追加しました。(2023/8/13)</li>
             <li>【更新】色バフ(スコア)を色威力バフに名称変更しました。(2023/8/12)</li>
             <li>【更新】スコア自動追加機能を追加しました。(2023/8/12)</li>
