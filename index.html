@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?date=202308150130">
-  <script src="js/main.js?date=202308150130"></script>
-  <script src="js/addform.js?date=202308150130"></script>
-  <script src="js/calculate.js?date=202308150130"></script>
-  <script src="js/savedata.js?date=202308150130"></script>
+  <link rel="stylesheet" href="style.css?date=202308150200">
+  <script src="js/main.js?date=202308150200"></script>
+  <script src="js/addform.js?date=202308150200"></script>
+  <script src="js/calculate.js?date=202308150200"></script>
+  <script src="js/savedata.js?date=202308150200"></script>
   <title>FGO Damage Roadmap</title>
 </head>
 <body onload="generateServantList();">
@@ -53,9 +53,12 @@
             <option hidden>サーヴァント選択</option>
           </select>
           <input type="button" class="button" value="反映" onclick="reflectsvData()">
+          <label>
+            <!-- <input  id="perfect-check" type="checkbox">完全体 -->
+          </label>
         </div>
         <div class="inputfield-item">
-          <input type="text" class="servant-name-field" id="servant-name" size="10" placeholder="保存用タイトル">
+          <input type="text" class="servant-name-field" id="servant-name" size="10" placeholder="タイトル">
           <select id="servant-class">
             <option value="saber">剣</option>
             <option value="archer">弓</option>

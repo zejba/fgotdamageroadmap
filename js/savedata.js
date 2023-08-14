@@ -204,10 +204,10 @@ function reflectsvData() {
   document.getElementById('np-mag').value = Number(arr[i][6]);
   document.getElementById('np-rate').value = Number(arr[i][7]);
   document.getElementById('star-rate').value = Number(arr[i][8]);
-  document.getElementById('n-hit-count').value = Number(arr[i][9]);
-  document.getElementById('b-hit-count').value = Number(arr[i][10]);
-  document.getElementById('a-hit-count').value = Number(arr[i][11]);
-  document.getElementById('q-hit-count').value = Number(arr[i][12]);
+  document.getElementById('b-hit-count').value = Number(arr[i][9]);
+  document.getElementById('a-hit-count').value = Number(arr[i][10]);
+  document.getElementById('q-hit-count').value = Number(arr[i][11]);
+  document.getElementById('n-hit-count').value = Number(arr[i][12]);
   document.getElementById('ex-hit-count').value = Number(arr[i][13]);
   let psform = document.getElementById("passive-skill");
   for (let j = 0; j < arr[i][14]; j++) {
