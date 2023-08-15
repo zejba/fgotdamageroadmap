@@ -184,7 +184,7 @@ function inputSkillData(p, arrc) {
 //データベース
 function reflectsvData() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv",false);
+  csv.open("GET", "data/servant_data.csv?date=202308151530",false);
   try {
     csv.send(null);
   } catch (err) {
