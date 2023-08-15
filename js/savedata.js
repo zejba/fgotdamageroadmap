@@ -184,7 +184,7 @@ function inputSkillData(p, arrc) {
 //データベース
 function reflectsvData() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv?date=202308151530",false);
+  csv.open("GET", "data/servant_data.csv?date=202308151600",false);
   try {
     csv.send(null);
   } catch (err) {
@@ -210,8 +210,8 @@ function reflectsvData() {
   document.getElementById('b-hit-count').value = Number(arr[i][10]);
   document.getElementById('a-hit-count').value = Number(arr[i][11]);
   document.getElementById('q-hit-count').value = Number(arr[i][12]);
-  document.getElementById('n-hit-count').value = Number(arr[i][13]);
-  document.getElementById('ex-hit-count').value = Number(arr[i][14]);
+  document.getElementById('ex-hit-count').value = Number(arr[i][13]);
+  document.getElementById('n-hit-count').value = Number(arr[i][14]);
   let psform = document.getElementById("passive-skill");
   for (let j = 0; j < arr[i][15]; j++) {
     addForm(psform.children[0]);
