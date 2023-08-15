@@ -184,7 +184,7 @@ function inputSkillData(p, arrc) {
 //データベース
 function reflectsvData() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv?date=202308151730",false);
+  csv.open("GET", "data/servant_data.csv?date=202308151800",false);
   try {
     csv.send(null);
   } catch (err) {
@@ -213,10 +213,16 @@ function reflectsvData() {
   document.getElementById('ex-hit-count').value = Number(arr[i][14]);
   document.getElementById('n-hit-count').value = Number(arr[i][15]);
   let psform = document.getElementById("passive-skill");
+  let buffForms = psform.getElementsByClassName("buff-form");
+  for (let j = buffForms.length - 1; j >= 0; j--) {
+    if (buffForms[j].getElementsByClassName('skill-name')[0].value == "クラススキル") {
+      buffForms[j].remove();
+    }
+  }
   for (let j = 0; j < arr[i][16]; j++) {
     addForm(psform.children[0]);
   }
-  let buffForms = psform.getElementsByClassName("buff-form");
+  buffForms = psform.getElementsByClassName("buff-form");
   let x = buffForms.length - arr[i][16];
   for (let j = 0; j < arr[i][16]; j++) {
     buffForms[x+j].getElementsByClassName('skill-name')[0].value = "クラススキル";

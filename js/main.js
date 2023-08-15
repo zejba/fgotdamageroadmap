@@ -5,7 +5,7 @@ function openMenu(p) {
 //サーヴァントリストを生成
 function generateServantList(b) {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv?date=202308151730",false);
+  csv.open("GET", "data/servant_data.csv?date=202308151800",false);
   csv.send(null);
   if (csv.status != 200) {
     return;
