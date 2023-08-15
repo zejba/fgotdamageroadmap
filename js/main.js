@@ -3,9 +3,9 @@ function openMenu(p) {
 }
 
 //サーヴァントリストを生成
-function generateServantList() {
+function generateServantList(b) {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv?date=202308151620",false);
+  csv.open("GET", "data/servant_data.csv?date=202308151730",false);
   csv.send(null);
   if (csv.status != 200) {
     return;
@@ -13,11 +13,21 @@ function generateServantList() {
   let arr = [];
   let list = csv.responseText.split('\n');
   for (let i = 0; i < list.length; i++) {
-    arr.push(list[i].split(',').slice(0,2));
+    arr.push(list[i].split(','));
   }
 
   let menu = document.getElementById("servant-list");
+  let svcl = document.getElementById("servant-list-class").value;
+  let svr = document.getElementById("servant-list-rarity").value;
+
+  menu.innerHTML = "";
+
   for(var i=0;i<arr.length;i++){
+    if (b==1) {
+      if (svcl != arr[i][3] || svr != arr[i][2]) {
+        continue;
+      }
+    }
     let opt = document.createElement("option");
     opt.value = arr[i][0];
     opt.text = arr[i][0] + "." + arr[i][1];

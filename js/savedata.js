@@ -184,7 +184,7 @@ function inputSkillData(p, arrc) {
 //データベース
 function reflectsvData() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv?date=202308151620",false);
+  csv.open("GET", "data/servant_data.csv?date=202308151730",false);
   try {
     csv.send(null);
   } catch (err) {
@@ -197,31 +197,31 @@ function reflectsvData() {
   }
   let i = arr.findIndex(item => item[0] == document.getElementById("servant-list").value);
   if (i === -1) {return}
-  document.getElementById('servant-class').value = arr[i][2];
-  document.getElementById('servant-attr').value = arr[i][3];
-  document.getElementById('servant-atk').value = Number(arr[i][4]);
+  document.getElementById('servant-class').value = arr[i][3];
+  document.getElementById('servant-attr').value = arr[i][4];
+  document.getElementById('servant-atk').value = Number(arr[i][5]);
   if (document.getElementById("perfect-check").checked) {
-    document.getElementById('servant-atk').value = Number(arr[i][5]);
+    document.getElementById('servant-atk').value = Number(arr[i][6]);
   }
-  document.getElementById('np-color').value = arr[i][6];
-  document.getElementById('np-mag').value = Number(arr[i][7]);
-  document.getElementById('np-rate').value = Number(arr[i][8]);
-  document.getElementById('star-rate').value = Number(arr[i][9]);
-  document.getElementById('b-hit-count').value = Number(arr[i][10]);
-  document.getElementById('a-hit-count').value = Number(arr[i][11]);
-  document.getElementById('q-hit-count').value = Number(arr[i][12]);
-  document.getElementById('ex-hit-count').value = Number(arr[i][13]);
-  document.getElementById('n-hit-count').value = Number(arr[i][14]);
+  document.getElementById('np-color').value = arr[i][7];
+  document.getElementById('np-mag').value = Number(arr[i][8]);
+  document.getElementById('np-rate').value = Number(arr[i][9]);
+  document.getElementById('star-rate').value = Number(arr[i][10]);
+  document.getElementById('b-hit-count').value = Number(arr[i][11]);
+  document.getElementById('a-hit-count').value = Number(arr[i][12]);
+  document.getElementById('q-hit-count').value = Number(arr[i][13]);
+  document.getElementById('ex-hit-count').value = Number(arr[i][14]);
+  document.getElementById('n-hit-count').value = Number(arr[i][15]);
   let psform = document.getElementById("passive-skill");
-  for (let j = 0; j < arr[i][15]; j++) {
+  for (let j = 0; j < arr[i][16]; j++) {
     addForm(psform.children[0]);
   }
   let buffForms = psform.getElementsByClassName("buff-form");
-  let x = buffForms.length - arr[i][15];
-  for (let j = 0; j < arr[i][15]; j++) {
+  let x = buffForms.length - arr[i][16];
+  for (let j = 0; j < arr[i][16]; j++) {
     buffForms[x+j].getElementsByClassName('skill-name')[0].value = "クラススキル";
-    buffForms[x+j].getElementsByClassName('skill-type')[0].value = arr[i][16+j*2];
-    buffForms[x+j].getElementsByClassName('amount')[0].value = Number(arr[i][17+j*2]);
+    buffForms[x+j].getElementsByClassName('skill-type')[0].value = arr[i][17+j*2];
+    buffForms[x+j].getElementsByClassName('amount')[0].value = Number(arr[i][18+j*2]);
     buffForms[x+j].getElementsByClassName('turn')[0].value = 0;
     buffForms[x+j].getElementsByClassName('time')[0].value = 0;
   }

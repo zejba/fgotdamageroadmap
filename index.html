@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?date=202308151620">
-  <script src="js/main.js?date=202308151620"></script>
-  <script src="js/addform.js?date=202308151620"></script>
-  <script src="js/calculate.js?date=202308151620"></script>
-  <script src="js/savedata.js?date=202308151620"></script>
+  <link rel="stylesheet" href="style.css?date=202308151730">
+  <script src="js/main.js?date=202308151730"></script>
+  <script src="js/addform.js?date=202308151730"></script>
+  <script src="js/calculate.js?date=202308151730"></script>
+  <script src="js/savedata.js?date=202308151730"></script>
   <title>FGO Damage Roadmap</title>
 </head>
-<body onload="generateServantList();">
+<body onload="generateServantList(0);">
   <header>
     <a href="./index.html" id="title">FGO Damage Roadmap</a>
     <label class="menu-button">≡<input type="checkbox" id="menucheck" onchange="openMenu(this)"></label>
@@ -48,18 +48,54 @@
       </div>
       <div class="inputfield-wrapper">
         <h3>基本情報</h3>
-        <div class="inputfield-item">
-          <select id="servant-list">
-            <option hidden>サーヴァント選択</option>
-          </select>
-        </div>
-        <div class="inputfield-item">
-          <label>完全体
-            <input  id="perfect-check" type="checkbox">
-          </label>
-          <input type="button" class="button" value="反映" onclick="reflectsvData()">
-          ※ATKフォウ込み(完全体は金フォウ込み)
-        </div>
+        <details>
+          <summary>
+            自動入力
+          </summary>
+          <div class="inputfield-item">
+            <select id="servant-list-class">
+              <option value="saber">剣</option>
+              <option value="archer">弓</option>
+              <option value="lancer">槍</option>
+              <option value="rider">騎</option>
+              <option value="caster">術</option>
+              <option value="assassin">殺</option>
+              <option value="berserker">狂</option>
+              <option value="ruler">裁</option>
+              <option value="avenger">讐</option>
+              <option value="alterego">分</option>
+              <option value="mooncancer">月</option>
+              <option value="pretender">詐</option>
+              <option value="foreigner">降</option>
+              <option value="shielder">盾</option>
+              <option value="beast">獣</option>
+            </select>
+            <select id="servant-list-rarity">
+              <option value="0">★0</option>
+              <option value="1">★1</option>
+              <option value="2">★2</option>
+              <option value="3">★3</option>
+              <option value="4">★4</option>
+              <option value="5" selected>★5</option>
+            </select>
+            <input type="button" class="button" value="絞り込み" onclick="generateServantList(1)">
+          </div>
+          <div class="inputfield-item">
+            <select id="servant-list">
+              <option hidden>サーヴァント選択</option>
+            </select>
+          </div>
+          <div class="inputfield-item">
+            <label>
+              <input  id="perfect-check" type="checkbox">完全体
+            </label>
+          </div>
+          <div class="inputfield-item">
+            <input type="button" class="button" value="反映" onclick="reflectsvData()">
+            ※ATKフォウ込み(完全体は金フォウ込み)
+          </div>
+          <br>
+        </details>
         <div class="inputfield-item">
           <input type="text" class="servant-name-field" id="servant-name" size="10" placeholder="タイトル">
           <select id="servant-class">
@@ -229,7 +265,7 @@
             お知らせ・更新履歴
           </summary>
           <ul>
-            <li>【更新】サーヴァントデータを実装しました。(β版)(2023/8/15)</li>
+            <li>【更新】サーヴァントデータを実装しました。(2023/8/15)</li>
             <li>【更新】カード毎のバフ情報を確認できる機能を追加しました。(2023/8/13)</li>
             <li>【更新】色バフ(スコア)を色威力バフに名称変更しました。(2023/8/12)</li>
             <li>【更新】スコア自動追加機能を追加しました。(2023/8/12)</li>
