@@ -54,9 +54,14 @@ function addTurn() {
   npCalcCheck(document.getElementById("np-calc-check"));
 }
 
-function deleteTurn() {
-  let result = window.confirm("ターンを削除しますか？");
-  const n = document.getElementsByClassName("inputfield-wrapper").length - 2;
+function deleteTurn(b) {
+  let result
+  if (b===0) {
+    result = window.confirm("ターンを削除しますか？");
+  } else {
+    result = true
+  }
+  const n = document.getElementsByClassName("turn-form").length;
   if (n>0 && result) {
     document.getElementById("turn"+n).remove();
   }

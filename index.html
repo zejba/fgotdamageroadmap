@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?date=202308161700">
-  <script src="js/main.js?date=202308161700"></script>
-  <script src="js/addform.js?date=202308161700"></script>
-  <script src="js/calculate.js?date=202308161700"></script>
-  <script src="js/savedata.js?date=202308161700"></script>
+  <link rel="stylesheet" href="style.css?date=202308181730">
+  <script src="js/main.js?date=202308181730"></script>
+  <script src="js/addform.js?date=202308181730"></script>
+  <script src="js/calculate.js?date=202308181730"></script>
+  <script src="js/savedata.js?date=202308181730"></script>
   <title>FGO Damage Roadmap</title>
 </head>
-<body onload="generateServantList(0);">
+<body onload="generateServantList(0); generateQuesttList();">
   <header>
     <a href="./index.html" id="title">FGO Damage Roadmap</a>
     <label class="menu-button">≡<input type="checkbox" id="menucheck" onchange="openMenu(this)"></label>
@@ -189,12 +189,38 @@
 
       <div class="button-wrapper">
         <input type="button" class="button" value="ターン追加" onclick="addTurn()">
-        <input type="button" class="button" value="ターン削除" onclick="deleteTurn()">
+        <input type="button" class="button" value="ターン削除" onclick="deleteTurn(0)">
         <input type="button" class="button" value="計算" onclick="calculate()">
         <label id="colorcheck">カード選択に色をつける
           <input type="checkbox" onchange="colorChangeCheck()">
         </label>
       </div>
+
+        <div class="notice">
+          <details>
+            <summary>
+              クエスト自動入力
+            </summary>
+            <select id="quest-list">
+            </select>
+            相性:
+            <select id="quest-list-class">
+              <option value="0.5">0.5</option>
+              <option value="1.0">1.0</option>
+              <option value="1.2">1.2</option>
+              <option value="1.5">1.5</option>
+              <option value="2.0" selected>2.0</option>
+            </select>
+            <select id="quest-list-attr">
+              <option value="0.9">0.9</option>
+              <option value="1.0" selected>1.0</option>
+              <option value="1.1">1.1</option>
+            </select>
+            <input type="button" class="button" value="反映" onclick="reflectQData()">
+            <br>
+            ※入力済みのターン情報は初期化されます。
+          </details>
+        </div>
 
       <div class="resultform">
         <table class="result" id="result-form">
@@ -265,6 +291,7 @@
             お知らせ・更新履歴
           </summary>
           <ul>
+            <li>【更新】クエストデータを実装しました。(2023/8/18)</li>
             <li>【更新】サーヴァントデータを実装しました。(2023/8/15)</li>
             <li>【更新】カード毎のバフ情報を確認できる機能を追加しました。(2023/8/13)</li>
             <li>【更新】色バフ(スコア)を色威力バフに名称変更しました。(2023/8/12)</li>

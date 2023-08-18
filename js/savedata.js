@@ -184,11 +184,10 @@ function inputSkillData(p, arrc) {
 //データベース
 function reflectsvData() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv?date=202308161700",false);
-  try {
-    csv.send(null);
-  } catch (err) {
-    alert(err);
+  csv.open("GET", "data/servant_data.csv?date=202308181730",false);
+  csv.send(null);
+  if (csv.status != 200) {
+    return;
   }
   let arr = [];
   let list = csv.responseText.split('\n');
@@ -230,5 +229,35 @@ function reflectsvData() {
     buffForms[x+j].getElementsByClassName('amount')[0].value = Number(arr[i][18+j*2]);
     buffForms[x+j].getElementsByClassName('turn')[0].value = 0;
     buffForms[x+j].getElementsByClassName('time')[0].value = 0;
+  }
+}
+
+function reflectQData() {
+  let csv = new XMLHttpRequest();
+  csv.open("GET", "data/quest_data.csv?date=202308181730",false);
+  csv.send(null);
+  if (csv.status != 200) {
+    return;
+  }
+  let arr = [];
+  let list = csv.responseText.split('\n');
+  for (let i = 0; i < list.length; i++) {
+    arr.push(list[i].split(','));
+  }
+  let q_id = arr.findIndex(item => item[0] == document.getElementById("quest-list").value);
+  let q_class = document.getElementById("quest-list-class").value;
+  let q_attr = document.getElementById("quest-list-attr").value;
+  if (q_id === -1) {return}
+
+  //ターンフォームを初期化
+  let tf = document.getElementsByClassName("turn-form");
+  for (let i = tf.length-1; i >= 0; i--) {
+    tf[i].remove();
+  }
+  for (let i = 0; i<arr[q_id][2]; i++) {
+    addTurn();
+    document.getElementById("turn"+(i+1)+"-enemy-hp").value = arr[q_id][3+i];
+    document.getElementById("turn"+(i+1)+"-class").value = q_class;
+    document.getElementById("turn"+(i+1)+"-attr").value = q_attr;
   }
 }
