@@ -54,27 +54,28 @@ function calculate() {
 
 
   //パッシブスキル取得
-  readBuff("passive-skill");
+  readBuff(0,0);
 
   
   //ターン数ループ
   for (let i = 1; i <= turns; i++) {
     let result = [];
+    let tf = document.getElementById("turn"+i);
     //エネミー情報を取得
-    let vsclass = Number(document.getElementById("turn"+i+"-class").value);
-    let vsattr = Number(document.getElementById("turn"+i+"-attr").value);
-    let enemyHp = Number(document.getElementById("turn"+i+"-enemy-hp").value);
-    let dtdr = Number(document.getElementById("turn"+i+"-dtdr").value) / 100;
-    let dsr = Number(document.getElementById("turn"+i+"-dsr").value) / 100;
+    let vsclass = Number(tf.getElementsByClassName("enemy-class")[0].value);
+    let vsattr = Number(tf.getElementsByClassName("enemy-attr")[0].value);
+    let enemyHp = Number(tf.getElementsByClassName("enemy-hp")[0].value);
+    let dtdr = Number(tf.getElementsByClassName("dtdr")[0].value) / 100;
+    let dsr = Number(tf.getElementsByClassName("dsr")[0].value) / 100;
 
     // スキルのバフを計算
-    readBuff("turn"+i+"-skill");
+    readBuff(i,0);
 
     // カード選択を取得
     let cardColors = [];
-    cardColors.push(document.getElementById("turn"+i+"-card1-color").value);
-    cardColors.push(document.getElementById("turn"+i+"-card2-color").value);
-    cardColors.push(document.getElementById("turn"+i+"-card3-color").value);
+    cardColors.push(tf.getElementsByClassName("card1-color")[0].value);
+    cardColors.push(tf.getElementsByClassName("card2-color")[0].value);
+    cardColors.push(tf.getElementsByClassName("card3-color")[0].value);
     cardColors.push("ex");
     let bFirstBonus = 0;
     let aFirstBonus = 0;
@@ -117,20 +118,20 @@ function calculate() {
 
     for (let j = 1; j <= 4; j++) {
       // カードのバフを計算
-      readBuff("turn"+i+"-card"+j+"-skill");
+      readBuff(i,j);
       //判定
-      let bl = Number(document.getElementById("turn"+i+"-card"+j+"-bool").value);
+      let bl = Number(tf.getElementsByClassName("card"+j+"-bool")[0].value);
       //オバキル
-      let ovk = Number(document.getElementById("turn"+i+"-card"+j+"-ovk").value);
+      let ovk = Number(tf.getElementsByClassName("card"+j+"-ovk")[0].value);
       // クリティカル判定
       let cr = 1;
       if (j!=4) {
-        cr = Number(document.getElementById("turn"+i+"-card"+j+"-cri").value);
+        cr = Number(tf.getElementsByClassName("card"+j+"-cri")[0].value);
       }
       // 固定ダメージを0で定義
       let constantDamage = 0;
       // EXカードが選択されていなければバフを消費せず次へ
-      if (j == 4 && document.getElementById("turn"+i+"-card4-color").value == -1) {
+      if (j == 4 && tf.getElementsByClassName("card4-color")[0].value == -1) {
         bl = 2;
       }
 
@@ -385,8 +386,8 @@ function classCheck(svclass) {
 }
 
 //バフ取得
-function readBuff(element) {
-  const ele = document.getElementById(element);
+function readBuff(turn,card) {
+  const ele = document.getElementById("turn"+turn).getElementsByClassName("card"+card+"-skill")[0];
   let buffForms = [];
   if (ele.length != 0) {
     buffForms = ele.getElementsByClassName("buff-form");

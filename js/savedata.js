@@ -28,28 +28,28 @@ function exportData() {
     savedata.push(info);
 
     //パッシブスキル
-    savedata.push(getSkillData("passive-skill"));
+    savedata.push(getSkillData(0,0));
 
     //ターンごとに処理
     for (let i=1; i<=turns; i++) {
-      let t = document.getElementById("turn"+i);
-      savedata.push([document.getElementById("turn"+i+"-class").value,
-                    document.getElementById("turn"+i+"-attr").value,
-                    Number(document.getElementById("turn"+i+"-enemy-hp").value),
-                    Number(document.getElementById("turn"+i+"-dtdr").value),
-                    Number(document.getElementById("turn"+i+"-dsr").value)]);
-      savedata.push(getSkillData("turn"+i+"-skill"));
+      let tf = document.getElementById("turn"+i);
+      savedata.push([tf.getElementsByClassName("enemy-class")[0].value,
+                    tf.getElementsByClassName("enemy-attr")[0].value,
+                    Number(tf.getElementsByClassName("enemy-hp")[0].value),
+                    Number(tf.getElementsByClassName("dtdr")[0].value),
+                    Number(tf.getElementsByClassName("dsr")[0].value)]);
+      savedata.push(getSkillData(i,0));
       for (let j=1; j<=3; j++) {
-        savedata.push([document.getElementById("turn"+i+"-card"+j+"-color").value,
-                      document.getElementById("turn"+i+"-card"+j+"-bool").value,
-                      document.getElementById("turn"+i+"-card"+j+"-ovk").value,
-                      document.getElementById("turn"+i+"-card"+j+"-cri").value]);
-        savedata.push(getSkillData("turn"+i+"-card"+j+"-skill"));
+        savedata.push([tf.getElementsByClassName("card"+j+"-color")[0].value,
+                      tf.getElementsByClassName("card"+j+"-bool")[0].value,
+                      tf.getElementsByClassName("card"+j+"-ovk")[0].value,
+                      tf.getElementsByClassName("card"+j+"-cri")[0].value]);
+        savedata.push(getSkillData(i,j));
       }
-      savedata.push([document.getElementById("turn"+i+"-card4-color").value,
-                     document.getElementById("turn"+i+"-card4-bool").value,
-                     document.getElementById("turn"+i+"-card4-ovk").value]);
-      savedata.push(getSkillData("turn"+i+"-card4-skill"));
+      savedata.push([tf.getElementsByClassName("card4-color")[0].value,
+                     tf.getElementsByClassName("card4-bool")[0].value,
+                     tf.getElementsByClassName("card4-ovk")[0].value]);
+      savedata.push(getSkillData(i,4));
     }
 
     //CSV形式に変換して保存
@@ -62,8 +62,8 @@ function exportData() {
 }
 
 //スキルの入力情報を取得
-function getSkillData(p) {
-  let skill = document.getElementById(p);
+function getSkillData(turn,card) {
+  let skill = document.getElementById("turn"+turn).getElementsByClassName("card"+card+"-skill")[0];
   let buffForms = [];
   let skilldata = [];
   buffForms = skill.getElementsByClassName("buff-form");
@@ -141,24 +141,25 @@ function inportData() {
         document.getElementById('q-hit-count').value = Number(arr[0][15]);
         document.getElementById('ex-hit-count').value = Number(arr[0][16]);
 
-        inputSkillData("passive-skill", arr[1]);
+        inputSkillData(0,0,arr[1]);
 
         for (let i = 1; i <= arr[0][17]; i++) {
           addTurn();
-          document.getElementById("turn"+i+"-class").value = arr[10*i-8][0];
-          document.getElementById("turn"+i+"-attr").value = arr[10*i-8][1];
-          document.getElementById("turn"+i+"-enemy-hp").value = Number(arr[10*i-8][2]);
-          document.getElementById("turn"+i+"-dtdr").value = Number(arr[10*i-8][3]);
-          document.getElementById("turn"+i+"-dsr").value = Number(arr[10*i-8][4]);
-          inputSkillData("turn"+i+"-skill", arr[10*i-7]);
+          let tf = document.getElementById("turn"+i);
+          tf.getElementsByClassName("enemy-class")[0].value = arr[10*i-8][0];
+          tf.getElementsByClassName("enemy-attr")[0].value = arr[10*i-8][1];
+          tf.getElementsByClassName("enemy-hp")[0].value = Number(arr[10*i-8][2]);
+          tf.getElementsByClassName("dtdr")[0].value = Number(arr[10*i-8][3]);
+          tf.getElementsByClassName("dsr")[0].value = Number(arr[10*i-8][4]);
+          inputSkillData(i,0,arr[10*i-7]);
           for (let j=1; j<=4; j++) {
-            document.getElementById("turn"+i+"-card"+j+"-color").value = arr[10*i+2*j-8][0];
-            document.getElementById("turn"+i+"-card"+j+"-bool").value = Number(arr[10*i+2*j-8][1]);
-            document.getElementById("turn"+i+"-card"+j+"-ovk").value = Number(arr[10*i+2*j-8][2]);
+            tf.getElementsByClassName("card"+j+"-color")[0].value = arr[10*i+2*j-8][0];
+            tf.getElementsByClassName("card"+j+"-bool")[0].value = Number(arr[10*i+2*j-8][1]);
+            tf.getElementsByClassName("card"+j+"-ovk")[0].value = Number(arr[10*i+2*j-8][2]);
             if (j!=4) {
-              document.getElementById("turn"+i+"-card"+j+"-cri").value = Number(arr[10*i+2*j-8][3]);
+              tf.getElementsByClassName("card"+j+"-cri")[0].value = Number(arr[10*i+2*j-8][3]);
             }
-            inputSkillData("turn"+i+"-card"+j+"-skill", arr[10*i+2*j-7]);
+            inputSkillData(i,j,arr[10*i+2*j-7]);
           }
         }
       });
@@ -168,8 +169,8 @@ function inportData() {
 
 
 //受け取った配列(arrc)を元にスキル情報を反映
-function inputSkillData(p, arrc) {
-  let f = document.getElementById(p)
+function inputSkillData(turn,card,arrc) {
+  let f = document.getElementById("turn"+turn).getElementsByClassName("card"+card+"-skill")[0];
   for (let i = 0; i < arrc[0]; i++) {
     addForm(f.children[0], 0);
     let buffForms = f.getElementsByClassName("buff-form");
@@ -184,7 +185,7 @@ function inputSkillData(p, arrc) {
 //データベース
 function reflectsvData() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv?date=202308181730",false);
+  csv.open("GET", "data/servant_data.csv?date=202309011230",false);
   csv.send(null);
   if (csv.status != 200) {
     return;
@@ -234,7 +235,7 @@ function reflectsvData() {
 
 function reflectQData() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/quest_data.csv?date=202308181730",false);
+  csv.open("GET", "data/quest_data.csv?date=202309011230",false);
   csv.send(null);
   if (csv.status != 200) {
     return;
@@ -256,8 +257,9 @@ function reflectQData() {
   }
   for (let i = 0; i<arr[q_id][2]; i++) {
     addTurn();
-    document.getElementById("turn"+(i+1)+"-enemy-hp").value = arr[q_id][3+i];
-    document.getElementById("turn"+(i+1)+"-class").value = q_class;
-    document.getElementById("turn"+(i+1)+"-attr").value = q_attr;
+    tf = document.getElementById("turn"+(i+1));
+    tf.getElementsByClassName("enemy-hp")[0].value = arr[q_id][3+i];
+    tf.getElementsByClassName("enemy-class")[0].value = q_class;
+    tf.getElementsByClassName("enemy-attr")[0].value = q_attr;
   }
 }

@@ -113,6 +113,15 @@ select {
   display: flex;
 }
 
+.turn-title {
+  display: flex;
+}
+
+.turn-delete-button {
+  margin-left: auto;
+  cursor: pointer;
+}
+
 .open-pop-up {
   margin-top: 25px;
   margin-left: 5px;

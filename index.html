@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?date=202308181730">
-  <script src="js/main.js?date=202308181730"></script>
-  <script src="js/addform.js?date=202308181730"></script>
-  <script src="js/calculate.js?date=202308181730"></script>
-  <script src="js/savedata.js?date=202308181730"></script>
+  <link rel="stylesheet" href="style.css?date=202309011230">
+  <script src="js/main.js?date=202309011230"></script>
+  <script src="js/addform.js?date=202309011230"></script>
+  <script src="js/calculate.js?date=202309011230"></script>
+  <script src="js/savedata.js?date=202309011230"></script>
   <title>FGO Damage Roadmap</title>
 </head>
 <body onload="generateServantList(0); generateQuesttList();">
@@ -176,9 +176,9 @@
         </div>
       </div>
 
-      <div class="inputfield-wrapper">
+      <div class="inputfield-wrapper" id="turn0">
         <h3>パッシブ/開始時効果</h3>
-        <div class="inputfield-item" id="passive-skill">
+        <div class="inputfield-item card0-skill" id="passive-skill">
           <input type="button" class="button" value="追加" onclick="addForm(this,0)">
           <input type="button" class="button" value="スコア自動追加" onclick="addScoreForm(this)">
         </div>
@@ -189,7 +189,6 @@
 
       <div class="button-wrapper">
         <input type="button" class="button" value="ターン追加" onclick="addTurn()">
-        <input type="button" class="button" value="ターン削除" onclick="deleteTurn(0)">
         <input type="button" class="button" value="計算" onclick="calculate()">
         <label id="colorcheck">カード選択に色をつける
           <input type="checkbox" onchange="colorChangeCheck()">
@@ -291,6 +290,7 @@
             お知らせ・更新履歴
           </summary>
           <ul>
+            <li>【更新】ターンごとにフォームを削除できるよう変更しました。(2023/9/1)</li>
             <li>【更新】クエストデータを実装しました。(2023/8/18)</li>
             <li>【更新】サーヴァントデータを実装しました。(2023/8/15)</li>
             <li>【更新】カード毎のバフ情報を確認できる機能を追加しました。(2023/8/13)</li>
@@ -368,11 +368,14 @@
     </template>
 
     <template id="turn-template">
-      <div id="turn0" class="inputfield-wrapper turn-form">
-        <h3>0T目</h3>
+      <div id="turnx" class="inputfield-wrapper turn-form">
+        <div class="turn-title">
+          <h3>0T目</h3>
+          <a class="turn-delete-button" for="pop-up-check" onclick="deleteTurn(0,this)">✖</a>
+        </div>
         <div class="enemy-info inputfield-item">
           <label>クラス相性:
-            <select id="turn0-class">
+            <select class="enemy-class">
               <option value="0.5">0.5</option>
               <option value="1.0">1.0</option>
               <option value="1.2">1.2</option>
@@ -381,27 +384,27 @@
             </select>
           </label>
           <label>属性相性:
-            <select id="turn0-attr">
+            <select class="enemy-attr">
               <option value="0.9">0.9</option>
               <option value="1.0" selected>1.0</option>
               <option value="1.1">1.1</option>
             </select>
           </label>
-          <input type="number" class="numberfield-9digits" id="turn0-enemy-hp" min="0" max="100000000" placeholder="目標ダメージ">
+          <input type="number" class="numberfield-9digits enemy-hp" min="0" max="100000000" placeholder="目標ダメージ">
           <label class="np-and-star-info">DTDR(NP敵補正):
-            <input type="number" class="numberfield-4digits np-and-star-info" id="turn0-dtdr" min="0" max="1000" placeholder="DTDR" value="100">% 
+            <input type="number" class="numberfield-4digits np-and-star-info dtdr" min="0" max="1000" placeholder="DTDR" value="100">% 
           </label>
           <label class="np-and-star-info">DSR(スター敵補正):
-            <input type="number" class="numberfield-4digits np-and-star-info" id="turn0-dsr" min="-100" max="100" placeholder="DSR" value="0">%
+            <input type="number" class="numberfield-4digits np-and-star-info dsr" min="-100" max="100" placeholder="DSR" value="0">%
           </label>
         </div>
-        <div class="turn-skill" id="turn0-skill">
-          <input type="button" class="button" value="スキル追加">
+        <div class="turn-skill card0-skill">
+          <input type="button" class="button" value="スキル追加" onclick="addForm(this)">
         </div>
         <div class="card-select-wrapper">
-          <div class="card-select" id="turn0-card1">
+          <div class="card-select card1">
             <label>1st
-              <select id="turn0-card1-color" class="card-color-select" onchange="changeColor(this)">
+              <select class="card1-color card-color-select" onchange="changeColor(this)">
                 <option value="n" selected>N</option>
                 <option value="b">B</option>
                 <option value="a">A</option>
@@ -409,27 +412,27 @@
               </select>
             </label>
             <label>クリティカル
-              <select id="turn0-card1-cri">
+              <select class="card1-cri">
                 <option value="2">有</option>
                 <option value="1">無</option>
               </select>
             </label>
-            <select id="turn0-card1-bool">
+            <select class="card1-bool">
               <option value="0">default</option>
               <option value="1">0(回数消費有)</option>
               <option value="2">0(回数消費無)</option>
             </select>
-            <input type="number" class="numberfield-5digits np-and-star-info" id="turn0-card1-ovk" min="0" max="100" placeholder="Overkill">
+            <input type="number" class="numberfield-5digits np-and-star-info card1-ovk" min="0" max="100" placeholder="Overkill">
           </div>
-          <div class="card-skill" id="turn0-card1-skill">
-            <input type="button" class="button" value="追加">
+          <div class="card-skill card1-skill">
+            <input type="button" class="button" value="追加" onclick="addForm(this)">
           </div>
         </div>
 
         <div class="card-select-wrapper">
-          <div class="card-select" id="turn0-card2">
+          <div class="card-select card2">
             <label>2nd
-              <select id="turn0-card2-color" class="card-color-select" onchange="changeColor(this)">
+              <select class="card2-color card-color-select" onchange="changeColor(this)">
                 <option value="n">N</option>
                 <option value="b" selected>B</option>
                 <option value="a">A</option>
@@ -437,27 +440,27 @@
               </select>
             </label>
             <label>クリティカル
-              <select id="turn0-card2-cri">
+              <select class="card2-cri">
                 <option value="2">有</option>
                 <option value="1">無</option>
               </select>
             </label>
-            <select id="turn0-card2-bool">
+            <select class="card2-bool">
               <option value="0">default</option>
               <option value="1">0(回数消費有)</option>
               <option value="2">0(回数消費無)</option>
             </select>
-            <input type="number" class="numberfield-5digits np-and-star-info" id="turn0-card2-ovk" min="0" max="100" placeholder="Overkill">
+            <input type="number" class="numberfield-5digits np-and-star-info card2-ovk" min="0" max="100" placeholder="Overkill">
           </div>
-          <div id="turn0-card2-skill">
-            <input type="button" class="button" value="追加">
+          <div class="card2-skill">
+            <input type="button" class="button" value="追加" onclick="addForm(this)">
           </div>
         </div>
 
         <div class="card-select-wrapper">
-          <div class="card-select" id="turn0-card3">
+          <div class="card-select" class="card3">
             <label>3rd
-              <select id="turn0-card3-color" class="card-color-select" onchange="changeColor(this)">
+              <select class="card3-color card-color-select" onchange="changeColor(this)">
                 <option value="n">N</option>
                 <option value="b" selected>B</option>
                 <option value="a">A</option>
@@ -465,40 +468,40 @@
               </select>
             </label>
             <label>クリティカル
-              <select id="turn0-card3-cri">
+              <select class="card3-cri">
                 <option value="2">有</option>
                 <option value="1">無</option>
               </select>
             </label>
-            <select id="turn0-card3-bool">
+            <select class="card3-bool">
               <option value="0">default</option>
               <option value="1">0(回数消費有)</option>
               <option value="2">0(回数消費無)</option>
             </select>
-            <input type="number" class="numberfield-5digits np-and-star-info" id="turn0-card3-ovk" min="0" max="100" placeholder="Overkill">
+            <input type="number" class="numberfield-5digits np-and-star-info card3-ovk" min="0" max="100" placeholder="Overkill">
           </div>
-          <div id="turn0-card3-skill">
-            <input type="button" class="button" value="追加">
+          <div class="card3-skill">
+            <input type="button" class="button" value="追加" onclick="addForm(this)">
           </div>
         </div>
 
         <div class="card-select-wrapper">
-          <div class="card-select" id="turn0-card4">
+          <div class="card-select card4">
             <label>4th
-              <select id="turn0-card4-color" class="card-color-select">
+              <select class="card4-color card-color-select">
                 <option value="ex">EX</option>
                 <option value="-1">-</option>
               </select>
             </label>
-            <select id="turn0-card4-bool">
+            <select class="card4-bool">
               <option value="0">default</option>
               <option value="1">0(回数消費有)</option>
               <option value="2">0(回数消費無)</option>
             </select>
-            <input type="number" class="numberfield-5digits np-and-star-info" id="turn0-card4-ovk" min="0" max="100" placeholder="Overkill"></label>
+            <input type="number" class="numberfield-5digits np-and-star-info card4-ovk" min="0" max="100" placeholder="Overkill"></label>
           </div>
-          <div id="turn0-card4-skill">
-            <input type="button" class="button" value="追加">
+          <div class="card4-skill">
+            <input type="button" class="button" value="追加" onclick="addForm(this)">
           </div>
         </div>
       </div>
