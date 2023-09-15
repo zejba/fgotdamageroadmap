@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?date=202309011230">
-  <script src="js/main.js?date=202309011230"></script>
-  <script src="js/addform.js?date=202309011230"></script>
-  <script src="js/calculate.js?date=202309011230"></script>
-  <script src="js/savedata.js?date=202309011230"></script>
+  <link rel="stylesheet" href="style.css?date=202309151800">
+  <script src="js/main.js?date=202309151800"></script>
+  <script src="js/addform.js?date=202309151800"></script>
+  <script src="js/calculate.js?date=202309151800"></script>
+  <script src="js/savedata.js?date=202309151800"></script>
+  <script src="js/subwindow.js?date=202309151800"></script>
   <title>FGO Damage Roadmap</title>
 </head>
 <body onload="generateServantList(0); generateQuesttList();">
@@ -189,7 +190,7 @@
 
       <div class="button-wrapper">
         <input type="button" class="button" value="ターン追加" onclick="addTurn()">
-        <input type="button" class="button" value="計算" onclick="calculate()">
+        <input type="button" class="button" value="計算" id="calculate_button" onclick="calculate()">
         <label id="colorcheck">カード選択に色をつける
           <input type="checkbox" onchange="colorChangeCheck()">
         </label>
@@ -277,6 +278,9 @@
           </details>
         </div>
       </div>
+      <div class="button-wrapper result-window-button">
+        <input type="button" class="button" value="リザルトを別ウィンドウで開く" onClick="openSubWindow('resultwindow.html')">
+      </div>
       
       <div class="button-wrapper">
         <input type="button" class="button" value="エクスポート" onclick="exportData()">
@@ -290,6 +294,7 @@
             お知らせ・更新履歴
           </summary>
           <ul>
+            <li>【更新】リザルトフォームを別ウィンドウで表示する機能を追加しました。(PC限定)(2023/9/15)</li>
             <li>【更新】ターンごとにフォームを削除できるよう変更しました。(2023/9/1)</li>
             <li>【更新】クエストデータを実装しました。(2023/8/18)</li>
             <li>【更新】サーヴァントデータを実装しました。(2023/8/15)</li>

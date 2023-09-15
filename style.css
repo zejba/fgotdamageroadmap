@@ -356,6 +356,10 @@ footer {
     display: none;
   }
 
+  .result-window-button {
+    display: none;
+  }
+
   table {
     font-size: 12px;
   }

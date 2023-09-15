@@ -302,62 +302,69 @@ function calculate() {
   }
 
   //出力
+  if (turns != 0) {
+    refResult(window);
+    if (win1 && !win1.closed) {
+      refResult(win1);
+    }
+  }
 
   //リザルトフォームを生成
-  addResultForm(turns, npbool);
-  let op = document.getElementsByName("result");
-  let npr = document.getElementsByName("npresult");
-  let starr = document.getElementsByName("starresult");
-
-  let bufff = document.getElementById("hidden-result");
-  bufff.innerHTML = "";
-  //ターン数ループ
-  for (let i=0; i<turns; i++) {
-    //カード色部分
-    for (let j=0; j < 3; j++) {
-      let k = i*20 + j; 
-      op[k].textContent = totalResult[k].toLocaleString();
-      if (document.getElementById("colorcheck").children[0].checked) {
-        let cardcolor = totalResult[k];
-        if (totalResult[k]=="N") {
-          cardcolor = npColor.toUpperCase();  
+  function refResult(target_window) {
+    addResultForm(target_window, turns, npbool);
+    let op = target_window.document.getElementsByName("result");
+    let npr = target_window.document.getElementsByName("npresult");
+    let starr = target_window.document.getElementsByName("starresult");
+    let bufff = target_window.document.getElementById("hidden-result");
+    bufff.innerHTML = "";
+    //ターン数ループ
+    for (let i=0; i<turns; i++) {
+      //カード色部分
+      for (let j=0; j < 3; j++) {
+        let k = i*20 + j; 
+        op[k].textContent = totalResult[k].toLocaleString();
+        if (document.getElementById("colorcheck").children[0].checked) {
+          let cardcolor = totalResult[k];
+          if (totalResult[k]=="N") {
+            cardcolor = npColor.toUpperCase();  
+          }
+          if (cardcolor=="B") {
+            op[k].parentElement.style.backgroundColor = "tomato";
+          } else if (cardcolor=="A") {
+            op[k].parentElement.style.backgroundColor = "cornflowerblue";
+          } else if (cardcolor=="Q") {
+            op[k].parentElement.style.backgroundColor = "lightgreen";
+          }
+        } else {
+          op[k].parentElement.style.backgroundColor = "white";
         }
-        if (cardcolor=="B") {
-          op[k].parentElement.style.backgroundColor = "tomato";
-        } else if (cardcolor=="A") {
-          op[k].parentElement.style.backgroundColor = "cornflowerblue";
-        } else if (cardcolor=="Q") {
-          op[k].parentElement.style.backgroundColor = "lightgreen";
+      }
+      //数値部分
+      for (let j=3; j < 20; j++) {
+        let k = i*20 + j; 
+        op[k].textContent = totalResult[k].toLocaleString();
+      }
+      //NP部分
+      if (npbool) {
+        let npsum = 0;
+        let starsum = [0,0];
+        for (let j=0; j<=3; j++) {
+          npr[i*5+j].textContent = npResult[i*4+j] / 100 + "%";
+          npsum += npResult[i*4+j];
+          starr[i*5+j].textContent = starResult[i*4+j][0] + "(+" + starResult[i*4+j][1] + ")" + Math.floor(Math.max(starResult[i*4+j][2],0) * 1000) / 10 + "～" + Math.floor(Math.max(starResult[i*4+j][3],0) * 1000) / 10 + "%";
+          starsum[0] += starResult[i*4+j][0];
+          starsum[1] += starResult[i*4+j][1];
         }
-      } else {
-        op[k].parentElement.style.backgroundColor = "white";
+        npr[i*5+4].textContent = Math.floor(npsum) / 100 + "%";
+        starr[i*5+4].textContent = starsum[0] + "(+" + starsum[1] + ")";
       }
-    }
-    //数値部分
-    for (let j=3; j < 20; j++) {
-      let k = i*20 + j; 
-      op[k].textContent = totalResult[k].toLocaleString();
-    }
-    //NP部分
-    if (npbool) {
-      let npsum = 0;
-      let starsum = [0,0];
-      for (let j=0; j<=3; j++) {
-        npr[i*5+j].textContent = npResult[i*4+j] / 100 + "%";
-        npsum += npResult[i*4+j];
-        starr[i*5+j].textContent = starResult[i*4+j][0] + "(+" + starResult[i*4+j][1] + ")" + Math.floor(Math.max(starResult[i*4+j][2],0) * 1000) / 10 + "～" + Math.floor(Math.max(starResult[i*4+j][3],0) * 1000) / 10 + "%";
-        starsum[0] += starResult[i*4+j][0];
-        starsum[1] += starResult[i*4+j][1];
-      }
-      npr[i*5+4].textContent = Math.floor(npsum) / 100 + "%";
-      starr[i*5+4].textContent = starsum[0] + "(+" + starsum[1] + ")";
-    }
 
-    //バフ情報
-    for (let j=0; j<4; j++) {
-      let new_element = document.createElement("li");
-      new_element.textContent = (i + 1) + "T-" + (j + 1) + " 攻撃バフ:" + buffCount[4*i+j][0] + "% 色バフ:" + buffCount[4*i+j][1] + "% 宝具/クリバフ:" + buffCount[4*i+j][2] + "% 特攻バフ:" + buffCount[4*i+j][3] + "%";
-      bufff.appendChild(new_element);
+      //バフ情報
+      for (let j=0; j<4; j++) {
+        let new_element = document.createElement("li");
+        new_element.textContent = (i + 1) + "T-" + (j + 1) + " 攻撃バフ:" + buffCount[4*i+j][0] + "% 色バフ:" + buffCount[4*i+j][1] + "% 宝具/クリバフ:" + buffCount[4*i+j][2] + "% 特攻バフ:" + buffCount[4*i+j][3] + "%";
+        bufff.appendChild(new_element);
+      }
     }
   }
 }
@@ -473,10 +480,10 @@ function binarySearch(target, arr) {
 }
 
 //表を増やす
-function addResultForm(i, np) {
-  const parent = document.getElementById("result-form");
+function addResultForm(target_window, i, np) {
+  const parent = target_window.document.getElementById("result-form");
   //初期化
-  let t = document.getElementsByClassName("result-content");
+  let t = target_window.document.getElementsByClassName("result-content");
   for (let k=0; k<t.length;) {
     t[0].remove();
   }
