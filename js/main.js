@@ -12,6 +12,7 @@ function generateServantList(b) {
   }
   let arr = [];
   let list = csv.responseText.split('\n');
+  list.shift();
   for (let i = 0; i < list.length; i++) {
     arr.push(list[i].split(','));
   }

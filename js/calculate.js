@@ -442,6 +442,11 @@ function buffTotalling(buffName) {
 
 //撃破率計算
 function passRate(d1,d2,d3,d4,target) {
+  if ((d1+d2+d3+d4) * 1.099 < target) {
+    return 0;
+  } else if ((d1+d2+d3+d4) * 0.9 >= target) {
+    return 100;
+  }
   let first = [];
   let second = [];
   for (let i = 0.900; i <= 1.099; i += 0.001) {
@@ -450,12 +455,20 @@ function passRate(d1,d2,d3,d4,target) {
       second.push(Math.floor(d3*i+d4*j));
     }
   }
+  first.sort((a,b) => a - b)
   second.sort((a,b) => a - b);
   let cnt = 0;
-  first.forEach(function(elt) {
-    cnt += (40000 - binarySearch((target - elt), second));
-  });
-  return (Math.floor(cnt / 160000))/100;
+  let right = 39999;
+  for (let i=0; i < 40000; i += 1) {
+    if (first[i] >= target) {
+      break;
+    }
+    while (right > 0 && first[i] + second[right] >= target) {
+      right -= 1
+    }
+    cnt += right + 1;    
+  };
+  return Math.round((1600000000 - cnt) / 160000) / 100
 }
 
 //二分探索
