@@ -133,8 +133,8 @@ function npCalcCheck(p) {
 
 //クラススコア自動入力
 function addScoreForm(p) {
-  scoreType = ["b_power_buff","b_cr_buff","a_power_buff","a_cr_buff","q_power_buff","q_cr_buff","ex_buff","cr_buff","np_buff","starget_buff"];
-  scoreAmount = [20,20,20,40,20,60,50,10,10,50];
+  const scoreType = ["b_power_buff","b_cr_buff","a_power_buff","a_cr_buff","q_power_buff","q_cr_buff","ex_buff","cr_buff","np_buff","starget_buff"];
+  const scoreAmount = [20,20,20,40,20,60,50,10,10,50];
   for (let i = 0; i < 10; i++) {
     addForm(p);
   }
@@ -147,4 +147,53 @@ function addScoreForm(p) {
     buffForms[x+i].getElementsByClassName('turn')[0].value = 0;
     buffForms[x+i].getElementsByClassName('time')[0].value = 0;
   }
+}
+
+//AS自動入力
+function addAS1Form(p) {
+  addForm(p);
+  let buffForms = p.parentElement.getElementsByClassName("buff-form");
+  let x = buffForms.length - 1;
+  buffForms[x].getElementsByClassName('skill-name')[0].value = "AS1";
+  buffForms[x].getElementsByClassName('skill-type')[0].value = "ex_buff";
+  buffForms[x].getElementsByClassName('amount')[0].value = 50;
+  buffForms[x].getElementsByClassName('turn')[0].value = 0;
+  buffForms[x].getElementsByClassName('time')[0].value = 0;
+}
+
+//AS自動入力
+function addAS3Form(p) {
+  addForm(p);
+  let buffForms = p.parentElement.getElementsByClassName("buff-form");
+  let x = buffForms.length - 1;
+  buffForms[x].getElementsByClassName('skill-name')[0].value = "AS3";
+  buffForms[x].getElementsByClassName('skill-type')[0].value = "atk_buff";
+  buffForms[x].getElementsByClassName('amount')[0].value = 30;
+  buffForms[x].getElementsByClassName('turn')[0].value = 0;
+  buffForms[x].getElementsByClassName('time')[0].value = 0;
+}
+
+//AS自動入力
+function addAS4Form(p) {
+  addForm(p);
+  let buffForms = p.parentElement.getElementsByClassName("buff-form");
+  let x = buffForms.length - 1;
+  buffForms[x].getElementsByClassName('skill-name')[0].value = "AS4";
+  buffForms[x].getElementsByClassName('skill-type')[0].value = "cr_buff";
+  buffForms[x].getElementsByClassName('amount')[0].value = 30;
+  buffForms[x].getElementsByClassName('turn')[0].value = 0;
+  buffForms[x].getElementsByClassName('time')[0].value = 0;
+}
+
+//礼装ATK自動入力
+function setAtk(value) {
+  let target = document.getElementById("craft-essence-atk");
+  target.value = value;
+}
+
+//完全体チェック時
+function perfectCheck(p) {
+  document.getElementById("lv120-check").checked = p.checked;
+  document.getElementById("goldfou-check").checked = p.checked;
+  document.getElementById("footprint-check").checked = p.checked;
 }

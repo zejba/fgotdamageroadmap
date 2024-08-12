@@ -199,10 +199,14 @@ function reflectsvData() {
   if (i === -1) {return}
   document.getElementById('servant-class').value = arr[i][3];
   document.getElementById('servant-attr').value = arr[i][4];
-  document.getElementById('servant-atk').value = Number(arr[i][5]);
-  if (document.getElementById("perfect-check").checked) {
-    document.getElementById('servant-atk').value = Number(arr[i][6]);
+  let atk = Number(arr[i][5]) + 1000;
+  if (document.getElementById("lv120-check").checked) {
+    atk = Number(arr[i][6]) + 1000;
   }
+  if (document.getElementById("goldfou-check").checked) {
+    atk += 1000;
+  }
+  document.getElementById('servant-atk').value = atk;
   document.getElementById('np-color').value = arr[i][7];
   document.getElementById('np-mag').value = Number(arr[i][8]);
   document.getElementById('np-rate').value = Number(arr[i][9]);
@@ -231,6 +235,13 @@ function reflectsvData() {
     buffForms[x+j].getElementsByClassName('turn')[0].value = 0;
     buffForms[x+j].getElementsByClassName('time')[0].value = 0;
   }
+  let footprint = 0;
+  if (document.getElementById("footprint-check").checked) {
+    footprint = 500;
+  }
+  document.getElementById("b-footprint").value = footprint;
+  document.getElementById("a-footprint").value = footprint;
+  document.getElementById("q-footprint").value = footprint;
 }
 
 function reflectQData() {

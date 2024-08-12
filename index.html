@@ -88,12 +88,23 @@
           </div>
           <div class="inputfield-item">
             <label>
-              <input  id="perfect-check" type="checkbox">完全体
+              <input id="perfect-check" type="checkbox" onchange="perfectCheck(this)">完全体
             </label>
+            （
+            <label>
+              <input id="lv120-check" type="checkbox">Lv.120
+            </label>
+            <label>
+              <input id="goldfou-check" type="checkbox">金フォウ
+            </label>
+            <label>
+              <input id="footprint-check" type="checkbox">足跡
+            </label>
+            ）
           </div>
           <div class="inputfield-item">
             <input type="button" class="button" value="反映" onclick="reflectsvData()">
-            ※ATKフォウ込み(完全体は金フォウ込み)
+            ※ATK銀フォウ込み
           </div>
           <br>
         </details>
@@ -127,9 +138,14 @@
         <label>ATK:
           <input type="number" class="numberfield-5digits" id="servant-atk" min="0" max="30000">
         </label>
-        <lebel>礼装ATK:
-          <input type="number" class="numberfield-5digits" id="craft-essence-atk" min="0" max="3000">
-        </lebel>
+        <div>
+          <lebel>礼装ATK:
+            <input type="number" class="numberfield-5digits" id="craft-essence-atk" min="0" max="3000">
+          </lebel>
+          <input type="button" class="button" value="2000" onclick="setAtk(2000)">
+          <input type="button" class="button" value="2400" onclick="setAtk(2400)">
+          <input type="button" class="button" value="1000" onclick="setAtk(1000)">
+        </div>
         <label>宝具色:
           <select id="np-color" id="np-color" onchange="colorChangeCheck()">
               <option value="b">B</option>
@@ -182,6 +198,9 @@
         <div class="inputfield-item card0-skill" id="passive-skill">
           <input type="button" class="button" value="追加" onclick="addForm(this,0)">
           <input type="button" class="button" value="スコア自動追加" onclick="addScoreForm(this)">
+          <input type="button" class="button" value="AS1追加" onclick="addAS1Form(this)">
+          <input type="button" class="button" value="AS3追加" onclick="addAS3Form(this)">
+          <input type="button" class="button" value="AS4追加" onclick="addAS4Form(this)">
         </div>
       </div>
 
@@ -294,7 +313,8 @@
             お知らせ・更新履歴
           </summary>
           <ul>
-            <li>【固定】サーヴァントデータ最終更新日 2024/3/28</li>
+            <li>【固定】サーヴァントデータ最終更新日 2024/8/12</li>
+            <li>【更新】自動入力ボタンを数種類追加しました。(2024/8/12)</li>
             <li>【更新】リザルトフォームを別ウィンドウで表示する機能を追加しました。(PC限定)(2023/9/15)</li>
             <li>【更新】ターンごとにフォームを削除できるよう変更しました。(2023/9/1)</li>
             <li>【更新】クエストデータを実装しました。(2023/8/18)</li>
