@@ -5,7 +5,7 @@ function openMenu(p) {
 //サーヴァントリストを生成
 function generateServantList(b) {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv?date=202409050240",false);
+  csv.open("GET", "data/servant_data.csv?date=202409150300",false);
   csv.send(null);
   if (csv.status != 200) {
     return;
@@ -39,7 +39,7 @@ function generateServantList(b) {
 //クエストリストを生成
 function generateQuesttList() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/quest_data.csv?date=202409050240",false);
+  csv.open("GET", "data/quest_data.csv?date=202409150300",false);
   csv.send(null);
   if (csv.status != 200) {
     return;

@@ -365,6 +365,7 @@ function calculate() {
         new_element.textContent = (i + 1) + "T-" + (j + 1) + " 攻撃バフ:" + buffCount[4*i+j][0] + "% 色バフ:" + buffCount[4*i+j][1] + "% 宝具/クリバフ:" + buffCount[4*i+j][2] + "% 特攻バフ:" + buffCount[4*i+j][3] + "%";
         bufff.appendChild(new_element);
       }
+      bufff.appendChild(document.createElement("br"))
     }
   }
 }
