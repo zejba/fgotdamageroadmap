@@ -51,6 +51,7 @@ function calculate() {
   buffs["sp_def"] = [[0,Infinity,Infinity]];
   buffs["damage_plus"] = [[0,Infinity,Infinity]];
   buffs["np_mag_up"] = [[0, Infinity, Infinity]];
+  buffs["cr_card_buff"] = [[0, Infinity, Infinity]]
 
 
   //パッシブスキル取得
@@ -118,7 +119,7 @@ function calculate() {
 
     for (let j = 1; j <= 4; j++) {
       // カードのバフを計算
-      readBuff(i,j);
+      readBuff(i, j);
       //判定
       let bl = Number(tf.getElementsByClassName("card"+j+"-bool")[0].value);
       //オバキル
@@ -234,6 +235,7 @@ function calculate() {
           cardCorr = cardCorres[j-1] * (1 + (j-1) * 0.2);
           if (actType == "cr") {
             nporcrbuff = Math.max((buffTotalling("cr_buff") + buffTotalling(cardColor + "_cr_buff")) / 100, -1);
+            cardbuff += Math.max(buffTotalling("cr_card_buff") / 100, -1);
           }
         }
 
