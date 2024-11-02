@@ -3,7 +3,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 150vh;
-  min-width: 450px;
+  min-width: 480px;
 }
 
 main{
@@ -39,7 +39,7 @@ select {
   border: solid 2px;
   border-radius: 6px;
   padding: 8px;
-  max-width: 470px;
+  max-width: 500px;
   margin: 6px;
 }
 

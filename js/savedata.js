@@ -186,7 +186,7 @@ function inputSkillData(turn,card,arrc) {
 //データベース
 function reflectsvData() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/servant_data.csv?date=202411010000",false);
+  csv.open("GET", "data/servant_data.csv?date=202411030000",false);
   csv.send(null);
   if (csv.status != 200) {
     return;
@@ -247,7 +247,7 @@ function reflectsvData() {
 
 function reflectQData() {
   let csv = new XMLHttpRequest();
-  csv.open("GET", "data/quest_data.csv?date=202411010000",false);
+  csv.open("GET", "data/quest_data.csv?date=202411030000",false);
   csv.send(null);
   if (csv.status != 200) {
     return;
