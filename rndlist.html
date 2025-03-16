@@ -35,7 +35,8 @@
             <th>色バフ</th>
             <th>星バフ</th>
             <th>クリティカル</th>
-            <th>コマコ/追加効果</th>
+            <th>ダメ前追加判定</th>
+            <th>ダメ後追加判定</th>
             <th>ダメージ判定回数(補助宝具は0)</th>
             <th>選出必須</th>
           </tr>
@@ -57,7 +58,8 @@
             <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
             <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
             <td><input type="checkbox" name="critical"></td>
-            <td><input type="number" class="numberfield-2digits" name="additional-effect" min="0" max="100"></td>
+            <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
+            <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
             <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
             <td><input type="checkbox" name="select-required"></td>
           </tr>
@@ -79,7 +81,8 @@
             <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
             <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
             <td><input type="checkbox" name="critical"></td>
-            <td><input type="number" class="numberfield-2digits" name="additional-effect" min="0" max="100"></td>
+            <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
+            <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
             <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
             <td><input type="checkbox" name="select-required"></td>
           </tr>
@@ -101,7 +104,8 @@
             <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
             <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
             <td><input type="checkbox" name="critical"></td>
-            <td><input type="number" class="numberfield-2digits" name="additional-effect" min="0" max="100"></td>
+            <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
+            <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
             <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
             <td><input type="checkbox" name="select-required"></td>
           </tr>
@@ -114,7 +118,8 @@
             <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
             <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
             <td><input type="checkbox" name="critical"></td>
-            <td><input type="number" class="numberfield-2digits" name="additional-effect" min="0" max="100"></td>
+            <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
+            <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
             <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
             <td><input type="checkbox" name="select-required"></td>
           </tr>
@@ -131,7 +136,10 @@
       <label for="star-check">星判定消費数を表示</label>
     </div>
 
-    <div>
+    <details open>
+      <summary>
+        結果
+      </summary>
       <table id="rndc-result">
         <tr>
           <th class="table-number"></th>
@@ -161,10 +169,16 @@
           <td name="rndcresult"></td>
         </tr>
       </table>
-    </div>
+      <p class="note">※クリティカルは20%、オーバーキルは30%を星発生率に加算し、100%を超える毎に乱数消費量にhit数を加算</p>
+      <p class="note">※ダメージ乱数は乱数消費量から星判定とダメージ後効果判定の乱数消費量を減算</p>
+    </details>
 
-    <p class="note">※クリティカルは20%、オーバーキルは30%を星発生率に加算し、100%を超える毎に乱数消費量にhit数を加算</p>
-    <p class="note">※ダメージ乱数は乱数消費量から星判定とダメージ後効果判定の乱数消費量を減算</p>
+    <div>
+      <br />
+      <p class="note">【踏めるダメージ乱数とその位置】</p>
+      <ul id="checkable-rnds">
+      </ul>
+    </div>
 
     <template id="rndform-template">
       <tr class="rndr">
@@ -185,7 +199,8 @@
         <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
         <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
         <td><input type="checkbox" name="critical"></td>
-        <td><input type="number" class="numberfield-2digits" name="additional-effect" min="0" max="100"></td>
+        <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
+        <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
         <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
         <td><input type="checkbox" name="select-required"></td>
 

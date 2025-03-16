@@ -23,100 +23,100 @@ function addRow() {
 }
 
 function rndCalc() {
-  const ele1 = document.getElementsByName("card-select");
-  const cnt = ele1.length
-  const ele2 = document.getElementsByName("sr");
-  const ele3 = document.getElementsByName("dsr");
-  const ele4 = document.getElementsByName("hit-count");
-  const ele5 = document.getElementsByName("card-buff");
-  const ele6 = document.getElementsByName("star-buff");
-  const ele7 = document.getElementsByName("critical");
-  const ele8 = document.getElementsByName("additional-effect");
-  const ele9 = document.getElementsByName("damage-judge");
-  const ele10 = document.getElementsByName("select-required");
-  const ex = ele1[cnt-1].checked;
-  let info = [];
+  const cardColors = document.getElementsByName("card-select");
+  const recordLength = cardColors.length
+  const srs = document.getElementsByName("sr");
+  const dsrs = document.getElementsByName("dsr");
+  const hitCounts = document.getElementsByName("hit-count");
+  const cardBuffs = document.getElementsByName("card-buff");
+  const starBuffs = document.getElementsByName("star-buff");
+  const criticals = document.getElementsByName("critical");
+  const beforeAdditionals = document.getElementsByName("before-additional-effect");
+  const afterAdditionals = document.getElementsByName("after-additional-effect");
+  const damageJudgeCounts = document.getElementsByName("damage-judge");
+  const requires = document.getElementsByName("select-required");
+  const ex = cardColors[recordLength-1].checked;
+  let input = [];
   let result = [];
-  const numstr = ["①","②","③","④","⑤","⑥","⑦","⑧"];
-  for (let i = 0; i<cnt; i++) {
-    let x=1;
-    let y=false;
-    if (ele7[i].checked) {
-      x = 2;
-    }
-    if (ele10[i].checked) {
-      y = true;
-    }
-    info.push([ele1[i].value,
-               Number(ele2[i].value),
-               Number(ele3[i].value),
-               Number(ele4[i].value),
-               Number(ele5[i].value),
-               Number(ele6[i].value),
-               x,
-               Number(ele8[i].value),
-               Number(ele9[i].value),
-               y]);
+  let checkableRnds = Array(100)
+  checkableRnds.fill('')
+  const cardNo = ["①","②","③","④","⑤","⑥","⑦","⑧","Ⓔ"];
+  const cardNoBlack = ["➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "🅔"]
+  for (let i = 0; i<recordLength; i++) {
+    input.push([
+      cardColors[i].value,
+      Number(srs[i].value),
+      Number(dsrs[i].value),
+      Number(hitCounts[i].value),
+      Number(cardBuffs[i].value),
+      Number(starBuffs[i].value),
+      criticals[i].checked ? 2 : 1,
+      Number(beforeAdditionals[i].value),
+      Number(damageJudgeCounts[i].value),
+      requires[i].checked,
+      Number(afterAdditionals[i].value),
+    ]);
   }
   
-  for (let i=0; i<cnt-1; i++) {
-    for (let j=0; j<cnt-1; j++) {
+  for (let i=0; i<recordLength-1; i++) {
+    for (let j=0; j<recordLength-1; j++) {
       if (i===j) {
         continue;
       }
-      for (let k=0; k<cnt-1; k++) {
+      for (let k=0; k<recordLength-1; k++) {
         if (i===k || j===k) {
           continue;
         }
         let r = [];
-        r.push(numstr[i]+numstr[j]+numstr[k]);
-        let fb = 0;
-        if (info[i][0].charAt(0) == "q" || (info[i][0].charAt(0) != info[j][0].charAt(0) && info[j][0].charAt(0) != info[k][0].charAt(0) && info[i][0].charAt(0) != info[k][0].charAt(0))) {
-          fb = 0.2;
+        const header = cardNo[i]+cardNo[j]+cardNo[k]+(ex ? cardNo[cardNo.length - 1] : '')
+        r.push(header);
+        let firstBonus = 0;
+        if (input[i][0].charAt(0) == "q" || (input[i][0].charAt(0) != input[j][0].charAt(0) && input[j][0].charAt(0) != input[k][0].charAt(0) && input[i][0].charAt(0) != input[k][0].charAt(0))) {
+          firstBonus = 0.2;
         }
 
-        odr = [i,j,k,cnt-1];
-        sum = 0;
+        const selection = [i,j,k,recordLength-1];
+        let sum = 0;
 
         for (let l=0; l<4; l++) {
           //カード補正
           let act = 0;
-          if (info[odr[l]][0].charAt(1) == "n") {
+          if (input[selection[l]][0].charAt(1) == "n") {
             act = 1;
           }
           let cardStarCorr = 0;
           if (l==3) {
             act = 2;
             cardStarCorr = 1;
-          } else if (info[odr[l]][0].charAt(0) == "q") {
+          } else if (input[selection[l]][0].charAt(0) == "q") {
             cardStarCorr = 0.8;
             if (act == 0) {
               cardStarCorr += 0.5 * l;
             }
-          } else if (info[odr[l]][0].charAt(0) == "b") {
+          } else if (input[selection[l]][0].charAt(0) == "b") {
             cardStarCorr = 0.1;
             if (act == 0) {
               cardStarCorr += 0.05 * l;
             }
           }
-          let starRate = info[odr[l]][1] / 100;
-          let dsr = info[odr[l]][2] / 100;
-          let hit = info[odr[l]][3];
-          let cardbuff = info[odr[l]][4] / 100;
-          let stargetbuff = info[odr[l]][5] / 100;
-          let cr = info[odr[l]][6];
+          let starRate = input[selection[l]][1] / 100;
+          let dsr = input[selection[l]][2] / 100;
+          let hit = input[selection[l]][3];
+          let cardbuff = input[selection[l]][4] / 100;
+          let stargetbuff = input[selection[l]][5] / 100;
+          let cr = input[selection[l]][6];
           if (act != 0) {
             cr = 1;
           }
           //追加効果を初期値に
-          let rndcount = info[odr[l]][7];
-          let dg = info[odr[l]][8];
-          let stp = starGetCalc(starRate, cardStarCorr, cardbuff, fb, dsr, stargetbuff, cr, hit, 0)[2];
-          if (hit == 0 || dg == 0) {
+          let rndcount = input[selection[l]][7] + input[selection[l]][10];
+          let damageCount = input[selection[l]][8];
+          let stp = starGetCalc(starRate, cardStarCorr, cardbuff, firstBonus, dsr, stargetbuff, cr, hit, 0)[2];
+          if (hit == 0 || damageCount == 0) {
             stp = 0;
           }
           let strnd = 3;
-          if (stp <= 0 || dg == 0) {
+          if (stp <= 0 || damageCount == 0) {
             strnd = 0;
           } else if (stp <= 1) {
             strnd = 1;
@@ -124,9 +124,10 @@ function rndCalc() {
             strnd = 2;
           }
           // ダメージ判定
-          rndcount += dg;
+          rndcount += damageCount;
           //星判定
-          rndcount += strnd * hit;
+          const starJudgeCount = strnd * hit
+          rndcount += starJudgeCount;
 
           if (act == 0) {
             //クリティカル判定
@@ -134,7 +135,7 @@ function rndCalc() {
           } else if (act == 1){
             //謎消費1
             rndcount += 1;
-            if (dg != 0) {
+            if (damageCount != 0) {
               //補助宝具でなければダメージ成功判定(謎消費2)
               rndcount += 1;
             }
@@ -148,15 +149,23 @@ function rndCalc() {
           r.push(rndcount);
           r.push(strnd);
           sum += rndcount;
+          if (!(l === 3 && !ex)) { 
+          const checkableRndEnd = sum - input[selection[l]][10] - starJudgeCount
+            for (let ii=damageCount; ii > 0; ii--) {
+              let turn = l === 0 ? '1st' : l === 1 ? '2nd' : l === 2 ? '3rd' : 'EX'
+              const newHeader = header.replace(header.charAt(l), cardNoBlack[cardNo.indexOf(header[l])])
+              checkableRnds[checkableRndEnd - ii + 1] = `${newHeader} ${turn}-${ii}`
+            }
+          }
         }
         r.push(sum);
         result.push(r.concat());
       }
     }
   }
-  for (let i=0; i<cnt-1; i++) {
-    if (info[i][9]) {
-    result = result.filter(elem => elem[0].indexOf(numstr[i]) != -1);
+  for (let i=0; i<recordLength-1; i++) {
+    if (input[i][9]) {
+    result = result.filter(elem => elem[0].indexOf(cardNo[i]) != -1);
     }
   }
   if (document.getElementById("sort-check").checked) {
@@ -189,5 +198,15 @@ function rndCalc() {
     target[i*10+7].textContent = result[i][7] +"%";
     target[i*10+8].textContent = result[i][10] +"%";
     target[i*10+9].textContent = result[i][13];
-  }  
+  }
+  const parent = document.getElementById("checkable-rnds")
+  parent.innerHTML = ''
+  for (let i=0; i < 100; i++) {
+    if (!checkableRnds[i]) {
+      continue
+    }
+    let li = document.createElement('li')
+    li.innerHTML = `${i}: ${checkableRnds[i]}`
+    parent.appendChild(li)
+  }
 }
