@@ -1,214 +1,561 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css?date=202502151930">
-  <script src="js/main.js?date=202502151930"></script>
-  <script src="js/rndcalc.js?date=202502151930"></script>
-  <script src="js/calculate.js?date=202502151930"></script>
-  <title>FGO Damage Roadmap | RND List</title>
-</head>
-<body>
-  <header>
-    <a href="./index.html" id="title">FGO Damage Roadmap</a>
-    <label class="menu-button">≡<input type="checkbox" id="menucheck" onchange="openMenu(this)"></label>
-    <div class="menu">
-      <div id="menu-close-button"><label class="menu-button" for="menucheck">×</label></div>
-      <div class="menu__item"><a href="./index.html">ダメージ計算</a></div>
-      <div class="menu__item"><a href="./rndlist.html">乱数パターン計算</a></div>
-      <div class="menu__item"><a href="https://twitter.com/yukimisnowy" target="_blank" rel="noopener noreferrer">管理者Twitter</a></div>
-    </div>
-  </header>
-  
-  <main>
-    <h2>乱数パターン計算</h2>
-    <div class="input-table">
-      <div class="rnd-card-select">
-        <table class="rndc-table">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css?date=202503170130" />
+    <script src="js/main.js?date=202503170130"></script>
+    <script src="js/rndcalc.js?date=202503170130"></script>
+    <script src="js/calculate.js?date=202503170130"></script>
+    <title>FGO Damage Roadmap | RND List</title>
+  </head>
+  <body>
+    <header>
+      <a href="./index.html" id="title">FGO Damage Roadmap</a>
+      <label class="menu-button"
+        >≡<input type="checkbox" id="menucheck" onchange="openMenu(this)"
+      /></label>
+      <div class="menu">
+        <div id="menu-close-button">
+          <label class="menu-button" for="menucheck">×</label>
+        </div>
+        <div class="menu__item"><a href="./index.html">ダメージ計算</a></div>
+        <div class="menu__item">
+          <a href="./rndlist.html">乱数パターン計算</a>
+        </div>
+        <div class="menu__item">
+          <a
+            href="https://twitter.com/yukimisnowy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >管理者Twitter</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <h2>乱数パターン計算</h2>
+      <div class="input-table">
+        <div class="rnd-card-select">
+          <table class="rndc-table">
+            <tr>
+              <th class="table-number"></th>
+              <th>カード</th>
+              <th>SR</th>
+              <th>DSR</th>
+              <th>hit数(全体宝具は敵の数を乗算)</th>
+              <th>色バフ</th>
+              <th>星バフ</th>
+              <th>クリティカル</th>
+              <th>ダメ前追加判定</th>
+              <th>ダメ後追加判定</th>
+              <th>ダメージ判定回数(補助宝具は0)</th>
+              <th>選出必須</th>
+            </tr>
+            <tr class="rndr">
+              <td>①</td>
+              <td>
+                <select name="card-select" class="card-color-select">
+                  <option value="bb">B</option>
+                  <option value="aa">A</option>
+                  <option value="qq">Q</option>
+                  <option value="bn">BN</option>
+                  <option value="an">AN</option>
+                  <option value="qn">QN</option>
+                </select>
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="sr"
+                  min="0"
+                  max="100"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="dsr"
+                  min="-100"
+                  max="100"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="hit-count"
+                  min="-100"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="card-buff"
+                  min="-1000"
+                  max="1000"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="star-buff"
+                  min="-1000"
+                  max="1000"
+                />%
+              </td>
+              <td><input type="checkbox" name="critical" /></td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="before-additional-effect"
+                  min="0"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="after-additional-effect"
+                  min="0"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="damage-judge"
+                  min="0"
+                  max="100"
+                  value="1"
+                />
+              </td>
+              <td><input type="checkbox" name="select-required" /></td>
+            </tr>
+            <tr class="rndr">
+              <td>②</td>
+              <td>
+                <select name="card-select" class="card-color-select">
+                  <option value="b">B</option>
+                  <option value="a">A</option>
+                  <option value="q">Q</option>
+                  <option value="bn">BN</option>
+                  <option value="an">AN</option>
+                  <option value="qn">QN</option>
+                </select>
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="sr"
+                  min="0"
+                  max="100"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="dsr"
+                  min="-100"
+                  max="100"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="hit-count"
+                  min="-100"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="card-buff"
+                  min="-1000"
+                  max="1000"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="star-buff"
+                  min="-1000"
+                  max="1000"
+                />%
+              </td>
+              <td><input type="checkbox" name="critical" /></td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="before-additional-effect"
+                  min="0"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="after-additional-effect"
+                  min="0"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="damage-judge"
+                  min="0"
+                  max="100"
+                  value="1"
+                />
+              </td>
+              <td><input type="checkbox" name="select-required" /></td>
+            </tr>
+            <tr class="rndr">
+              <td>③</td>
+              <td>
+                <select name="card-select" class="card-color-select">
+                  <option value="b">B</option>
+                  <option value="a">A</option>
+                  <option value="q">Q</option>
+                  <option value="bn">BN</option>
+                  <option value="an">AN</option>
+                  <option value="qn">QN</option>
+                </select>
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="sr"
+                  min="0"
+                  max="100"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="dsr"
+                  min="-100"
+                  max="100"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="hit-count"
+                  min="-100"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="card-buff"
+                  min="-1000"
+                  max="1000"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="star-buff"
+                  min="-1000"
+                  max="1000"
+                />%
+              </td>
+              <td><input type="checkbox" name="critical" /></td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="before-additional-effect"
+                  min="0"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="after-additional-effect"
+                  min="0"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="damage-judge"
+                  min="0"
+                  max="100"
+                  value="1"
+                />
+              </td>
+              <td><input type="checkbox" name="select-required" /></td>
+            </tr>
+            <tr id="rndex">
+              <td>EX</td>
+              <td><input type="checkbox" name="card-select" value="ex" /></td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="sr"
+                  min="0"
+                  max="100"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="dsr"
+                  min="-100"
+                  max="100"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="hit-count"
+                  min="-100"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="card-buff"
+                  min="-1000"
+                  max="1000"
+                />%
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="star-buff"
+                  min="-1000"
+                  max="1000"
+                />%
+              </td>
+              <td><input type="checkbox" name="critical" /></td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="before-additional-effect"
+                  min="0"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="after-additional-effect"
+                  min="0"
+                  max="100"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="numberfield-2digits"
+                  name="damage-judge"
+                  min="0"
+                  max="100"
+                  value="1"
+                />
+              </td>
+              <td><input type="checkbox" name="select-required" /></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="button-wrapper">
+        <input type="button" class="button" value="追加" onclick="addRow()" />
+        <input type="button" class="button" value="計算" onclick="rndCalc()" />
+        <input type="checkbox" id="sort-check" />
+        <label for="sort-check">消費数順ソート</label>
+        <input type="checkbox" id="star-check" />
+        <label for="star-check">星判定消費数を表示</label>
+      </div>
+
+      <details open class="notice">
+        <summary>結果</summary>
+        <table id="rndc-result">
           <tr>
             <th class="table-number"></th>
-            <th>カード</th>
-            <th>SR</th>
-            <th>DSR</th>
-            <th>hit数(全体宝具は敵の数を乗算)</th>
-            <th>色バフ</th>
-            <th>星バフ</th>
-            <th>クリティカル</th>
-            <th>ダメ前追加判定</th>
-            <th>ダメ後追加判定</th>
-            <th>ダメージ判定回数(補助宝具は0)</th>
-            <th>選出必須</th>
+            <th>選択</th>
+            <th>1st</th>
+            <th>2nd</th>
+            <th>3rd</th>
+            <th>4th</th>
+            <th>1st星</th>
+            <th>2nd星</th>
+            <th>3rd星</th>
+            <th>4th星</th>
+
+            <th>total</th>
           </tr>
-          <tr class="rndr">
-            <td>①</td>
-            <td>
-              <select name="card-select" class="card-color-select">
-                <option value="bb">B</option>
-                <option value="aa">A</option>
-                <option value="qq">Q</option>
-                <option value="bn">BN</option>
-                <option value="an">AN</option>
-                <option value="qn">QN</option>
-              </select>
-            </td>
-            <td><input type="number" class="numberfield-2digits" name="sr" min="0" max="100">%</td>
-            <td><input type="number" class="numberfield-2digits" name="dsr" min="-100" max="100">%</td>
-            <td><input type="number" class="numberfield-2digits" name="hit-count" min="-100" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
-            <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
-            <td><input type="checkbox" name="critical"></td>
-            <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
-            <td><input type="checkbox" name="select-required"></td>
-          </tr>
-          <tr class="rndr">
-            <td>②</td>
-            <td>
-              <select name="card-select" class="card-color-select">
-                <option value="b">B</option>
-                <option value="a">A</option>
-                <option value="q">Q</option>
-                <option value="bn">BN</option>
-                <option value="an">AN</option>
-                <option value="qn">QN</option>
-              </select>
-            </td>
-            <td><input type="number" class="numberfield-2digits" name="sr" min="0" max="100">%</td>
-            <td><input type="number" class="numberfield-2digits" name="dsr" min="-100" max="100">%</td>
-            <td><input type="number" class="numberfield-2digits" name="hit-count" min="-100" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
-            <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
-            <td><input type="checkbox" name="critical"></td>
-            <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
-            <td><input type="checkbox" name="select-required"></td>
-          </tr>
-          <tr class="rndr">
-            <td>③</td>
-            <td>
-              <select name="card-select" class="card-color-select">
-                <option value="b">B</option>
-                <option value="a">A</option>
-                <option value="q">Q</option>
-                <option value="bn">BN</option>
-                <option value="an">AN</option>
-                <option value="qn">QN</option>
-              </select>
-            </td>
-            <td><input type="number" class="numberfield-2digits" name="sr" min="0" max="100">%</td>
-            <td><input type="number" class="numberfield-2digits" name="dsr" min="-100" max="100">%</td>
-            <td><input type="number" class="numberfield-2digits" name="hit-count" min="-100" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
-            <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
-            <td><input type="checkbox" name="critical"></td>
-            <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
-            <td><input type="checkbox" name="select-required"></td>
-          </tr>
-          <tr id="rndex">
-            <td>EX</td>
-            <td><input type="checkbox" name="card-select" value="ex"></td>
-            <td><input type="number" class="numberfield-2digits" name="sr" min="0" max="100">%</td>
-            <td><input type="number" class="numberfield-2digits" name="dsr" min="-100" max="100">%</td>
-            <td><input type="number" class="numberfield-2digits" name="hit-count" min="-100" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
-            <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
-            <td><input type="checkbox" name="critical"></td>
-            <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
-            <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
-            <td><input type="checkbox" name="select-required"></td>
+          <tr class="rndc-result-form">
+            <td>1</td>
+            <td name="rndcresult"></td>
+            <td name="rndcresult"></td>
+            <td name="rndcresult"></td>
+            <td name="rndcresult"></td>
+            <td name="rndcresult"></td>
+            <td name="rndcresult"></td>
+            <td name="rndcresult"></td>
+            <td name="rndcresult"></td>
+            <td name="rndcresult"></td>
+            <td name="rndcresult"></td>
           </tr>
         </table>
+        <p class="note">
+          ※クリティカルは20%、オーバーキルは30%を星発生率に加算し、100%を超える毎に乱数消費量にhit数を加算
+        </p>
+        <p class="note">
+          ※ダメージ乱数は乱数消費量から星判定とダメージ後効果判定の乱数消費量を減算
+        </p>
+      </details>
+
+      <div>
+        <br />
+        <p class="note">
+          【踏めるダメージ乱数とその位置】※注:オーバーキル未考慮
+        </p>
+        <ul id="checkable-rnds"></ul>
       </div>
-    </div>
 
-    <div class="button-wrapper">
-      <input type="button" class="button" value="追加" onclick="addRow()">
-      <input type="button" class="button" value="計算" onclick="rndCalc()">
-      <input type="checkbox" id="sort-check">
-      <label for="sort-check">消費数順ソート</label>
-      <input type="checkbox" id="star-check">
-      <label for="star-check">星判定消費数を表示</label>
-    </div>
-
-    <details open>
-      <summary>
-        結果
-      </summary>
-      <table id="rndc-result">
-        <tr>
-          <th class="table-number"></th>
-          <th>選択</th>
-          <th>1st</th>
-          <th>2nd</th>
-          <th>3rd</th>
-          <th>4th</th>
-          <th>1st星</th>
-          <th>2nd星</th>
-          <th>3rd星</th>
-          <th>4th星</th>
-
-          <th>total</th>
+      <template id="rndform-template">
+        <tr class="rndr">
+          <td>①</td>
+          <td>
+            <select name="card-select" class="card-color-select">
+              <option value="bb">B</option>
+              <option value="aa">A</option>
+              <option value="qq">Q</option>
+              <option value="bn">BN</option>
+              <option value="an">AN</option>
+              <option value="qn">QN</option>
+            </select>
+          </td>
+          <td>
+            <input
+              type="number"
+              class="numberfield-2digits"
+              name="sr"
+              min="0"
+              max="100"
+            />%
+          </td>
+          <td>
+            <input
+              type="number"
+              class="numberfield-2digits"
+              name="dsr"
+              min="-100"
+              max="100"
+            />%
+          </td>
+          <td>
+            <input
+              type="number"
+              class="numberfield-2digits"
+              name="hit-count"
+              min="-100"
+              max="100"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="numberfield-2digits"
+              name="card-buff"
+              min="-1000"
+              max="1000"
+            />%
+          </td>
+          <td>
+            <input
+              type="number"
+              class="numberfield-2digits"
+              name="star-buff"
+              min="-1000"
+              max="1000"
+            />%
+          </td>
+          <td><input type="checkbox" name="critical" /></td>
+          <td>
+            <input
+              type="number"
+              class="numberfield-2digits"
+              name="before-additional-effect"
+              min="0"
+              max="100"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="numberfield-2digits"
+              name="after-additional-effect"
+              min="0"
+              max="100"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="numberfield-2digits"
+              name="damage-judge"
+              min="0"
+              max="100"
+              value="1"
+            />
+          </td>
+          <td><input type="checkbox" name="select-required" /></td>
         </tr>
-        <tr class="rndc-result-form">
-          <td>1</td>
-          <td name="rndcresult"></td>
-          <td name="rndcresult"></td>
-          <td name="rndcresult"></td>
-          <td name="rndcresult"></td>
-          <td name="rndcresult"></td>
-          <td name="rndcresult"></td>
-          <td name="rndcresult"></td>
-          <td name="rndcresult"></td>
-          <td name="rndcresult"></td>
-          <td name="rndcresult"></td>
-        </tr>
-      </table>
-      <p class="note">※クリティカルは20%、オーバーキルは30%を星発生率に加算し、100%を超える毎に乱数消費量にhit数を加算</p>
-      <p class="note">※ダメージ乱数は乱数消費量から星判定とダメージ後効果判定の乱数消費量を減算</p>
-    </details>
+      </template>
+    </main>
 
-    <div>
-      <br />
-      <p class="note">【踏めるダメージ乱数とその位置】</p>
-      <ul id="checkable-rnds">
-      </ul>
-    </div>
-
-    <template id="rndform-template">
-      <tr class="rndr">
-        <td>①</td>
-        <td>
-          <select name="card-select" class="card-color-select">
-            <option value="bb">B</option>
-            <option value="aa">A</option>
-            <option value="qq">Q</option>
-            <option value="bn">BN</option>
-            <option value="an">AN</option>
-            <option value="qn">QN</option>
-          </select>
-        </td>
-        <td><input type="number" class="numberfield-2digits" name="sr" min="0" max="100">%</td>
-        <td><input type="number" class="numberfield-2digits" name="dsr" min="-100" max="100">%</td>
-        <td><input type="number" class="numberfield-2digits" name="hit-count" min="-100" max="100"></td>
-        <td><input type="number" class="numberfield-2digits" name="card-buff" min="-1000" max="1000">%</td>
-        <td><input type="number" class="numberfield-2digits" name="star-buff" min="-1000" max="1000">%</td>
-        <td><input type="checkbox" name="critical"></td>
-        <td><input type="number" class="numberfield-2digits" name="before-additional-effect" min="0" max="100"></td>
-        <td><input type="number" class="numberfield-2digits" name="after-additional-effect" min="0" max="100"></td>
-        <td><input type="number" class="numberfield-2digits" name="damage-judge" min="0" max="100" value="1"></td>
-        <td><input type="checkbox" name="select-required"></td>
-
-      </tr>
-    </template>
-
-  </main>
-
-  <footer>
-    <a href="https://twitter.com/yukimisnowy" target="_blank" rel="noopener noreferrer" class="footer-item">管理者Twitter</a>
-  </footer>
+    <footer>
+      <a
+        href="https://twitter.com/yukimisnowy"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-item"
+        >管理者Twitter</a
+      >
+    </footer>
+  </body>
+</html>

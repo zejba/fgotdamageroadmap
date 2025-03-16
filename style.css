@@ -3,10 +3,10 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 150vh;
-  min-width: 480px;
+  min-width: 500px;
 }
 
-main{
+main {
   flex: 1;
 }
 
@@ -48,7 +48,7 @@ select {
 }
 
 .buff-form {
-  display:flex;
+  display: flex;
   gap: 2px 1px;
   margin: 3px 0px;
   flex-wrap: wrap;
@@ -89,7 +89,7 @@ select {
 }
 
 .turn-skill {
-  padding: 6px
+  padding: 6px;
 }
 
 .button-wrapper {
@@ -141,32 +141,32 @@ select {
 }
 
 .overlay {
-	display: none;
+  display: none;
 }
 
 #pop-up-check:checked + .overlay {
-	display: block;
-	position: fixed;
-	width: 100%;
-	height: 150vh;
-	top: 0;
-	left: 0;
-	z-index: 9999;
-	background: rgba(0, 0, 0, 0.6);
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 150vh;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .window {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	width: 100vw;
-	max-width: 500px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  max-width: 500px;
   padding: 15px;
-	height: 750px;
-	background-color: #fff;
-	border-radius: 6px;
-	align-items: center;
-	transform: translate(-50%, -50%);
+  height: 750px;
+  background-color: #fff;
+  border-radius: 6px;
+  align-items: center;
+  transform: translate(-50%, -50%);
 }
 
 .pop-up-title {
@@ -187,9 +187,8 @@ select {
 }
 
 .note {
-  margin:0 0 0 6px;
+  margin: 0 0 0 6px;
 }
-
 
 /* フォームサイズ */
 
@@ -198,35 +197,36 @@ input {
 }
 
 .numberfield-2digits {
-  width: 40px
+  width: 40px;
 }
 
 .numberfield-3digits {
-  width: 50px
+  width: 50px;
 }
 
 .numberfield-4digits {
-  width: 55px
+  width: 55px;
 }
 
 .numberfield-5digits {
-  width: 60px
+  width: 60px;
 }
 
 .numberfield-9digits {
-  width: 100px
+  width: 100px;
 }
 
 /* 表 */
 
-th,td {
+th,
+td {
   border: solid 1px;
   padding: 4px;
   text-align: center;
 }
 
 table {
-  border-collapse:  collapse;
+  border-collapse: collapse;
   margin: 8px;
 }
 
@@ -236,7 +236,7 @@ th {
 }
 
 .table-number {
-  max-width:48px;
+  max-width: 48px;
 }
 
 td {
@@ -263,7 +263,7 @@ header {
   margin-right: auto;
   color: white;
   text-decoration: none;
-  font-weight:bold
+  font-weight: bold;
 }
 
 .menu-button {
@@ -278,7 +278,7 @@ header {
   display: none;
 }
 
-.menu{
+.menu {
   position: fixed;
   top: 0;
   right: 0;
@@ -292,10 +292,10 @@ header {
   justify-content: start;
   background: darkolivegreen;
 }
-.menu__item{
+.menu__item {
   width: 100%;
   height: auto;
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   text-align: center;
   box-sizing: border-box;
 }
@@ -305,12 +305,12 @@ header {
   text-decoration: none;
 }
 
-.menu{
+.menu {
   transform: translateX(40vw);
-  transition: all .2s linear;
+  transition: all 0.2s linear;
 }
 
-.menu.is-active{
+.menu.is-active {
   transform: translateX(0);
 }
 
@@ -321,35 +321,32 @@ header {
 
 footer {
   display: flex;
-  height:50px;
+  height: 50px;
   width: 100%;
   border-top: solid gray 1px;
-  margin-top:50px;
+  margin-top: 50px;
 }
 
 .footer-item {
   margin: auto;
   color: gray;
   text-decoration: none;
-  font-size:13px;
+  font-size: 13px;
 }
 
 .footer-item:hover {
-  color:black;
+  color: black;
 }
 
 /* ランダムチェッカー */
 
-@media screen and (max-width:550px) {
-
-	/*　画面サイズが550px以下の場合ここの記述が適用される　*/
-
+@media screen and (max-width: 600px) {
   .numberfield-5digits {
-    width:35px
+    width: 35px;
   }
 
   .numberfield-2digits {
-    width:25px
+    width: 25px;
   }
 
   .goal-damage {
@@ -367,5 +364,4 @@ footer {
   .buff-form {
     font-size: 12px;
   }
-
 }
