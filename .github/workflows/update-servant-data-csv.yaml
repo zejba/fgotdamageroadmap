@@ -1,0 +1,39 @@
+name: Update Servant Data CSV
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *' # 毎日JSTの21時に実行
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run update script
+        uses: zejba/get-fgo-data@master
+        with:
+          servantDataJSONPath: data/servant_data.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Convert JSON into CSV
+        run: node js/convertJsonIntoCsv.js
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "66516617+zejba@users.noreply.github.com"
+          git config --local user.name "zejba"
+          git add data/servant_data.json data/servant_data.csv
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update Servant Data JSON and CSV"
+            git push
+          fi
