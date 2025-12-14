@@ -67,7 +67,7 @@ function convertToCsvLine(servantData, collectionNo) {
   return [
     collectionNo,
     servantData.anotherVersionName
-      ? `${servantData.name}(${servantData.anotherVersionName})`
+      ? `${servantData.name}（${servantData.anotherVersionName}）`
       : servantData.name,
     servantData.rarity.toString(),
     servantData.className === 'moonCancer'
