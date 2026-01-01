@@ -16007,5 +16007,37 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 106500,
+    "id": "106500",
+    "collectionNo": 461,
+    "name": "ロード・ログレス",
+    "rarity": 5,
+    "className": "saber",
+    "attribute": "star",
+    "atkMax": 12709,
+    "atk120": 16330,
+    "starGen": 10.2,
+    "npGain": 0.58,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 4,
+      "quick": 5,
+      "extra": 5,
+      "np": 5
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 500
+    },
+    "classPassive": [
+      {
+        "type": "quickBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
