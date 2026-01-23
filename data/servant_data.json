@@ -16039,5 +16039,131 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 505900,
+    "id": "505900",
+    "collectionNo": 462,
+    "name": "花咲翁",
+    "rarity": 5,
+    "className": "caster",
+    "attribute": "earth",
+    "atkMax": 11128,
+    "atk120": 14298,
+    "starGen": 10.7,
+    "npGain": 0.56,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 4,
+      "quick": 6,
+      "extra": 5,
+      "np": 8
+    },
+    "noblePhantasm": {
+      "card": "quick",
+      "value": 1000
+    },
+    "classPassive": [
+      {
+        "type": "artsBuff",
+        "value": 5.5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "quickBuff",
+        "value": 3.5,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 605200,
+    "id": "605200",
+    "collectionNo": 463,
+    "name": "蛇女房",
+    "rarity": 4,
+    "className": "assassin",
+    "attribute": "earth",
+    "atkMax": 8372,
+    "atk120": 11902,
+    "starGen": 24.5,
+    "npGain": 0.41,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 4,
+      "quick": 4,
+      "extra": 5,
+      "np": 0
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 0
+    },
+    "classPassive": [
+      {
+        "type": "starGetBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "criticalBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "busterBuff",
+        "value": 3.5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "npGetBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 1002000,
+    "id": "1002000",
+    "collectionNo": 464,
+    "name": "フローラ",
+    "rarity": 4,
+    "className": "alterEgo",
+    "attribute": "sky",
+    "atkMax": 9363,
+    "atk120": 13311,
+    "starGen": 9.9,
+    "npGain": 0.59,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 4,
+      "quick": 4,
+      "extra": 5,
+      "np": 0
+    },
+    "noblePhantasm": {
+      "card": "quick",
+      "value": 0
+    },
+    "classPassive": [
+      {
+        "type": "damagePlus",
+        "value": 260,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "npGetBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
