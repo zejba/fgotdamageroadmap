@@ -16165,5 +16165,49 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 306400,
+    "id": "306400",
+    "collectionNo": 465,
+    "name": "デメテル",
+    "rarity": 5,
+    "className": "lancer",
+    "attribute": "sky",
+    "atkMax": 12332,
+    "atk120": 15845,
+    "starGen": 11.8,
+    "npGain": 0.42,
+    "hitCounts": {
+      "buster": 5,
+      "arts": 4,
+      "quick": 5,
+      "extra": 5,
+      "np": 4
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 750
+    },
+    "classPassive": [
+      {
+        "type": "criticalBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "artsBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "damagePlus",
+        "value": 200,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
