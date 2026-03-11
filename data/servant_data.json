@@ -16209,5 +16209,37 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 106600,
+    "id": "106600",
+    "collectionNo": 466,
+    "name": "ジャック・ド・モレー",
+    "rarity": 5,
+    "className": "saber",
+    "attribute": "human",
+    "atkMax": 11782,
+    "atk120": 15139,
+    "starGen": 10,
+    "npGain": 0.43,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 4,
+      "quick": 4,
+      "extra": 5,
+      "np": 5
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 500
+    },
+    "classPassive": [
+      {
+        "type": "quickBuff",
+        "value": 6,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
