@@ -16241,5 +16241,81 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 505600,
+    "id": "505600",
+    "collectionNo": 467,
+    "name": "フランソワ・プレラーティ",
+    "rarity": 5,
+    "className": "caster",
+    "attribute": "sky",
+    "atkMax": 11601,
+    "atk120": 14906,
+    "starGen": 10.8,
+    "npGain": 0.4,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 4,
+      "quick": 4,
+      "extra": 5,
+      "np": 0
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 0
+    },
+    "classPassive": [
+      {
+        "type": "artsBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "damagePlus",
+        "value": 95,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 405600,
+    "id": "405600",
+    "collectionNo": 468,
+    "name": "ヒッポリュテ",
+    "rarity": 4,
+    "className": "rider",
+    "attribute": "earth",
+    "atkMax": 8773,
+    "atk120": 12472,
+    "starGen": 9.1,
+    "npGain": 0.57,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 4,
+      "quick": 3,
+      "extra": 5,
+      "np": 4
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 1000
+    },
+    "classPassive": [
+      {
+        "type": "quickBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "damagePlus",
+        "value": 175,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
