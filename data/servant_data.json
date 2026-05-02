@@ -16317,5 +16317,37 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 1102000,
+    "id": "1102000",
+    "collectionNo": 469,
+    "name": "ジョン・ラックランド",
+    "rarity": 5,
+    "className": "avenger",
+    "attribute": "human",
+    "atkMax": 10654,
+    "atk120": 13689,
+    "starGen": 5.9,
+    "npGain": 0.46,
+    "hitCounts": {
+      "buster": 5,
+      "arts": 4,
+      "quick": 4,
+      "extra": 5,
+      "np": 5
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 500
+    },
+    "classPassive": [
+      {
+        "type": "criticalBuff",
+        "value": 11.5,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
