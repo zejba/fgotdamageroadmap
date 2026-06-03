@@ -16349,5 +16349,43 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 205500,
+    "id": "205500",
+    "collectionNo": 470,
+    "name": "ウルズ",
+    "rarity": 5,
+    "className": "archer",
+    "attribute": "sky",
+    "atkMax": 11668,
+    "atk120": 14992,
+    "starGen": 8.1,
+    "npGain": 0.35,
+    "hitCounts": {
+      "buster": 2,
+      "arts": 4,
+      "quick": 4,
+      "extra": 6,
+      "np": 6
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 750
+    },
+    "classPassive": [
+      {
+        "type": "criticalBuff",
+        "value": 12,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "damagePlus",
+        "value": 250,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
