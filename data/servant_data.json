@@ -16387,5 +16387,43 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 1002200,
+    "id": "1002200",
+    "collectionNo": 471,
+    "name": "アスカラポス",
+    "rarity": 5,
+    "className": "alterEgo",
+    "attribute": "sky",
+    "atkMax": 12134,
+    "atk120": 15591,
+    "starGen": 10,
+    "npGain": 0.25,
+    "hitCounts": {
+      "buster": 5,
+      "arts": 4,
+      "quick": 4,
+      "extra": 5,
+      "np": 8
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 750
+    },
+    "classPassive": [
+      {
+        "type": "artsBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "damagePlus",
+        "value": 150,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
