@@ -16425,5 +16425,75 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 106700,
+    "id": "106700",
+    "collectionNo": 472,
+    "name": "グレイ・リリィ",
+    "rarity": 4,
+    "className": "saber",
+    "attribute": "human",
+    "atkMax": 9949,
+    "atk120": 14144,
+    "starGen": 9.9,
+    "npGain": 0.42,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 4,
+      "quick": 4,
+      "extra": 5,
+      "np": 4
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 500
+    },
+    "classPassive": [
+      {
+        "type": "quickBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "criticalBuff",
+        "value": 11,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 306300,
+    "id": "306300",
+    "collectionNo": 473,
+    "name": "グレイ・リリィ",
+    "rarity": 4,
+    "className": "lancer",
+    "attribute": "human",
+    "atkMax": 8731,
+    "atk120": 12412,
+    "starGen": 12,
+    "npGain": 0.71,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 3,
+      "quick": 5,
+      "extra": 5,
+      "np": 5
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 1000
+    },
+    "classPassive": [
+      {
+        "type": "criticalBuff",
+        "value": 11,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
