@@ -16495,5 +16495,49 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 605300,
+    "id": "605300",
+    "collectionNo": 474,
+    "name": "ハサン・サッバーハ",
+    "rarity": 5,
+    "className": "assassin",
+    "attribute": "human",
+    "atkMax": 11848,
+    "atk120": 15223,
+    "starGen": 25.6,
+    "npGain": 0.49,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 4,
+      "quick": 5,
+      "extra": 5,
+      "np": 6
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 1500
+    },
+    "classPassive": [
+      {
+        "type": "starGetBuff",
+        "value": 7,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "criticalBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "atkBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
