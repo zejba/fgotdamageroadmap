@@ -16539,5 +16539,143 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 705300,
+    "id": "705300",
+    "collectionNo": 475,
+    "name": "紅閻魔",
+    "rarity": 5,
+    "className": "berserker",
+    "attribute": "earth",
+    "atkMax": 11955,
+    "atk120": 15361,
+    "starGen": 5.1,
+    "npGain": 0.38,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 3,
+      "quick": 4,
+      "extra": 5,
+      "np": 7
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 750
+    },
+    "classPassive": [
+      {
+        "type": "starGetBuff",
+        "value": 6,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "criticalBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 2301200,
+    "id": "2301200",
+    "collectionNo": 476,
+    "name": "キングプロテア",
+    "rarity": 5,
+    "className": "moonCancer",
+    "attribute": "earth",
+    "atkMax": 11128,
+    "atk120": 14298,
+    "starGen": 14.8,
+    "npGain": 0.78,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 3,
+      "quick": 4,
+      "extra": 5,
+      "np": 6
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 500
+    },
+    "classPassive": [
+      {
+        "type": "criticalBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "artsBuff",
+        "value": 4,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "busterBuff",
+        "value": 6,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "damagePlus",
+        "value": 250,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 506000,
+    "id": "506000",
+    "collectionNo": 477,
+    "name": "ビショーネ",
+    "rarity": 4,
+    "className": "caster",
+    "attribute": "earth",
+    "atkMax": 9105,
+    "atk120": 12944,
+    "starGen": 11.2,
+    "npGain": 0.3,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 3,
+      "quick": 4,
+      "extra": 4,
+      "np": 8
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 750
+    },
+    "classPassive": [
+      {
+        "type": "busterBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "npGetBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "starGetBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "criticalBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
