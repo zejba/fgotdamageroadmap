@@ -16677,5 +16677,125 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 405900,
+    "id": "405900",
+    "collectionNo": 478,
+    "name": "リリス",
+    "rarity": 5,
+    "className": "rider",
+    "attribute": "earth",
+    "atkMax": 11971,
+    "atk120": 15381,
+    "starGen": 9.2,
+    "npGain": 0.54,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 4,
+      "quick": 5,
+      "extra": 5,
+      "np": 6
+    },
+    "noblePhantasm": {
+      "card": "quick",
+      "value": 1000
+    },
+    "classPassive": [
+      {
+        "type": "quickBuff",
+        "value": 12,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "damagePlus",
+        "value": 175,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 1102300,
+    "id": "1102300",
+    "collectionNo": 479,
+    "name": "キングプロテア・オルタ",
+    "rarity": 5,
+    "className": "avenger",
+    "attribute": "earth",
+    "atkMax": 12959,
+    "atk120": 16651,
+    "starGen": 6,
+    "npGain": 0.71,
+    "hitCounts": {
+      "buster": 5,
+      "arts": 3,
+      "quick": 5,
+      "extra": 5,
+      "np": 6
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 1000
+    },
+    "classPassive": [
+      {
+        "type": "criticalBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "artsBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "busterBuff",
+        "value": 1,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "busterCriticalBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 205600,
+    "id": "205600",
+    "collectionNo": 480,
+    "name": "小野小町",
+    "rarity": 4,
+    "className": "archer",
+    "attribute": "sky",
+    "atkMax": 10148,
+    "atk120": 14427,
+    "starGen": 7.9,
+    "npGain": 0.48,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 4,
+      "quick": 3,
+      "extra": 5,
+      "np": 5
+    },
+    "noblePhantasm": {
+      "card": "quick",
+      "value": 1000
+    },
+    "classPassive": [
+      {
+        "type": "criticalBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
