@@ -16797,5 +16797,37 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 2801300,
+    "id": "2801300",
+    "collectionNo": 481,
+    "name": "ハベトロット",
+    "rarity": 4,
+    "className": "pretender",
+    "attribute": "earth",
+    "atkMax": 9065,
+    "atk120": 12887,
+    "starGen": 19.8,
+    "npGain": 0.67,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 4,
+      "quick": 4,
+      "extra": 5,
+      "np": 5
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 1000
+    },
+    "classPassive": [
+      {
+        "type": "quickBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
