@@ -16829,5 +16829,43 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 705400,
+    "id": "705400",
+    "collectionNo": 482,
+    "name": "ダイダロス",
+    "rarity": 5,
+    "className": "berserker",
+    "attribute": "human",
+    "atkMax": 12213,
+    "atk120": 15692,
+    "starGen": 4.9,
+    "npGain": 0.5,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 3,
+      "quick": 4,
+      "extra": 5,
+      "np": 5
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 500
+    },
+    "classPassive": [
+      {
+        "type": "busterBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "artsBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
