@@ -16867,5 +16867,37 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 406000,
+    "id": "406000",
+    "collectionNo": 483,
+    "name": "タマモアリア",
+    "rarity": 5,
+    "className": "rider",
+    "attribute": "earth",
+    "atkMax": 10883,
+    "atk120": 13984,
+    "starGen": 8.8,
+    "npGain": 0.37,
+    "hitCounts": {
+      "buster": 4,
+      "arts": 4,
+      "quick": 4,
+      "extra": 5,
+      "np": 6
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 750
+    },
+    "classPassive": [
+      {
+        "type": "quickBuff",
+        "value": 12,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
