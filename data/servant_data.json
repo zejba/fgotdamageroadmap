@@ -16899,5 +16899,143 @@
         "count": -1
       }
     ]
+  },
+  {
+    "aaId": 2801400,
+    "id": "2801400",
+    "collectionNo": 484,
+    "name": "卑弥呼＆壱与",
+    "rarity": 5,
+    "className": "pretender",
+    "attribute": "earth",
+    "atkMax": 12016,
+    "atk120": 15439,
+    "starGen": 20.2,
+    "npGain": 0.41,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 4,
+      "quick": 5,
+      "extra": 5,
+      "np": 6
+    },
+    "noblePhantasm": {
+      "card": "arts",
+      "value": 750
+    },
+    "classPassive": [
+      {
+        "type": "artsBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "noblePhantasmBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "criticalBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "starGetBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 406100,
+    "id": "406100",
+    "collectionNo": 485,
+    "name": "雑賀孫一",
+    "rarity": 4,
+    "className": "rider",
+    "attribute": "human",
+    "atkMax": 9074,
+    "atk120": 12900,
+    "starGen": 9,
+    "npGain": 0.67,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 3,
+      "quick": 5,
+      "extra": 5,
+      "np": 5
+    },
+    "noblePhantasm": {
+      "card": "quick",
+      "value": 1000
+    },
+    "classPassive": [
+      {
+        "type": "quickBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "noblePhantasmBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "criticalBuff",
+        "value": 8,
+        "turn": -1,
+        "count": -1
+      }
+    ]
+  },
+  {
+    "aaId": 705500,
+    "id": "705500",
+    "collectionNo": 486,
+    "name": "松永久秀",
+    "rarity": 4,
+    "className": "berserker",
+    "attribute": "human",
+    "atkMax": 10197,
+    "atk120": 14496,
+    "starGen": 4.9,
+    "npGain": 0.52,
+    "hitCounts": {
+      "buster": 3,
+      "arts": 3,
+      "quick": 4,
+      "extra": 5,
+      "np": 4
+    },
+    "noblePhantasm": {
+      "card": "buster",
+      "value": 500
+    },
+    "classPassive": [
+      {
+        "type": "busterBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "criticalBuff",
+        "value": 5,
+        "turn": -1,
+        "count": -1
+      },
+      {
+        "type": "noblePhantasmBuff",
+        "value": 10,
+        "turn": -1,
+        "count": -1
+      }
+    ]
   }
 ]
